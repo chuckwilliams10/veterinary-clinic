@@ -10,6 +10,9 @@ class Pets extends CI_Controller
 		$this->access_control->validate();
 
 		$this->load->model('pet_model');
+		$this->load->model('laboratory_results_model');
+		$this->load->helper('format');
+		$this->mythos->library('upload');
 	}
 
 	public function index()
@@ -41,6 +44,7 @@ class Pets extends CI_Controller
 		$page = array();
 		$page['pets'] = $this->pet_model->pagination("admin/pets/index/__PAGE__", 'get_all');
 		$page['pets_pagination'] = $this->pet_model->pagination_links();
+
 		$this->template->content('pets-index', $page);
 		$this->template->content('menu-pets', null, 'admin', 'page-nav');
 		$this->template->show();
@@ -64,10 +68,12 @@ class Pets extends CI_Controller
 		$this->form_validation->set_rules('pet_gender', 'Gender', 'trim|required|max_length[120]');
 		$this->form_validation->set_rules('pet_color', 'Color', 'trim|required|max_length[120]');
 		$this->form_validation->set_rules('pet_remarks', 'Remarks', 'trim|required');
-		$this->form_validation->set_rules('pet_status', 'Status', 'trim|required');
-		$this->form_validation->set_rules('pet_date_added', 'Date Added', 'trim|required|date');
-		$this->form_validation->set_rules('pet_death_datetime', 'Death Datetime', 'trim|required|datetime');
-		$this->form_validation->set_rules('pet_cause_of_death', 'Cause Of Death', 'trim|required');
+		$this->form_validation->set_rules('pet_status', 'Status', 'trim');
+		$this->form_validation->set_rules('pet_date_added', 'Date Added', 'trim|date');
+		$this->form_validation->set_rules('pet_death_datetime', 'Death Datetime', 'trim|datetime');
+		$this->form_validation->set_rules('pet_cause_of_death', 'Cause Of Death', 'trim');
+		$this->form_validation->set_rules('pet_image', 'Image', 'trim');
+		$this->form_validation->set_rules('pet_image_thumb', '', 'trim');
 
 		if($this->input->post('submit'))
 		{
@@ -76,6 +82,10 @@ class Pets extends CI_Controller
 			// Call run method from Form_validation to check
 			if($this->form_validation->run() !== false)
 			{
+				$data = $this->upload->do_upload_resize("pet_image",300,300,'./uploads/pets/');
+				$pet['pet_image'] = $data['upload_data']['file_name'];
+				$pet['pet_image_thumb'] = $data['thumb_file_name'];
+				// echo "<pre>"; print_r($this->form_validation->get_fields()); die();
 				$this->pet_model->create($pet, $this->form_validation->get_fields());
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
@@ -113,17 +123,24 @@ class Pets extends CI_Controller
 		$this->form_validation->set_rules('pet_color', 'Color', 'trim|required|max_length[120]');
 		$this->form_validation->set_rules('pet_remarks', 'Remarks', 'trim|required');
 		$this->form_validation->set_rules('pet_status', 'Status', 'trim|required');
-		$this->form_validation->set_rules('pet_date_added', 'Date Added', 'trim|required|date');
-		$this->form_validation->set_rules('pet_death_datetime', 'Death Datetime', 'trim|required|datetime');
-		$this->form_validation->set_rules('pet_cause_of_death', 'Cause Of Death', 'trim|required');
+		// $this->form_validation->set_rules('pet_date_added', 'Date Added', 'trim|date');
+		$this->form_validation->set_rules('pet_death_datetime', 'Death Datetime', 'trim');
+		$this->form_validation->set_rules('pet_cause_of_death', 'Cause Of Death', 'trim');
+		$this->form_validation->set_rules('pet_image', 'Image', 'trim');
+		$this->form_validation->set_rules('pet_image_thumb', '', 'trim');
 
 		if($this->input->post('submit'))
 		{
 			$pet = $this->extract->post();
 			if($this->form_validation->run() !== false)
 			{
-				$pet['pet_id'] = $pet_id;
-				$rows_affected = $this->pet_model->update($pet, $this->form_validation->get_fields());
+				$pet['pet_id'] = $pet_id; 
+				
+				$data = $this->upload->do_upload_resize("pet_image",300,300,'./uploads/pets/');
+				$pet['pet_image'] = $data['upload_data']['file_name'];
+				$pet['pet_image_thumb'] = $data['thumb_file_name'];
+
+				$rows_affected = $this->pet_model->update($pet, $this->form_validation->get_fields()); 
 
 				$this->template->notification('Pet updated.', 'success');
 				redirect('admin/pets');
@@ -161,6 +178,12 @@ class Pets extends CI_Controller
 			$this->template->notification('Pet was not found.', 'error');
 			redirect('admin/pets');
 		}
+
+		$lab_results = ['laboratory_results.pet_id'=>$pet_id];
+		$lab_results_order = ['lab_id'=>"DESC"];
+
+		$lab['laboratory_results'] = $this->laboratory_results_model->get_all($lab_results, $lab_results_order);
+		$page['lab_index'] = $this->load->view('admin/laboratory_results/index',$lab,true); 
 		
 		$this->template->content('pets-view', $page);
 		$this->template->show();

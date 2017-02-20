@@ -1,31 +1,19 @@
 <table class="table-form table-bordered">
 	<tr>
 		<th>Pet</th>
-		<td><?php echo $laboratory_results->pet_name; ?></td>
+		<td><?php echo number_format($laboratory_results->acc_id); ?></td>
 	</tr>
 	<tr>
 		<th>Examination</th>
 		<td><?php echo $laboratory_results->exm_code; ?></td>
 	</tr>
 	<tr>
+		<th>Laboratory Test</th>
+		<td><?php echo number_format($laboratory_results->exm_id); ?></td>
+	</tr>
+	<tr>
 		<th>Result</th>
 		<td><?php echo number_format($laboratory_results->lab_result); ?></td>
-	</tr>
-	<tr>
-		<th>Normal Value</th>
-		<td><?php echo number_format($laboratory_results->lab_normal_value, 2); ?></td>
-	</tr>
-	<tr>
-		<th>Normal Value Start</th>
-		<td><?php echo number_format($laboratory_results->lab_normal_value_start, 2); ?></td>
-	</tr>
-	<tr>
-		<th>Sequence</th>
-		<td><?php echo number_format($laboratory_results->lab_sequence); ?></td>
-	</tr>
-	<tr>
-		<th>Remarks</th>
-		<td><?php echo nl2br($laboratory_results->lab_remarks); ?></td>
 	</tr>
 	<tr>
 		<th>Date</th>

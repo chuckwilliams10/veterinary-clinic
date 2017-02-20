@@ -8,9 +8,9 @@ if($laboratory_tests->num_rows())
 				<tr>
 					<th class="checkbox skip-sort"><input type="checkbox" class="select-all" value="lat_ids" /></th>
 					<th>Examination</th>
-					<th>Laboratory Results</th>
-					<th>Laboratory Results</th>
-					<th>Laboratory Results</th>
+					<th>Code</th>
+					<th>Name</th>
+					<th>Sequence</th>
 					<th style="width: 60px;"></th>
 				</tr>
 			</thead>
@@ -21,10 +21,10 @@ if($laboratory_tests->num_rows())
 				?>
 				<tr>
 					<td class="center"><input type="checkbox" name="lat_ids[]" value="<?php echo $laboratory_test->lat_id; ?>" /></td>
-					<td><a href="<?php echo site_url('admin/laboratory_tests/view/' . $laboratory_test->lat_id); ?>"><?php echo $laboratory_test->exm_code; ?></a></td>
-					<td><?php echo number_format($laboratory_test->pet_id); ?></td>
-					<td><?php echo number_format($laboratory_test->pet_id); ?></td>
-					<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+					<td><a href="<?php echo site_url('admin/laboratory_tests/view/' . $laboratory_test->lat_id); ?>"><?php echo $laboratory_test->exm_name; ?></a></td>
+					<td><?php echo $laboratory_test->lat_code; ?></td>
+					<td><?php echo $laboratory_test->lat_name; ?></td>
+					<td><?php echo number_format($laboratory_test->lat_sequence); ?></td>
 					<td class="center"><a href="<?php echo site_url('admin/laboratory_tests/edit/' . $laboratory_test->lat_id); ?>" class="btn">Edit</a></td>
 				</tr>
 				<?php

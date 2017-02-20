@@ -4,6 +4,12 @@
 		<td><?php echo $pet->acc_username; ?></td>
 	</tr>
 	<tr>
+		<th>Image</th>
+		<td>
+			<img src="<?php echo base_url("uploads/pets/".$pet->pet_image_thumb); ?> ">
+		</td>
+	</tr>
+	<tr>
 		<th>Name</th>
 		<td><?php echo $pet->pet_name; ?></td>
 	</tr>
@@ -55,3 +61,20 @@
 		</td>
 	</tr>
 </table>
+<div class="row">
+	<div class="span10">
+		<div class="pull-left"><h3>Laboratory Results</h3></div>
+		<div class="create-result">
+			<div class="page-nav">
+				<ul class="nav nav-pills pull-right">
+					<li><a href="http://localhost/veterinary-clinic/admin/laboratory_results/create/<?php echo $pet->pet_id; ?>">Create Laboratory Results</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="span10">
+		<?php echo $lab_index; ?>
+	</div>
+	<hr class="span10">
+</div>
+<br>

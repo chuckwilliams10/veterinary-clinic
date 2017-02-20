@@ -4,36 +4,36 @@
 		<td><?php echo $laboratory_test->exm_code; ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Code</th>
+		<td><?php echo $laboratory_test->lat_code; ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Name</th>
+		<td><?php echo $laboratory_test->lat_name; ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Sequence</th>
+		<td><?php echo number_format($laboratory_test->lat_sequence); ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Unit</th>
+		<td><?php echo $laboratory_test->lat_unit; ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Normal Value</th>
+		<td><?php echo $laboratory_test->lat_normal_value; ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Normal Value Start</th>
+		<td><?php echo number_format($laboratory_test->lat_normal_value_start); ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Normal Value End</th>
+		<td><?php echo number_format($laboratory_test->lat_normal_value_end); ?></td>
 	</tr>
 	<tr>
-		<th>Laboratory Results</th>
-		<td><?php echo number_format($laboratory_test->pet_id); ?></td>
+		<th>Status</th>
+		<td><?php echo $laboratory_test->lat_status; ?></td>
 	</tr>
 	<tr>
 		<th></th>

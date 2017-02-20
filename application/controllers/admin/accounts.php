@@ -10,6 +10,7 @@ class Accounts extends CI_Controller
 		$this->access_control->account_type('dev', 'admin');
 		$this->access_control->validate();
 		
+		$this->load->model('pet_model');
 		$this->load->model('account_model');
 	}
 	
@@ -65,6 +66,10 @@ class Accounts extends CI_Controller
 		$this->form_validation->set_rules('acc_password2', 'Retype Password', 'required|matches[acc_password]');
 		$this->form_validation->set_rules('acc_first_name', 'First Name', 'trim|required|max_length[60]');
 		$this->form_validation->set_rules('acc_last_name', 'Last Name', 'trim|required|max_length[30]');
+		$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
+		$this->form_validation->set_rules('acc_gender', 'Gender', 'trim|required');
+		$this->form_validation->set_rules('acc_contact', 'Contact', 'trim|required|numeric');
+		$this->form_validation->set_rules('acc_address', 'Address', 'trim|required');
 		
 		if($this->input->post('submit'))
 		{
@@ -120,6 +125,8 @@ class Accounts extends CI_Controller
 			
 			$page = array();
 			$page['account'] = $account;
+			$page['pets'] = $this->pet_model->get_all(['pet.acc_id'=>$id],["pet_id"=>"DESC"]);
+
 			$this->template->content('accounts-view', $page);
 			$this->template->show();
 		}

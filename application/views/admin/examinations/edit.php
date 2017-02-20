@@ -20,8 +20,8 @@
 			<th>Status</th>
 			<td>
 				<select name="exm_status">
-					<option value="active">active</option>
-					<option value="inactive">inactive</option>
+					<option <?php echo ($examination->exm_status == "active") ? "selected" : ""; ?> value="active">active</option>
+					<option <?php echo ($examination->exm_status == "inactive") ? "selected" : ""; ?> value="inactive">inactive</option>
 				</select>
 			</td>
 		</tr>
@@ -40,6 +40,6 @@ $(function() {
 	$('form').floodling('exm_name', "<?php echo addslashes($examination->exm_name); ?>");		
 	$('form').floodling('exm_description', "<?php echo addslashes($examination->exm_description); ?>");		
 	$('form').floodling('exm_rate', "<?php echo addslashes($examination->exm_rate); ?>");		
-	$('form').floodling('exm_status', "<?php echo addslashes($examination->exm_status); ?>");
+	// $('form').floodling('exm_status', "<?php //echo addslashes($examination->exm_status); ?>");
 });
 </script>

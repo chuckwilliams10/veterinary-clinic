@@ -6,7 +6,7 @@
 	<table class="table-form table-bordered">
 		<tr>
 			<th>Email</th>
-			<td><input type="text" name="acc_username" maxlength="150" /></td>
+			<td><input type="email" name="acc_username" maxlength="20" /></td>
 		</tr>
 		<tr>
 			<th>Password</th>
@@ -25,8 +25,35 @@
 			<td><input type="text" name="acc_last_name" maxlength="30" /></td>
 		</tr>
 		<tr>
+			<th>Gender</th>
+			<td>
+				<select name="acc_gender">
+					<option>select gender</option>
+					<option value="male">Male</option>
+					<option value="female">Female</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>Contact Number</th>
+			<td><input type="number" name="acc_contact" maxlength="11"></td>
+		</tr>
+		<tr>
+			<th>Address</th>
+			<td>
+				<textarea name="acc_address"></textarea>
+			</td>
+		</tr>
+		<tr>
 			<th>Account Type</th>
-			<td>Admin</td>
+			<td>
+				<select name="acc_type">
+					<option>Select Type</option>
+					<option value="admin">Admin</option>
+					<option value="customer">Customer</option>
+					<!-- 'admin','dev','user' -->
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<th></th>

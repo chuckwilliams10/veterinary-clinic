@@ -6,7 +6,7 @@ class Laboratory_test_model extends Base_model
 	{
 		// List all fields of the table.
 		// Primary key must be auto-increment and must be listed here first.
-		$fields = array('lat_id', 'exm_id', 'lab_code', 'lab_name', 'lab_sequence', 'lab_unit', 'lab_normal_value', 'lab_normal_value_start', 'lab_normal_value_end', 'lab_status');
+		$fields = array('lat_id', 'exm_id', 'lat_code', 'lat_name', 'lat_sequence', 'lat_unit', 'lat_normal_value', 'lat_normal_value_start', 'lat_normal_value_end', 'lat_status');
 		// Call the parent constructor with the table name and fields as parameters.
 		parent::__construct('laboratory_test', $fields);
 	}
@@ -14,15 +14,22 @@ class Laboratory_test_model extends Base_model
 	// Inherits the create, update, delete, get_one, and get_all methods of base_model.
 	public function get_one($id)
 	{				
-		$this->db->join('examination', "examination.exm_id = {$this->table}.exm_id");				
-		$this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");
+		$this->db->join('examination', "examination.exm_id = {$this->table}.exm_id");
 		return parent::get_one($id);
 	}
 
-	public function get_all($params = array())
+	public function get_all($params = array(), $order_by = array())
 	{				
-		$this->db->join('examination', "examination.exm_id = {$this->table}.exm_id");				
-		$this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");
+		$this->db->join('examination', "examination.exm_id = {$this->table}.exm_id");
+
+		if ($order_by) 
+		{	
+			foreach ($order_by as $key => $value) 
+			{
+				$this->db->order_by($key, $value); 
+			}
+		}
+
 		return parent::get_all($params);
 	}
 }

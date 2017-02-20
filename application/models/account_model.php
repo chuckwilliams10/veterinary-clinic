@@ -16,7 +16,10 @@ class Account_model extends Base_model
 			'acc_first_name',
 			'acc_type',
 			'acc_failed_login',
-			'acc_status'
+			'acc_status',
+			'acc_gender',
+			'acc_contact',
+			'acc_address'
 		);
 		// Call the parent constructor with the table name and fields as parameters.
 		parent::__construct('account', $fields);

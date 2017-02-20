@@ -50,22 +50,21 @@ class Laboratory_tests extends CI_Controller
 	{
 		$this->template->title('Create Laboratory Test');
 				
-		$this->load->model('examination_model');				
-		$this->load->model('laboratory_results_model');
+		$this->load->model('examination_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
 		// Already combined with jQuery. No extra coding required for JS validation.
 		// We get both JS and PHP validation which makes it both secure and user friendly.
 		// NOTE: Set the rules before you check if $_POST is set so that the jQuery validation will work.
 		$this->form_validation->set_rules('exm_id', 'Code', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_code', 'Id', 'trim|required|max_length[12]');
-		$this->form_validation->set_rules('lab_name', 'Id', 'trim|required|max_length[100]');
-		$this->form_validation->set_rules('lab_sequence', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_unit', 'Id', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lab_normal_value', 'Id', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lab_normal_value_start', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_normal_value_end', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_status', 'Id', 'trim|required');
+		$this->form_validation->set_rules('lat_code', 'Code', 'trim|required|max_length[12]');
+		$this->form_validation->set_rules('lat_name', 'Name', 'trim|required|max_length[100]');
+		$this->form_validation->set_rules('lat_sequence', 'Sequence', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_unit', 'Unit', 'trim|required|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value', 'Normal Value', 'trim|required|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value_start', 'Normal Value Start', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_normal_value_end', 'Normal Value End', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_status', 'Status', 'trim|required');
 
 		if($this->input->post('submit'))
 		{
@@ -91,14 +90,6 @@ class Laboratory_tests extends CI_Controller
 
 		$page = array();
 		$page['exm_ids'] = $this->examination_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
 		
 		$this->template->content('laboratory_tests-create', $page);
 		$this->template->show();
@@ -108,18 +99,17 @@ class Laboratory_tests extends CI_Controller
 	{
 		$this->template->title('Edit Laboratory Test');
 				
-		$this->load->model('examination_model');				
-		$this->load->model('laboratory_results_model');
+		$this->load->model('examination_model');
 
 		$this->form_validation->set_rules('exm_id', 'Code', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_code', 'Id', 'trim|required|max_length[12]');
-		$this->form_validation->set_rules('lab_name', 'Id', 'trim|required|max_length[100]');
-		$this->form_validation->set_rules('lab_sequence', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_unit', 'Id', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lab_normal_value', 'Id', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lab_normal_value_start', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_normal_value_end', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_status', 'Id', 'trim|required');
+		$this->form_validation->set_rules('lat_code', 'Code', 'trim|required|max_length[12]');
+		$this->form_validation->set_rules('lat_name', 'Name', 'trim|required|max_length[100]');
+		$this->form_validation->set_rules('lat_sequence', 'Sequence', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_unit', 'Unit', 'trim|required|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value', 'Normal Value', 'trim|required|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value_start', 'Normal Value Start', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_normal_value_end', 'Normal Value End', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_status', 'Status', 'trim|required');
 
 		if($this->input->post('submit'))
 		{
@@ -148,14 +138,6 @@ class Laboratory_tests extends CI_Controller
 			redirect('admin/laboratory_tests');
 		}
 		$page['exm_ids'] = $this->examination_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
-		$page['lab_ids'] = $this->laboratory_results_model->get_all();
 
 		$this->template->content('laboratory_tests-edit', $page);
 		$this->template->show();
@@ -176,5 +158,24 @@ class Laboratory_tests extends CI_Controller
 		
 		$this->template->content('laboratory_tests-view', $page);
 		$this->template->show();
+	}
+
+	public function show_forms()
+	{
+		$page = [];
+
+		$exm_id = $this->input->get('id');
+		$page["lab_tests"] = $this->laboratory_test_model->get_all(
+			[
+				'laboratory_test.exm_id' => $exm_id,
+				'lat_status' => 'active'
+			],
+			[
+				'laboratory_test.lat_sequence' => "ASC"	
+			] 
+		);
+
+		$html_string = $this->load->view('admin/laboratory_tests/form',$page,true);
+		echo $html_string;
 	}
 }

@@ -242,3 +242,79 @@ table .headerSortUp:after {
 {
 	margin-top: 10px;
 }
+
+.hidden
+{
+	display: none;
+}
+
+.hidden-force
+{
+	display: none !important;
+}
+
+.create-result
+{
+    margin-top: 15px;
+}
+
+.create-result .nav-pills li>a
+{
+    background: #227893;
+    color: #fefefe;
+    font-size: 14px;
+}
+
+.create-result .nav-pills li>a:hover
+{
+    color: #d9230f;
+    background: #ffe2be;
+}
+
+.lab-form-table
+{
+	width: 100%;
+}
+
+.lab-form-table thead th {
+    padding: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    background: #54baa4;
+    color: #FFF;
+}
+
+.lab-form-table tbody tr
+{
+
+}
+
+.lab-form-table tbody tr:nth-child(odd){
+	background: #e6e3f8;
+}
+
+.lab-form-table tbody tr:nth-child(even){
+    background: #FFF;
+}
+
+.lab-form-table tbody tr td
+{ 
+	padding: 10px 0px 10px 10px;
+}
+
+.lab-form-table tbody tr th
+{
+	text-align: left;
+	padding: 10px 0px 10px 10px;
+}
+
+.lab-form-table tbody tr td:last-child
+{
+	text-align: right;
+	padding-right: 15px;
+}
+
+.lab-form-table tbody tr td input
+{
+	margin-bottom: 0px;
+}
