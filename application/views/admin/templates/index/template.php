@@ -17,7 +17,7 @@
 	</div>
 </div>
 <div class="clearfix" style="height: 50px"></div>
-<div class="container">
+<div class="container" style="margin-top: 60px;">
 	<div class="row">
 		<div class="span4 offset4">
 			<?php echo template('notification'); ?>

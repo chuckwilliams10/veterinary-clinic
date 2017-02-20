@@ -48,51 +48,53 @@
 		<div class="span2">
 			<div class="sidebar-nav">
 				<ul class="nav nav-list">
-					<li class="nav-header"><a href="<?php echo site_url('admin/pages'); ?>">Pages</a></li>
-					<?php
-					if($this->access_control->check_account_type('dev'))
-					{
-					?>
-					<li class="nav-header"><a href="<?php echo site_url('admin/page_categories'); ?>">Page Categories</a></li>
-					<?php
-					}
-					?>
-					<li class="nav-header"><a href="<?php echo site_url('admin/photos'); ?>">Photos</a></li>
-					<?php
-					if($this->access_control->check_account_type('admin', 'dev'))
-					{
-					?>
-					<li class="nav-header"><a href="<?php echo site_url('admin/accounts'); ?>">Accounts</a></li>
-					<?php
-					}
-					?>
-					<?php
-					if($this->access_control->check_account_type('dev'))
-					{
-					?>
-					<!-- <li class="nav-header"><a href="<?php echo site_url('admin/settings'); ?>">Settings</a></li> -->
-					<?php
-					}
-					?>
+					<?php if($this->access_control->check_logged_in()) { ?>
+						<li class="nav-header"><a href="<?php echo site_url('admin/pages'); ?>">Pages</a></li>
+						<?php
+						if($this->access_control->check_account_type('dev'))
+						{
+						?>
+						<li class="nav-header"><a href="<?php echo site_url('admin/page_categories'); ?>">Page Categories</a></li>
+						<?php
+						}
+						?>
+						<li class="nav-header"><a href="<?php echo site_url('admin/photos'); ?>">Photos</a></li>
+						<?php
+						if($this->access_control->check_account_type('admin', 'dev'))
+						{
+						?>
+						<li class="nav-header"><a href="<?php echo site_url('admin/accounts'); ?>">Accounts</a></li>
+						<?php
+						}
+						?>
+						<?php
+						if($this->access_control->check_account_type('dev'))
+						{
+						?>
+						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/settings'); ?>">Settings</a></li> -->
+						<?php
+						}
+						?>
 
 
-					<li class="nav-header"><a href="<?php echo site_url('admin/examinations'); ?>">Examinations</a></li>
-					<li class="nav-header"><a href="<?php echo site_url('admin/pets'); ?>">Pets</a></li>
-					<li class="nav-header"><a href="<?php echo site_url('admin/laboratory_results'); ?>">laboratory Results</a></li>
-					<li class="nav-header"><a href="<?php echo site_url('admin/laboratory_test'); ?>">Laboratory tests</a></li>
-					<li class="nav-header"><a href="<?php echo site_url('admin/medical_records'); ?>">Medical Records</a></li>
-					<li class="nav-header"><a href="<?php echo site_url('admin/release_vouchers'); ?>">Release Vouchers</a></li>
-					<li class="nav-header"><a href="<?php echo site_url('admin/banners'); ?>">Banners</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/examinations'); ?>">Examinations</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/pets'); ?>">Pets</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/laboratory_results'); ?>">laboratory Results</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/laboratory_test'); ?>">Laboratory tests</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/medical_records'); ?>">Medical Records</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/release_vouchers'); ?>">Release Vouchers</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/banners'); ?>">Banners</a></li>
 
-					<!-- Sample menu with dropdown sub items
-					<li class="nav-header">
-						<a href="javascript:;" data-toggle="collapse" data-target="#menu_sample1">Sample Dropdown</a>
-						<ul class="nav nav-list collapse in" id="menu_sample1">
-							<li><a href="#">Sub Item 1</a></li>
-							<li><a href="#">Sub Item 2</a></li>
-						</ul>
-					</li>
+						<!-- Sample menu with dropdown sub items
+						<li class="nav-header">
+							<a href="javascript:;" data-toggle="collapse" data-target="#menu_sample1">Sample Dropdown</a>
+							<ul class="nav nav-list collapse in" id="menu_sample1">
+								<li><a href="#">Sub Item 1</a></li>
+								<li><a href="#">Sub Item 2</a></li>
+							</ul>
+						</li>
 					-->
+					<?php } ?>
 				</ul>
 			</div>
 		</div>

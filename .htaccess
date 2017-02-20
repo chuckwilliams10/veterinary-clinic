@@ -1,0 +1,27 @@
+Options +FollowSymLinks
+Options -Indexes
+DirectoryIndex index.php
+RewriteEngine on
+
+
+# ------------------------------------------------------------------------------
+# Files and directories accessible via HTTP request
+# ------------------------------------------------------------------------------
+RewriteCond $1 !^(index\.php|resources|robots\.txt|favicon|uploads|designs)
+
+
+# ------------------------------------------------------------------------------
+# Remove index.php
+# ------------------------------------------------------------------------------
+
+# Use this if URL is permanent (has own domain). Comment out the similar rule below.
+RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+
+# Use this if URL is temporary (http://184.154.69.106/~mywebsite/. Comment out the similar rule above.
+# RewriteRule ^(.*)$ /~mywebsite/index.php?/$1 [L,QSA]
+
+
+# ------------------------------------------------------------------------------
+# Unknown MIME Types Fix
+# ------------------------------------------------------------------------------
+AddType application/x-font-woff .woff

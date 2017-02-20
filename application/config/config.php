@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/blessed-veterinary-clinic/';
+$config['base_url']	= 'http://localhost/veterinary-clinic/';
 
 /*
 |--------------------------------------------------------------------------
