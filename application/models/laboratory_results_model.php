@@ -6,7 +6,7 @@ class Laboratory_results_model extends Base_model
 	{
 		// List all fields of the table.
 		// Primary key must be auto-increment and must be listed here first.
-		$fields = array('lab_id', 'pet_id', 'exm_id','lab_date','lab_remark');
+		$fields = array('lab_id', 'pet_id', 'exm_id','lab_date','lab_remark','lab_status');
 		// Call the parent constructor with the table name and fields as parameters.
 		parent::__construct('laboratory_results', $fields);
 	}

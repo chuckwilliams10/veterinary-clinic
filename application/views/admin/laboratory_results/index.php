@@ -8,6 +8,7 @@ if($laboratory_results->num_rows())
 				<tr> 
 					<th>Examination</th> 
 					<th>Date</th>
+					<th>Status</th>
 					<th style="width: 160px;"></th>
 				</tr>
 			</thead>
@@ -19,9 +20,10 @@ if($laboratory_results->num_rows())
 				<tr> 
 					<td class="center"><?php echo $laboratory_results->exm_name; ?></td> 
 					<td class="center"><?php echo format_datetime($laboratory_results->lab_date,"F d, Y H:i A"); ?></td>
+					<td class="center"><?php echo $laboratory_results->lab_status; ?></td>
 					<td class="center">
-						<a href="<?php echo site_url('admin/laboratory_results/edit/' . $laboratory_results->lab_id); ?>" class="btn btn-primary">Edit</a>
-						<a href="<?php echo site_url('admin/laboratory_results/view/' . $laboratory_results->lab_id); ?>" class="btn btn-warning">View</a>
+						<a href="<?php echo site_url('admin/laboratory_results/edit/' . $laboratory_results->lab_id."/".$pet->pet_id); ?>" class="btn btn-primary">Edit</a>
+						<a href="<?php echo site_url('admin/laboratory_results/view/' . $laboratory_results->lab_id."/".$pet->pet_id); ?>" class="btn btn-warning">View</a>
 					</td>
 				</tr> 
 				<?php

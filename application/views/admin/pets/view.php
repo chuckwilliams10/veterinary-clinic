@@ -41,18 +41,21 @@
 		<th>Status</th>
 		<td><?php echo $pet->pet_status; ?></td>
 	</tr>
+	<?php if ( $pet->pet_status == "dead"): ?>
+		<tr>
+			<th>Death Datetime</th>
+			<td><?php echo format_datetime($pet->pet_death_datetime); ?></td>
+		</tr>
+		<tr>
+			<th>Cause Of Death</th>
+			<td><?php echo nl2br($pet->pet_cause_of_death); ?></td>
+		</tr>
+	<?php endif ?>
 	<tr>
 		<th>Date Added</th>
 		<td><?php echo format_date($pet->pet_date_added); ?></td>
 	</tr>
-	<tr>
-		<th>Death Datetime</th>
-		<td><?php echo format_datetime($pet->pet_death_datetime); ?></td>
-	</tr>
-	<tr>
-		<th>Cause Of Death</th>
-		<td><?php echo nl2br($pet->pet_cause_of_death); ?></td>
-	</tr>
+	
 	<tr>
 		<th></th>
 		<td>
@@ -67,7 +70,7 @@
 		<div class="create-result">
 			<div class="page-nav">
 				<ul class="nav nav-pills pull-right">
-					<li><a href="http://localhost/veterinary-clinic/admin/laboratory_results/create/<?php echo $pet->pet_id; ?>">Create Laboratory Results</a></li>
+					<li><a href="<?php echo site_url("admin/laboratory_results/create/".$pet->pet_id); ?>">Add Laboratory Examination</a></li>
 				</ul>
 			</div>
 		</div>
@@ -76,5 +79,12 @@
 		<?php echo $lab_index; ?>
 	</div>
 	<hr class="span10">
+	<div class="create-result">
+		<div class="page-nav">
+			<ul class="nav nav-pills pull-right">
+				<li><a href="<?php echo site_url("admin/release_vouchers/create/".$pet->pet_id); ?>">Release Pet</a></li>
+			</ul>
+		</div>
+	</div>
 </div>
 <br>

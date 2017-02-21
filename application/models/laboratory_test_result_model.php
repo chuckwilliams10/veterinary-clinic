@@ -13,7 +13,7 @@ class Laboratory_test_result_model extends Base_model
 
     public function get_all( $params = array(), $order_by = array() )
     {               
-        $this->db->join('laboratory_result', "laboratory_result.lab_id = {$this->table}.lab_id");               
+        $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");               
         $this->db->join('laboratory_test', "laboratory_test.lat_id = {$this->table}.lat_id");        
 
         if ($order_by) 
@@ -26,4 +26,32 @@ class Laboratory_test_result_model extends Base_model
 
         return parent::get_all($params);
     }
-}
+
+    public function get_all_aggregated( $params = array(), $order_by = array() )
+    {               
+        
+        $this->db->select("
+            laboratory_test_result.ltr_id,
+            laboratory_test_result.lab_id,
+            laboratory_test_result.ltr_result,
+            laboratory_test_result.ltr_remark,
+            laboratory_test_result.ltr_status,
+            laboratory_test.*,
+            examination.*
+        ");
+
+        $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");               
+        $this->db->join('laboratory_test', "laboratory_test.lat_id = {$this->table}.lat_id");             
+        $this->db->join('examination', "examination.exm_id = laboratory_test.exm_id");         
+
+        if ($order_by) 
+        {   
+            foreach ($order_by as $key => $value) 
+            {
+                $this->db->order_by($key, $value); 
+            }
+        }
+
+        return parent::get_all($params);
+    }
+} 

@@ -64,7 +64,7 @@ $autoload['libraries'] = array('session', 'mythos', 'template', 'access_control'
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('url','doordie','string');
 
 
 /*

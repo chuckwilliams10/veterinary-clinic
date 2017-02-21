@@ -4,12 +4,16 @@
 		<td><?php echo $release_voucher->rev_code; ?></td>
 	</tr>
 	<tr>
-		<th></th>
-		<td><?php echo $release_voucher->; ?></td>
+		<th>Account</th>
+		<td><?php echo $release_voucher->acc_username; ?></td>
 	</tr>
 	<tr>
-		<th>Admin Acc Id</th>
-		<td><?php echo number_format($release_voucher->rev_admin_acc_id); ?></td>
+		<th>Admin Account</th>
+		<td><?php echo $release_voucher->rev_acc_first_name." ".$release_voucher->rev_acc_last_name; ?></td>
+	</tr>
+	<tr>
+		<th>Pet</th>
+		<td><a href="<?php echo site_url("admin/pets/view/".$release_voucher->pet_id) ?>"><?php echo $release_voucher->pet_name; ?></a></td>
 	</tr>
 	<tr>
 		<th>Or Number</th>

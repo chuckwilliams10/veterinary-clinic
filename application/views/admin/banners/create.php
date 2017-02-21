@@ -1,13 +1,9 @@
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 	<table class="table-form table-bordered">
 		<tr>
 			<th>Image</th>
-			<td><input type="text" name="bnr_image" size="80" maxlength="200" value="" /></td>
-		</tr>
-		<tr>
-			<th>Image Thumb</th>
-			<td><input type="text" name="bnr_image_thumb" size="80" maxlength="200" value="" /></td>
-		</tr>
+			<td><input type="file" name="bnr_image" /></td>
+		</tr> 
 		<tr>
 			<th></th>
 			<td>

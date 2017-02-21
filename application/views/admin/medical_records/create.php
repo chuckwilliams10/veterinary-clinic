@@ -3,16 +3,21 @@
 		<tr>
 			<th>Pet</th>
 			<td>			
-				<select name="pet_id">
-				<?php
-				foreach($pet_ids->result() as $pet_id) 
-				{
-					?>
-					<option value="<?php echo $pet_id->pet_id; ?>"><?php echo $pet_id->acc_id; ?></option>
+				<?php if ($pet): ?>
+					<?php echo $pet->pet_name; ?>
+					<input type="hidden" name="pet_id" value="<?php echo $pet->pet_id; ?>">
+				<?php else: ?>
+					<select name="pet_id">
 					<?php
-				}
-				?>
-				</select>
+					foreach($pet_ids->result() as $pet_id) 
+					{
+						?>
+						<option value="<?php echo $pet_id->pet_id; ?>"><?php echo $pet_id->pet_name; ?></option>
+						<?php
+					}
+					?>
+					</select>
+				<?php endif ?>		
 			</td>
 		</tr>
 		<tr>
@@ -46,8 +51,12 @@
 		</tr>
 		<tr>
 			<th>Temperature</th>
+			<td><input type="text" name="mer_temperature" value="" /></td>
+		</tr>
+		<tr>
+			<th>Temperature Unit</th>
 			<td>
-				<select name="mer_temperature">
+				<select name="mer_temperature_unit">
 					<option value="celcius(℃)">celcius(℃)</option>
 					<option value="fahrenheit(℉)">fahrenheit(℉)</option>
 					<option value=""></option>
@@ -105,7 +114,10 @@
 		</tr>
 		<tr>
 			<th>Date</th>
-			<td><input type="text" name="mer_date" class="datetime" value="" /></td>
+			<td>
+				<?php echo date("F d, Y h:i A"); ?>
+				<input type="hidden" name="mer_date" value="<?php echo date("Y-m-d H:i:s"); ?>" />
+			</td>
 		</tr>
 		<tr>
 			<th></th>

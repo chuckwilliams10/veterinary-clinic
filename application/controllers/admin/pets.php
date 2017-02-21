@@ -86,11 +86,11 @@ class Pets extends CI_Controller
 				$pet['pet_image'] = $data['upload_data']['file_name'];
 				$pet['pet_image_thumb'] = $data['thumb_file_name'];
 				// echo "<pre>"; print_r($this->form_validation->get_fields()); die();
-				$this->pet_model->create($pet, $this->form_validation->get_fields());
+				$id = $this->pet_model->create($pet, $this->form_validation->get_fields());
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
 				$this->template->notification('New pet created.', 'success');
-				redirect('admin/pets');
+				redirect('admin/medical_records/create/'.$id);
 			}
 			else
 			{
@@ -182,6 +182,7 @@ class Pets extends CI_Controller
 		$lab_results = ['laboratory_results.pet_id'=>$pet_id];
 		$lab_results_order = ['lab_id'=>"DESC"];
 
+		$lab['pet'] = $this->pet_model->get_one($pet_id);
 		$lab['laboratory_results'] = $this->laboratory_results_model->get_all($lab_results, $lab_results_order);
 		$page['lab_index'] = $this->load->view('admin/laboratory_results/index',$lab,true); 
 		

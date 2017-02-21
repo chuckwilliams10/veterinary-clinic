@@ -3,16 +3,8 @@
 		<tr>
 			<th>Pet</th>
 			<td>			
-				<select name="pet_id">
-				<?php
-				foreach($pet_ids->result() as $pet_id) 
-				{
-					?>
-					<option value="<?php echo $pet_id->pet_id; ?>"><?php echo $pet_id->acc_id; ?></option>
-					<?php
-				}
-				?>
-				</select>
+				<?php echo $medical_record->pet_name; ?>
+				<input type="hidden" name="pet_id" value="<?php echo $medical_record->pet_id; ?>"> 
 			</td>
 		</tr>
 		<tr>
@@ -46,8 +38,12 @@
 		</tr>
 		<tr>
 			<th>Temperature</th>
+			<td><input type="text" name="mer_temperature" value="" /></td>
+		</tr>
+		<tr>
+			<th>Temperature Unit</th>
 			<td>
-				<select name="mer_temperature">
+				<select name="mer_temperature_unit">
 					<option value="celcius(℃)">celcius(℃)</option>
 					<option value="fahrenheit(℉)">fahrenheit(℉)</option>
 					<option value=""></option>
@@ -105,7 +101,9 @@
 		</tr>
 		<tr>
 			<th>Date</th>
-			<td><input type="text" name="mer_date" class="datetime" value="" /></td>
+			<td> 
+				<?php echo format_date($medical_record->mer_date,"F d, Y h:i A"); ?>
+			</td>
 		</tr>
 		<tr>
 			<th></th>
@@ -118,12 +116,13 @@
 </form>
 <script type="text/javascript">
 $(function() {		
-	$('form').floodling('pet_id', "<?php echo addslashes($medical_record->acc_id); ?>");		
-	$('form').floodling('mer_height', "<?php echo addslashes($medical_record->mer_height); ?>");		
+	// $('form').floodling('pet_id', "<?php echo addslashes($medical_record->acc_id); ?>");		
+	$('form').floodling('mer_height', "<?php echo addslashes(number_format($medical_record->mer_height,2)); ?>");		
 	$('form').floodling('mer_height_unit', "<?php echo addslashes($medical_record->mer_height_unit); ?>");		
-	$('form').floodling('mer_weight', "<?php echo addslashes($medical_record->mer_weight); ?>");		
+	$('form').floodling('mer_weight', "<?php echo addslashes(number_format($medical_record->mer_weight,2)); ?>");		
 	$('form').floodling('mer_weight_unit', "<?php echo addslashes($medical_record->mer_weight_unit); ?>");		
-	$('form').floodling('mer_temperature', "<?php echo addslashes($medical_record->mer_temperature); ?>");		
+	$('form').floodling('mer_temperature', "<?php echo addslashes(number_format($medical_record->mer_temperature,2)); ?>");		
+	$('form').floodling('mer_temperature_unit', "<?php echo addslashes($medical_record->mer_temperature_unit); ?>");		
 	$('form').floodling('mer_heartrate', "<?php echo addslashes($medical_record->mer_heartrate); ?>");		
 	$('form').floodling('mer_nose', "<?php echo addslashes($medical_record->mer_nose); ?>");		
 	$('form').floodling('mer_skin', "<?php echo addslashes($medical_record->mer_skin); ?>");		
@@ -135,7 +134,6 @@ $(function() {
 	$('form').floodling('mer_upper_abdomen', "<?php echo addslashes($medical_record->mer_upper_abdomen); ?>");		
 	$('form').floodling('mer_limbs', "<?php echo addslashes($medical_record->mer_limbs); ?>");		
 	$('form').floodling('mer_other_remarks', "<?php echo addslashes($medical_record->mer_other_remarks); ?>");		
-	$('form').floodling('mer_status', "<?php echo addslashes($medical_record->mer_status); ?>");		
-	$('form').floodling('mer_date', "<?php echo addslashes($medical_record->mer_date); ?>");
+	$('form').floodling('mer_status', "<?php echo addslashes($medical_record->mer_status); ?>");		 
 });
 </script>

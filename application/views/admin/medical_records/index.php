@@ -7,11 +7,10 @@ if($medical_records->num_rows())
 			<thead>
 				<tr>
 					<th class="checkbox skip-sort"><input type="checkbox" class="select-all" value="mer_ids" /></th>
-					<th>Pet</th>
-					<th>Height</th>
-					<th>Height Unit</th>
+					<th colspan="1">Pet</th>
+					<th>Height</th> 
 					<th>Weight</th>
-					<th style="width: 60px;"></th>
+					<th style="width: 160px;"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,11 +20,18 @@ if($medical_records->num_rows())
 				?>
 				<tr>
 					<td class="center"><input type="checkbox" name="mer_ids[]" value="<?php echo $medical_record->mer_id; ?>" /></td>
-					<td><a href="<?php echo site_url('admin/medical_records/view/' . $medical_record->mer_id); ?>"><?php echo number_format($medical_record->acc_id); ?></a></td>
-					<td><?php echo number_format($medical_record->mer_height, 2); ?></td>
-					<td><?php echo $medical_record->mer_height_unit; ?></td>
-					<td><?php echo number_format($medical_record->mer_weight, 2); ?></td>
-					<td class="center"><a href="<?php echo site_url('admin/medical_records/edit/' . $medical_record->mer_id); ?>" class="btn">Edit</a></td>
+					<td class="center">
+						<a href="<?php echo site_url('admin/medical_records/view/' . $medical_record->mer_id); ?>">
+							<?php echo $medical_record->pet_name; ?> <br>
+							<img src="<?php echo base_url("uploads/pets/".$medical_record->pet_image_thumb); ?> " width="100">
+						</a> 
+					</td>
+					<td><?php echo number_format($medical_record->mer_height, 2); ?> <?php echo $medical_record->mer_height_unit; ?></td> 
+					<td><?php echo number_format($medical_record->mer_weight, 2); ?> <?php echo $medical_record->mer_weight_unit; ?></td>
+					<td class="center">
+						<a href="<?php echo site_url('admin/medical_records/edit/' . $medical_record->mer_id); ?>" class="btn btn-primary">Edit</a>					
+						<a href="<?php echo site_url('admin/pets/view/' . $medical_record->pet_id); ?>" class="btn btn-info">View Pet</a>
+					</td>
 				</tr>
 				<?php
 			}

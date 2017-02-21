@@ -8,9 +8,10 @@ if($release_vouchers->num_rows())
 				<tr>
 					<th class="checkbox skip-sort"><input type="checkbox" class="select-all" value="rev_ids" /></th>
 					<th>Code</th>
-					<th></th>
-					<th>Admin Acc Id</th>
-					<th>Or Number</th>
+					<th>Account</th>
+					<th>Pet</th>
+					<th>Marked By</th>
+					<th>Date</th>
 					<th style="width: 60px;"></th>
 				</tr>
 			</thead>
@@ -22,9 +23,10 @@ if($release_vouchers->num_rows())
 				<tr>
 					<td class="center"><input type="checkbox" name="rev_ids[]" value="<?php echo $release_voucher->rev_id; ?>" /></td>
 					<td><a href="<?php echo site_url('admin/release_vouchers/view/' . $release_voucher->rev_id); ?>"><?php echo $release_voucher->rev_code; ?></a></td>
-					<td><?php echo $release_voucher->; ?></td>
-					<td><?php echo number_format($release_voucher->rev_admin_acc_id); ?></td>
-					<td><?php echo number_format($release_voucher->rev_or_number); ?></td>
+					<td><?php echo $release_voucher->acc_username; ?></td>
+					<td><a href="<?php echo site_url("admin/pets/view/".$release_voucher->pet_id) ?>"><?php echo $release_voucher->pet_name; ?></a></td>
+					<td><?php echo $release_voucher->rev_acc_first_name." ".$release_voucher->rev_acc_last_name; ?></td>
+					<td><?php echo format_datetime($release_voucher->rev_datetime,"M d, Y h:i A"); ?></td>
 					<td class="center"><a href="<?php echo site_url('admin/release_vouchers/edit/' . $release_voucher->rev_id); ?>" class="btn">Edit</a></td>
 				</tr>
 				<?php

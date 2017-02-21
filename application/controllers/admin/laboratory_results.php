@@ -9,6 +9,8 @@ class Laboratory_results extends CI_Controller
 		$this->access_control->logged_in();
 		$this->access_control->validate();
 
+		$this->load->model('pet_model');
+		$this->load->model('examination_model');
 		$this->load->model('laboratory_test_model');
 		$this->load->model('laboratory_results_model');
 		$this->load->model('laboratory_test_result_model');
@@ -116,11 +118,11 @@ class Laboratory_results extends CI_Controller
 					
 					$imgfile = array();
 					$imgfile['lri_image'] = $data['upload_data']['file_name'];
-                    $imgfile['lri_image_thumb'] = $data['thumb_file_name'];
-                    $imgfile['lri_original'] = $data['upload_data']['orig_name'];
-                    $imgfile['lab_id'] = $id;
-                    
-                    $this->laboratory_result_images_model->create($imgfile);
+	                $imgfile['lri_image_thumb'] = $data['thumb_file_name'];
+	                $imgfile['lri_original'] = $data['upload_data']['orig_name'];
+	                $imgfile['lab_id'] = $id;
+
+              	 	$this->laboratory_result_images_model->create($imgfile);
 			    } 
 
 				// Set a notification using notification method from Template.
@@ -146,37 +148,56 @@ class Laboratory_results extends CI_Controller
 		$this->template->show();
 	}
 
-	public function edit($lab_id)
+	public function edit($lab_id, $pet_id)
 	{
 		$this->template->title('Edit Laboratory Results');
 				
 		$this->load->model('pet_model');				
 		$this->load->model('examination_model');				
-		$this->load->model('laboratory_test_model');
-
-		$this->form_validation->set_rules('pet_id', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('exm_id', 'Code', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lat_id', 'Id', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_result', 'Result', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lab_date', 'Date', 'trim|required|datetime');
-		$this->form_validation->set_rules('lab_status', 'Status', 'trim|required');
+		$this->load->model('laboratory_test_model'); 
 
 		if($this->input->post('submit'))
 		{
 			$laboratory_results = $this->extract->post();
-			if($this->form_validation->run() !== false)
-			{
-				$laboratory_results['lab_id'] = $lab_id;
-				$rows_affected = $this->laboratory_results_model->update($laboratory_results, $this->form_validation->get_fields());
+			foreach ($laboratory_results['ltr_id'] as $ltrid => $value) {
+				$data = array();
+				$data["ltr_id"] = $ltrid;
+				$laboratory_results['ltr_result'][$ltrid] ? $data['ltr_result'] = $laboratory_results['ltr_result'][$ltrid] : $data['ltr_result'] = "";
+				$laboratory_results['ltr_remark'][$ltrid] ? $data['ltr_remark'] = $laboratory_results['ltr_remark'][$ltrid] : $data['ltr_remark'] = "";
+			
+				$rows_affected = $this->laboratory_test_result_model->update($data, ["ltr_id","ltr_result","ltr_remark"]); 
+			}
 
-				$this->template->notification('Laboratory results updated.', 'success');
-				redirect('admin/laboratory_results');
-			}
-			else
-			{
-				$this->template->notification(validation_errors());
-			}
-			$this->template->autofill($laboratory_results);
+			$this->load->library('upload');
+
+		    $files = $_FILES;
+		    $cpt = count($_FILES['lri_image']['name']);
+		    for($i=0; $i<$cpt; $i++)
+		    {           
+		        $_FILES['lri_image']['name'] = $files['lri_image']['name'][$i];
+		        $_FILES['lri_image']['type'] = $files['lri_image']['type'][$i];
+		        $_FILES['lri_image']['tmp_name'] = $files['lri_image']['tmp_name'][$i];
+		        $_FILES['lri_image']['error'] = $files['lri_image']['error'][$i];
+		        $_FILES['lri_image']['size'] = $files['lri_image']['size'][$i];    
+
+		        
+				$this->load->helper('format');
+				$this->mythos->library('upload');
+				$this->upload->initialize($this->set_upload_options());
+				$data = $this->upload->do_upload_resize("lri_image",300,300,'./uploads/laboratory_results/');
+				
+				if (isset($data['error'])) {} else {
+
+					$imgfile = array();
+					$imgfile['lri_image'] = $data['upload_data']['file_name'];
+	                $imgfile['lri_image_thumb'] = $data['thumb_file_name'];
+	                $imgfile['lri_original'] = $data['upload_data']['orig_name'];
+	                $imgfile['lab_id'] = $lab_id;
+
+              	 	$this->laboratory_result_images_model->create($imgfile);
+                }
+                
+		    } 
 		}
 
 		$page = array();
@@ -186,28 +207,40 @@ class Laboratory_results extends CI_Controller
 		{
 			$this->template->notification('Laboratory results was not found.', 'error');
 			redirect('admin/laboratory_results');
-		}
-		$page['pet_ids'] = $this->pet_model->get_all();
-		$page['exm_ids'] = $this->examination_model->get_all();
-		$page['lat_ids'] = $this->laboratory_test_model->get_all();
+		}  
+
+		$page['pet']     = $this->pet_model->get_one($pet_id);  
+		$page['pet']     = $this->pet_model->get_one($pet_id);  		
+
+		$ltr_params   = array("laboratory_test_result.lab_id" => $lab_id);
+		$ltr_order_by = array("laboratory_test.lat_sequence" => " ASC");
+		$page['laboratory_test_results'] = $this->laboratory_test_result_model->get_all_aggregated($ltr_params,$ltr_order_by);
+		$page['lab_result_images'] = $this->laboratory_result_images_model->get_all(["laboratory_results.lab_id" => $lab_id]);
 
 		$this->template->content('laboratory_results-edit', $page);
 		$this->template->show();
 	}
 
-	public function view($laboratory_results_id)
+	public function view($lab_id, $pet_id )
 	{
 		$this->template->title('View Laboratory Results');
 		
-		$page = array();
-		$page['laboratory_results'] = $this->laboratory_results_model->get_one($laboratory_results_id);
+		$page = array(); 
+		$page['laboratory_results'] = $this->laboratory_results_model->get_one($lab_id);		
 
 		if($page['laboratory_results'] === false)
 		{
 			$this->template->notification('Laboratory results was not found.', 'error');
 			redirect('admin/laboratory_results');
 		}
-		
+
+		$page['pet']     = $this->pet_model->get_one($pet_id);  		
+
+		$ltr_params   = array("laboratory_test_result.lab_id" => $lab_id);
+		$ltr_order_by = array("laboratory_test.lat_sequence" => " ASC");
+		$page['laboratory_test_results'] = $this->laboratory_test_result_model->get_all_aggregated($ltr_params,$ltr_order_by);
+		$page['lab_result_images'] = $this->laboratory_result_images_model->get_all(["laboratory_results.lab_id" => $lab_id]);
+
 		$this->template->content('laboratory_results-view', $page);
 		$this->template->show();
 	}
@@ -223,5 +256,14 @@ class Laboratory_results extends CI_Controller
 	    $config['encrypt_name'] = TRUE;
 
 	    return $config;
+	}
+
+	// http://localhost/veterinary-clinic/admin/laboratory_results/delete_image/1
+	public function delete_image($lri_id)
+	{
+		$image = $this->laboratory_result_images_model->get_one($lri_id);
+
+		$this->laboratory_result_images_model->delete($lri_id); 
+		redirect('admin/laboratory_results/edit/'.$image->lab_id."/".$image->pet_id);
 	}
 }

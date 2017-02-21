@@ -58,7 +58,7 @@
 						<?php
 						}
 						?>
-						<li class="nav-header"><a href="<?php echo site_url('admin/photos'); ?>">Photos</a></li>
+						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/photos'); ?>">Photos</a></li> -->
 						<?php
 						if($this->access_control->check_account_type('admin', 'dev'))
 						{

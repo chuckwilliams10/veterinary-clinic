@@ -10,6 +10,8 @@ class Banners extends CI_Controller
 		$this->access_control->validate();
 
 		$this->load->model('banner_model');
+		$this->load->helper('format');
+		$this->mythos->library('upload');
 	}
 
 	public function index()
@@ -55,8 +57,8 @@ class Banners extends CI_Controller
 		// Already combined with jQuery. No extra coding required for JS validation.
 		// We get both JS and PHP validation which makes it both secure and user friendly.
 		// NOTE: Set the rules before you check if $_POST is set so that the jQuery validation will work.
-		$this->form_validation->set_rules('bnr_image', 'Image', 'trim|required|max_length[200]');
-		$this->form_validation->set_rules('bnr_image_thumb', 'Image Thumb', 'trim|required|max_length[200]');
+		$this->form_validation->set_rules('bnr_image', 'Image', 'trim|max_length[200]');
+		$this->form_validation->set_rules('bnr_image_thumb', 'Image Thumb', 'trim|max_length[200]');
 
 		if($this->input->post('submit'))
 		{
@@ -65,6 +67,10 @@ class Banners extends CI_Controller
 			// Call run method from Form_validation to check
 			if($this->form_validation->run() !== false)
 			{
+				$data = $this->upload->do_upload_resize("bnr_image",300,300,'./uploads/banners/');
+				$banner['bnr_image'] = $data['upload_data']['file_name'];
+				$banner['bnr_image_thumb'] = $data['thumb_file_name'];
+
 				$this->banner_model->create($banner, $this->form_validation->get_fields());
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
@@ -91,8 +97,8 @@ class Banners extends CI_Controller
 		$this->template->title('Edit Banner');
 
 
-		$this->form_validation->set_rules('bnr_image', 'Image', 'trim|required|max_length[200]');
-		$this->form_validation->set_rules('bnr_image_thumb', 'Image Thumb', 'trim|required|max_length[200]');
+		$this->form_validation->set_rules('bnr_image', 'Image', 'trim|max_length[200]');
+		$this->form_validation->set_rules('bnr_image_thumb', 'Image Thumb', 'trim|max_length[200]');
 
 		if($this->input->post('submit'))
 		{
@@ -100,6 +106,9 @@ class Banners extends CI_Controller
 			if($this->form_validation->run() !== false)
 			{
 				$banner['bnr_id'] = $bnr_id;
+				$data = $this->upload->do_upload_resize("bnr_image",300,300,'./uploads/banners/');
+				$banner['bnr_image'] = $data['upload_data']['file_name'];
+				$banner['bnr_image_thumb'] = $data['thumb_file_name'];
 				$rows_affected = $this->banner_model->update($banner, $this->form_validation->get_fields());
 
 				$this->template->notification('Banner updated.', 'success');

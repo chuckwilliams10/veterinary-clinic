@@ -21,7 +21,11 @@
 	</tr>
 	<tr>
 		<th>Temperature</th>
-		<td><?php echo $medical_record->mer_temperature; ?></td>
+		<td><?php echo number_format($medical_record->mer_temperature, 2); ?></td>
+	</tr>
+	<tr>
+		<th>Temperature Unit</th>
+		<td><?php echo $medical_record->mer_temperature_unit; ?></td>
 	</tr>
 	<tr>
 		<th>Heartrate</th>

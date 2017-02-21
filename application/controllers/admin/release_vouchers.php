@@ -10,6 +10,7 @@ class Release_vouchers extends CI_Controller
 		$this->access_control->validate();
 
 		$this->load->model('release_voucher_model');
+		$this->load->model('release_voucher_lineitem_model');
 	}
 
 	public function index()
@@ -46,21 +47,23 @@ class Release_vouchers extends CI_Controller
 		$this->template->show();
 	}
 
-	public function create()
+	public function create($pet_id = 0)
 	{
 		$this->template->title('Create Release Voucher');
 				
-		$this->load->model('_model');
+		$this->load->model('account_model');				
+		$this->load->model('pet_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
 		// Already combined with jQuery. No extra coding required for JS validation.
 		// We get both JS and PHP validation which makes it both secure and user friendly.
 		// NOTE: Set the rules before you check if $_POST is set so that the jQuery validation will work.
 		$this->form_validation->set_rules('rev_code', 'Code', 'trim|required|max_length[12]');
-		$this->form_validation->set_rules('acc_id', '', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('rev_admin_acc_id', 'Admin Acc Id', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('acc_id', 'Username', 'trim|integer|max_length[11]');
+		$this->form_validation->set_rules('rev_admin_acc_id', 'Admin Acc Id', 'trim|integer|max_length[11]');
+		$this->form_validation->set_rules('pet_id', 'Id', 'trim|required|max_length[11]');
 		$this->form_validation->set_rules('rev_or_number', 'Or Number', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('rev_datetime', 'Datetime', 'trim|required|datetime');
+		$this->form_validation->set_rules('rev_datetime', 'Datetime', 'trim|datetime');
 		$this->form_validation->set_rules('rev_remarks', 'Remarks', 'trim|required');
 		$this->form_validation->set_rules('rev_status', 'Status', 'trim|required');
 		$this->form_validation->set_rules('rev_total', 'Total', 'trim|required|decimal');
@@ -72,7 +75,32 @@ class Release_vouchers extends CI_Controller
 			// Call run method from Form_validation to check
 			if($this->form_validation->run() !== false)
 			{
-				$this->release_voucher_model->create($release_voucher, $this->form_validation->get_fields());
+				$pet = $this->pet_model->get_one($pet_id);
+				$current_user = $this->account_model->get_by_username($this->session->userdata("acc_username"));
+
+				$release_voucher['acc_id'] = $pet->acc_id;
+				$release_voucher['pet_id'] = $pet->pet_id;
+				$release_voucher['rev_datetime'] = date("Y-m-d H:i:s");			
+				$release_voucher['rev_admin_acc_id'] = $current_user->acc_id;	 
+
+				$rev_id = $this->release_voucher_model->create($release_voucher, $this->form_validation->get_fields());
+				
+				foreach ($release_voucher['rvl_value'] as $exm_id => $rvl_value) 
+				{ 	
+					$rvlineitem = array();
+
+					$rvlineitem["rev_id"] = $rev_id;
+					$rvlineitem["exm_id"] = $exm_id;
+					$rvlineitem["rvl_value"] = $rvl_value;
+
+					$this->release_voucher_lineitem_model->create($rvlineitem);
+				} 
+
+				$pet_params = array();
+				$pet_params["pet_id"] = $pet->pet_id;
+				$pet_params["pet_status"] = "released";
+				$this->pet_model->update($pet_params);
+
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
 				$this->template->notification('New release voucher created.', 'success');
@@ -88,7 +116,17 @@ class Release_vouchers extends CI_Controller
 		}
 
 		$page = array();
-		$page['s'] = $this->_model->get_all();
+		$page['acc_ids'] = $this->account_model->get_all();
+		$page['pet_ids'] = $this->pet_model->get_all();
+		$page['pet'] = $this->pet_model->get_one($pet_id);
+
+		if($page['pet'] === false)
+		{
+			$this->template->notification('Pet was not found.', 'error');
+			redirect('admin/pets');
+		}
+
+		$page['line_items'] = $this->get_pet($pet_id);
 		
 		$this->template->content('release_vouchers-create', $page);
 		$this->template->show();
@@ -98,11 +136,13 @@ class Release_vouchers extends CI_Controller
 	{
 		$this->template->title('Edit Release Voucher');
 				
-		$this->load->model('_model');
+		$this->load->model('account_model');				
+		$this->load->model('pet_model');
 
 		$this->form_validation->set_rules('rev_code', 'Code', 'trim|required|max_length[12]');
-		$this->form_validation->set_rules('acc_id', '', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('acc_id', 'Username', 'trim|required|integer|max_length[11]');
 		$this->form_validation->set_rules('rev_admin_acc_id', 'Admin Acc Id', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('pet_id', 'Id', 'trim|required|integer|max_length[11]');
 		$this->form_validation->set_rules('rev_or_number', 'Or Number', 'trim|required|integer|max_length[11]');
 		$this->form_validation->set_rules('rev_datetime', 'Datetime', 'trim|required|datetime');
 		$this->form_validation->set_rules('rev_remarks', 'Remarks', 'trim|required');
@@ -135,7 +175,8 @@ class Release_vouchers extends CI_Controller
 			$this->template->notification('Release voucher was not found.', 'error');
 			redirect('admin/release_vouchers');
 		}
-		$page['s'] = $this->_model->get_all();
+		$page['acc_ids'] = $this->account_model->get_all();
+		$page['pet_ids'] = $this->pet_model->get_all();
 
 		$this->template->content('release_vouchers-edit', $page);
 		$this->template->show();
@@ -147,7 +188,7 @@ class Release_vouchers extends CI_Controller
 		
 		$page = array();
 		$page['release_voucher'] = $this->release_voucher_model->get_one($release_voucher_id);
-
+		
 		if($page['release_voucher'] === false)
 		{
 			$this->template->notification('Release voucher was not found.', 'error');
@@ -156,5 +197,34 @@ class Release_vouchers extends CI_Controller
 		
 		$this->template->content('release_vouchers-view', $page);
 		$this->template->show();
+	}
+
+	public function get_pet($pet_id)
+	{
+		$this->load->model([
+			"pet_model",
+			"laboratory_results_model",
+			"laboratory_test_result_model"
+		]);
+
+		$exam_sort = array( "lab_id"     => "DESC" );
+		$exam_data = array( "pet.pet_id" => $pet_id );
+
+		$pet   = $this->pet_model->get_one($pet_id);
+		$exams = $this->laboratory_results_model->get_all($exam_data, $exam_sort);
+		
+		$data = array();
+
+		foreach ($exams->result() as $examination) {
+			
+			$data[$examination->exm_id] = $examination;
+
+			$exam_params = ["laboratory_results.lab_id" => $examination->exm_id];
+			$exam_orders = ["lat_sequence"=>"ASC"];
+
+			$examination_results = $this->laboratory_test_result_model->get_all($exam_params, $exam_orders);
+			$data[$examination->exm_id]->line_item = $examination_results->result();
+		}  
+		return $data;
 	}
 }

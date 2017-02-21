@@ -46,7 +46,7 @@ class Medical_records extends CI_Controller
 		$this->template->show();
 	}
 
-	public function create()
+	public function create($pet_id = 0)
 	{
 		$this->template->title('Create Medical Record');
 				
@@ -61,20 +61,21 @@ class Medical_records extends CI_Controller
 		$this->form_validation->set_rules('mer_height_unit', 'Height Unit', 'trim|required');
 		$this->form_validation->set_rules('mer_weight', 'Weight', 'trim|required|decimal');
 		$this->form_validation->set_rules('mer_weight_unit', 'Weight Unit', 'trim|required');
-		$this->form_validation->set_rules('mer_temperature', 'Temperature', 'trim|required');
+		$this->form_validation->set_rules('mer_temperature', 'Temperature', 'trim|required|decimal');
+		$this->form_validation->set_rules('mer_temperature_unit', 'Temperature Unit', 'trim|required');
 		$this->form_validation->set_rules('mer_heartrate', 'Heartrate', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('mer_nose', 'Nose', 'trim|required');
-		$this->form_validation->set_rules('mer_skin', 'Skin', 'trim|required');
-		$this->form_validation->set_rules('mer_anus', 'Anus', 'trim|required');
-		$this->form_validation->set_rules('mer_throat', 'Throat', 'trim|required');
-		$this->form_validation->set_rules('mer_fecal', 'Fecal', 'trim|required');
-		$this->form_validation->set_rules('mer_mouth', 'Mouth', 'trim|required');
-		$this->form_validation->set_rules('mer_lower_abdomen', 'Lower Abdomen', 'trim|required');
-		$this->form_validation->set_rules('mer_upper_abdomen', 'Upper Abdomen', 'trim|required');
-		$this->form_validation->set_rules('mer_limbs', 'Limbs', 'trim|required');
-		$this->form_validation->set_rules('mer_other_remarks', 'Other Remarks', 'trim|required');
-		$this->form_validation->set_rules('mer_status', 'Status', 'trim|required');
-		$this->form_validation->set_rules('mer_date', 'Date', 'trim|required|datetime');
+		$this->form_validation->set_rules('mer_nose', 'Nose', 'trim');
+		$this->form_validation->set_rules('mer_skin', 'Skin', 'trim');
+		$this->form_validation->set_rules('mer_anus', 'Anus', 'trim');
+		$this->form_validation->set_rules('mer_throat', 'Throat', 'trim');
+		$this->form_validation->set_rules('mer_fecal', 'Fecal', 'trim');
+		$this->form_validation->set_rules('mer_mouth', 'Mouth', 'trim');
+		$this->form_validation->set_rules('mer_lower_abdomen', 'Lower Abdomen', 'trim');
+		$this->form_validation->set_rules('mer_upper_abdomen', 'Upper Abdomen', 'trim');
+		$this->form_validation->set_rules('mer_limbs', 'Limbs', 'trim');
+		$this->form_validation->set_rules('mer_other_remarks', 'Other Remarks', 'trim');
+		$this->form_validation->set_rules('mer_status', 'Status', 'trim');
+		$this->form_validation->set_rules('mer_date', 'Date', 'trim');
 
 		if($this->input->post('submit'))
 		{
@@ -87,6 +88,9 @@ class Medical_records extends CI_Controller
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
 				$this->template->notification('New medical record created.', 'success');
+				if ($pet_id != 0) {
+					redirect('admin/pets/view/'.$pet_id);
+				}
 				redirect('admin/medical_records');
 			}
 			else
@@ -99,7 +103,8 @@ class Medical_records extends CI_Controller
 		}
 
 		$page = array();
-		$page['pet_ids'] = $this->pet_model->get_all();
+		$page['pet_ids'] = $this->pet_model->get_all();		
+		$page['pet'] = $this->pet_model->get_one($pet_id);
 		
 		$this->template->content('medical_records-create', $page);
 		$this->template->show();
@@ -116,20 +121,21 @@ class Medical_records extends CI_Controller
 		$this->form_validation->set_rules('mer_height_unit', 'Height Unit', 'trim|required');
 		$this->form_validation->set_rules('mer_weight', 'Weight', 'trim|required|decimal');
 		$this->form_validation->set_rules('mer_weight_unit', 'Weight Unit', 'trim|required');
-		$this->form_validation->set_rules('mer_temperature', 'Temperature', 'trim|required');
+		$this->form_validation->set_rules('mer_temperature', 'Temperature', 'trim|required|decimal');
+		$this->form_validation->set_rules('mer_temperature_unit', 'Temperature Unit', 'trim|required');
 		$this->form_validation->set_rules('mer_heartrate', 'Heartrate', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('mer_nose', 'Nose', 'trim|required');
-		$this->form_validation->set_rules('mer_skin', 'Skin', 'trim|required');
-		$this->form_validation->set_rules('mer_anus', 'Anus', 'trim|required');
-		$this->form_validation->set_rules('mer_throat', 'Throat', 'trim|required');
-		$this->form_validation->set_rules('mer_fecal', 'Fecal', 'trim|required');
-		$this->form_validation->set_rules('mer_mouth', 'Mouth', 'trim|required');
-		$this->form_validation->set_rules('mer_lower_abdomen', 'Lower Abdomen', 'trim|required');
-		$this->form_validation->set_rules('mer_upper_abdomen', 'Upper Abdomen', 'trim|required');
-		$this->form_validation->set_rules('mer_limbs', 'Limbs', 'trim|required');
-		$this->form_validation->set_rules('mer_other_remarks', 'Other Remarks', 'trim|required');
-		$this->form_validation->set_rules('mer_status', 'Status', 'trim|required');
-		$this->form_validation->set_rules('mer_date', 'Date', 'trim|required|datetime');
+		$this->form_validation->set_rules('mer_nose', 'Nose', 'trim');
+		$this->form_validation->set_rules('mer_skin', 'Skin', 'trim');
+		$this->form_validation->set_rules('mer_anus', 'Anus', 'trim');
+		$this->form_validation->set_rules('mer_throat', 'Throat', 'trim');
+		$this->form_validation->set_rules('mer_fecal', 'Fecal', 'trim');
+		$this->form_validation->set_rules('mer_mouth', 'Mouth', 'trim');
+		$this->form_validation->set_rules('mer_lower_abdomen', 'Lower Abdomen', 'trim');
+		$this->form_validation->set_rules('mer_upper_abdomen', 'Upper Abdomen', 'trim');
+		$this->form_validation->set_rules('mer_limbs', 'Limbs', 'trim');
+		$this->form_validation->set_rules('mer_other_remarks', 'Other Remarks', 'trim');
+		$this->form_validation->set_rules('mer_status', 'Status', 'trim');
+		$this->form_validation->set_rules('mer_date', 'Date', 'trim');
 
 		if($this->input->post('submit'))
 		{

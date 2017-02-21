@@ -13,7 +13,7 @@ class Laboratory_result_images_model extends Base_model
 
     public function get_all( $params = array(), $order_by = array() )
     {               
-        $this->db->join('laboratory_result', "laboratory_result.lab_id = {$this->table}.lab_id");        
+        $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");        
 
         if ($order_by) 
         {   
@@ -24,6 +24,12 @@ class Laboratory_result_images_model extends Base_model
         }
 
         return parent::get_all($params);
+    }
+
+    public function get_one($id)
+    {
+        $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");   
+        return parent::get_one($id);
     }
 
 }
