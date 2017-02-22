@@ -6,6 +6,7 @@ class A_example_pdf extends CI_Controller
 	public function __construct() 
 	{
 		parent::__construct();
+		$this->mythos->library("pdf");
 	}
 	
 	public function index() 

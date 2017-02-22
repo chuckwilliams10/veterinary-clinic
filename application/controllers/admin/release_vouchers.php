@@ -9,6 +9,8 @@ class Release_vouchers extends CI_Controller
 		$this->access_control->logged_in();
 		$this->access_control->validate();
 
+		$this->load->model('pet_model');
+		$this->load->model('account_model');
 		$this->load->model('release_voucher_model');
 		$this->load->model('release_voucher_lineitem_model');
 	}
@@ -50,9 +52,7 @@ class Release_vouchers extends CI_Controller
 	public function create($pet_id = 0)
 	{
 		$this->template->title('Create Release Voucher');
-				
-		$this->load->model('account_model');				
-		$this->load->model('pet_model');
+				 		
 
 		// Use the set_rules from the Form_validation class for form validation.
 		// Already combined with jQuery. No extra coding required for JS validation.
@@ -194,9 +194,44 @@ class Release_vouchers extends CI_Controller
 			$this->template->notification('Release voucher was not found.', 'error');
 			redirect('admin/release_vouchers');
 		}
+
+		$page["line_items"] = $this->get_pet($page['release_voucher']->pet_id);
 		
 		$this->template->content('release_vouchers-view', $page);
 		$this->template->show();
+	}
+
+	public function email_to_account($release_voucher_id)
+	{
+		$this->mythos->library("email"); 
+		$page = array();
+		$page['release_voucher'] = $this->release_voucher_model->get_one($release_voucher_id);
+		
+		if($page['release_voucher'] === false)
+		{
+			$this->template->notification('Release voucher was not found.', 'error');
+			redirect('admin/release_vouchers');
+		}
+
+		$page["line_items"] = $this->get_pet($page['release_voucher']->pet_id);
+
+		$template['content'] = $this->template->get_view('release_voucher', $page, 'email');		
+				
+		//send the email
+		// $send_to = $page['release_voucher']->acc_username;
+		$send_to = "jmsenosa@gmail.com";
+		$subject = "Blessed Veterinary Clinic Voucher"; 
+
+		$this->email->send_mail($send_to, $subject, $template);
+		$this->template->notification('Email Sent!', 'success');
+
+
+		$update = array();
+		$update["rev_id"] = $page['release_voucher']->rev_id;
+		$update["rev_emailed"] = 1;
+		$this->release_voucher_model->update($update, ["rev_id","rev_emailed"]);
+
+		redirect('admin/release_vouchers');			
 	}
 
 	public function get_pet($pet_id)

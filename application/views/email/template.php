@@ -332,52 +332,10 @@
         	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
             	<tr>
                 	<td align="center" valign="top">
-                        <!-- // Begin Template Preheader \\ -->
-                        <table border="0" cellpadding="10" cellspacing="0" width="600" id="templatePreheader">
-                            <tr>
-                                <td valign="top" class="preheaderContent">
-                                
-                                	<!-- // Begin Module: Standard Preheader \ -->
-                                    <table border="0" cellpadding="10" cellspacing="0" width="100%">
-                                    	<tr>
-                                        	<td valign="top">
-                                            	<div>
-                                                	 Use this area to offer a short teaser of your email's content. Text here will show in the preview area of some email clients.
-                                                </div>
-                                            </td>
-                                            <!-- *|IFNOT:ARCHIVE_PAGE|* -->
-											<td valign="top" width="190">
-                                            	<div>
-                                                	Is this email not displaying correctly?<br /><a href="#" target="_blank">View it in your browser</a>.
-                                                </div>
-                                            </td>
-											<!-- *|END:IF|* -->
-                                        </tr>
-                                    </table>
-                                	<!-- // End Module: Standard Preheader \ -->
-                                
-                                </td>
-                            </tr>
-                        </table>
+                        
                         <!-- // End Template Preheader \\ -->
                     	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
-                        	<tr>
-                            	<td align="center" valign="top">
-                                    <!-- // Begin Template Header \\ -->
-                                	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
-                                        <tr>
-                                            <td class="headerContent">
-                                            
-                                            	<!-- // Begin Module: Standard Header Image \\ -->
-                                            	<img src="http://gallery.mailchimp.com/653153ae841fd11de66ad181a/images/placeholder_600.gif" style="max-width:600px;" id="headerImage campaign-icon"/>
-                                            	<!-- // End Module: Standard Header Image \\ -->
-                                            
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <!-- // End Template Header \\ -->
-                                </td>
-                            </tr>
+                
                         	<tr>
                             	<td align="center" valign="top">
                                     <!-- // Begin Template Body \\ -->
@@ -402,55 +360,7 @@
                                     </table>
                                     <!-- // End Template Body \\ -->
                                 </td>
-                            </tr>
-                        	<tr>
-                            	<td align="center" valign="top">
-                                    <!-- // Begin Template Footer \\ -->
-                                	<table border="0" cellpadding="10" cellspacing="0" width="600" id="templateFooter">
-                                    	<tr>
-                                        	<td valign="top" class="footerContent">
-                                            
-                                                <!-- // Begin Module: Standard Footer \\ -->
-                                                <table border="0" cellpadding="10" cellspacing="0" width="100%">
-                                                    <tr>
-                                                        <td colspan="2" valign="middle" id="social">
-                                                            <div>
-                                                                &nbsp;<a href="#">follow on Twitter</a> | <a href="#">friend on Facebook</a> | <a href="#">forward to a friend</a>&nbsp;
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td valign="top" width="350">
-                                                            <div>
-																<em>Copyright &copy; <?php echo date("Y"); ?>, All rights reserved.</em>
-																<br />
-
-                                                            </div>
-                                                        </td>
-                                                        <td valign="top" width="190" id="monkeyRewards">
-                                                            <div>
-                                                                <strong>Our mailing address is:</strong>
-																<br />
-																no-reply@zeaple.com
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2" valign="middle" id="utility">
-                                                            <div>
-                                                                &nbsp;<a href="#">unsubscribe from this list</a> | <a href="#">update subscription preferences</a>&nbsp;
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <!-- // End Module: Standard Footer \\ -->
-                                            
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <!-- // End Template Footer \\ -->
-                                </td>
-                            </tr>
+                            </tr> 
                         </table>
                         <br />
                     </td>

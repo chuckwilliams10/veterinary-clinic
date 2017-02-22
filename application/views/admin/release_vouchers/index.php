@@ -12,7 +12,7 @@ if($release_vouchers->num_rows())
 					<th>Pet</th>
 					<th>Marked By</th>
 					<th>Date</th>
-					<th style="width: 60px;"></th>
+					<th style="width: 200px; text-align: right;"</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,7 +27,12 @@ if($release_vouchers->num_rows())
 					<td><a href="<?php echo site_url("admin/pets/view/".$release_voucher->pet_id) ?>"><?php echo $release_voucher->pet_name; ?></a></td>
 					<td><?php echo $release_voucher->rev_acc_first_name." ".$release_voucher->rev_acc_last_name; ?></td>
 					<td><?php echo format_datetime($release_voucher->rev_datetime,"M d, Y h:i A"); ?></td>
-					<td class="center"><a href="<?php echo site_url('admin/release_vouchers/edit/' . $release_voucher->rev_id); ?>" class="btn">Edit</a></td>
+					<td class="center">
+						<?php if ($release_voucher->rev_emailed == 0): ?>
+			                <a href="<?php echo site_url('admin/release_vouchers/email_to_account/'.$release_voucher->rev_id) ?>" class="btn btn-info">Email to Customer</a>
+			            <?php endif ?>
+						<a href="<?php echo site_url('admin/release_vouchers/view/' . $release_voucher->rev_id); ?>" class="btn">View</a>
+					</td>
 				</tr>
 				<?php
 			}

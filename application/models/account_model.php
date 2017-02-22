@@ -115,4 +115,23 @@ class Account_model extends Base_model
 			return false;
 		}
 	}
+
+	public function csv($params = array(),$order_by = array("pet.pet_id"=>"DESC"))
+	{
+		$this->db->select("
+				account.acc_username as Username, 
+				account.acc_last_name as Last_name,
+				account.acc_first_name as First_name,
+				account.acc_type as Type, 
+				account.acc_status as Status,
+				account.acc_gender as Gender,
+				account.acc_address as Address,
+				account.acc_contact as Contact,
+				COUNT(pet_id) as Number_of_Pets 
+			");
+		$this->db->join("pet","pet.acc_id = {$this->table}.acc_id","left");
+		$this->db->group_by("account.acc_id");
+
+		return parent::get_all($params);
+	}
 }

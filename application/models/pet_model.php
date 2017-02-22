@@ -47,4 +47,41 @@ class Pet_model extends Base_model
 		}
 		return parent::get_all($params);
 	}
+
+	public function csv($params = array(),$order_by = array("pet.pet_id"=>"DESC"))
+	{
+		$this->db->select("
+
+			account.acc_username as Username, 
+			account.acc_last_name as Last_name,
+			account.acc_first_name as First_name,
+			account.acc_type as Type, 
+			account.acc_status as Status,
+			account.acc_gender as Gender,
+			account.acc_address as Address,
+			account.acc_contact as Contact,
+			pet.pet_name as Pet_Name,
+			pet.pet_date_of_birth as Date_of_Birth,
+			pet.pet_species as Species,
+			pet.pet_breed as Breed,
+			pet.pet_gender as Gender,
+			pet.pet_color as Color,
+			pet.pet_status as Status,
+			pet.pet_date_added as Date_Added,
+			pet.pet_death_datetime as Death_Datetime,
+			pet.pet_cause_of_death as Cause_of_Death, 
+			pet.pet_remarks as Remarks
+
+		");
+		$this->db->join('account', "account.acc_id = {$this->table}.acc_id");
+		
+		if ($order_by) 
+		{	
+			foreach ($order_by as $key => $value) 
+			{
+				$this->db->order_by($key, $value); 
+			}
+		}
+		return parent::get_all($params);
+	}
 }

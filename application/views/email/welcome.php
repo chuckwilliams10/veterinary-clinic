@@ -1,5 +1,6 @@
-Welcome!<br/>
-<br/>
-First Name: <?php echo $first_name; ?><br/>
-Last Name: <?php echo $last_name; ?><br/>
-<br>
+<?php echo $name; ?>
+
+<div style="margin-top: 20px">
+    
+<p><?php echo $message; ?></p>
+</div>
