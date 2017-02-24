@@ -29,7 +29,7 @@
     ```<br>
     To<br>
     ```
-    $config['base_url']	= 'http://localhost/veterinary-clinic-master/';
+    $config['base_url']	= 'http://localhost/veterinary-clinic/';
     ```<br>
 5. In `application/config/config.php` change:<br>
     ```
