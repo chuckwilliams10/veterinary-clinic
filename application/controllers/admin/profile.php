@@ -4,6 +4,7 @@ class Profile extends CI_Controller
 {
 
 	private $species = [];
+	private $months = [];
 
 	public function __construct() 
 	{
@@ -18,6 +19,23 @@ class Profile extends CI_Controller
 		foreach ($list_species->result() as $specie) {
 			$this->species[] = $specie->spe_name;
 		}
+
+		 $this->months = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ];
+
+        $this->default_values = [0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	
 	public function index()
@@ -26,7 +44,7 @@ class Profile extends CI_Controller
 		$username = $this->session->userdata('acc_username');
 		$account = $this->account_model->get_by_username($username);
 		
-		$this->template->title($account->acc_first_name . ' ' . $account->acc_last_name);
+		$this->template->title("Dashboard");
 		
 		if($account !== false)
 		{
@@ -45,7 +63,7 @@ class Profile extends CI_Controller
 			$page = array();
 			$page['account'] = $account;
 			$page['chart_data'] = $this->charts();
-	 
+
 			$this->template->content('profile-index', $page);
 			
 			$this->template->show();
@@ -100,7 +118,8 @@ class Profile extends CI_Controller
 	
 
 	public function charts() {
-		$pet_permonth = $this->db->query("SELECT  
+		$pet_permonth = $this->db->query("
+			SELECT  
 			    COUNT(*) as total,
 			    DATE_FORMAT(pet_date_added, '%b') as month 
 			FROM
@@ -115,11 +134,15 @@ class Profile extends CI_Controller
 				MONTH(pet_date_added)
 			");
 
-		$ppm = array('title' => 'Pet registered per month','month' => array(), 'data' => array());
+		$ppm = array('id'=>"#ppm",'title' => 'Number of pets registered','month' => $this->months, 'data' => $this->default_values);
 		foreach ($pet_permonth->result() as $ppmonth) {
-			$ppm['month'][] = $ppmonth->month;
-			$ppm['data'][] = $ppmonth->total;
-		}
+ 
+			foreach ($ppm['month'] as $key => $value) {
+				if ($ppmonth->month == $value) {
+					$ppm['data'][$key] = intval($ppmonth->total);
+				}
+			}
+		} 
  
 		
 		$exam_permonth = $this->db->query("SELECT 
@@ -135,13 +158,14 @@ class Profile extends CI_Controller
 				MONTH(lab_date)
 			"); 
 		
-		$epm = array('title' => 'Laboratory test per month','month' => array(), 'data' => array());
+		$epm = array('id'=>"#epm", 'title' => 'Laboratory test','month' => $this->months, 'data' => $this->default_values);
 		foreach ($exam_permonth->result() as $ppmonth) {
-			$epm['month'][] = $ppmonth->month;
-			$epm['data'][] = $ppmonth->total;
-		}
-
-
+			foreach ($epm['month'] as $key => $value) {
+				if ($ppmonth->month == $value) {
+					$epm['data'][$key] = intval($ppmonth->total);
+				}
+			} 
+		}  
 
 		$pet_permonth_per_species = $this->db->query("SELECT 
 				species.spe_name as species,
@@ -161,21 +185,34 @@ class Profile extends CI_Controller
 
 
 
-		$ppps = array('title' => 'Laboratory test per month','month' => array(), 'data' => []);
-		foreach ($pet_permonth_per_species->result() as $ppmonth) {
-			if (!in_array($ppmonth->month, $ppps['month'])) {
-				$ppps['month'][] = $ppmonth->month;
-			}
-			$ppps['data'][$ppmonth->species][] = $ppmonth->total;
+		$ppps = array('id'=>"#ppps", 'title' => 'Number of species','month' => $this->months, 'data' => array());
+
+		foreach ($this->species as $key => $value) {
+			$ppps['data'][$value] = $this->default_values;
 		}
+
+		foreach ($pet_permonth_per_species->result() as $ppmonth) { 
+
+			foreach ($epm['month'] as $key => $value) {
+				if ($ppmonth->month == $value) {
+					$ppps['data'][$ppmonth->species][$key] = intval($ppmonth->total);
+				}
+			}
+
+			
+		}
+
+		
  
 		$data = array(
 			"ppm"  => $ppm,
 			"epm"  => $epm,
 			"ppps" => $ppps
-		);
+		); 
 
-		return json_encode($data, true);
+		// dd($data);
+
+		return $data;
 	} 
 
 

@@ -62,13 +62,13 @@ if($pets->num_rows())
 			</tbody>
 		</table>
 		<?php echo $pets_pagination; ?>
-		<div class="choose-select">
+		<!-- <div class="choose-select">
 			With selected:
 			<select name="form_mode" class="select-submit">
 				<option value="">choose...</option>
 				<option value="delete">Delete Pets</option>
 			</select>
-		</div>
+		</div> -->
 	</form>
 	<?php
 }

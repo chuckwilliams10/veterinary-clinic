@@ -9,8 +9,10 @@
 	<script type="text/javascript" src="<?php echo res_url('mythos/js/jquery.tablesorter.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url('mythos/tiny_mce/tiny_mce.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url('admin/js/document.ready.js'); ?>"></script>
-	<script type="text/javascript" src="<?php echo res_url("bower/highcharts/js/highcharts.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo res_url("bower/highcharts/highcharts.src.js"); ?>"></script>
 	<?php echo template('head'); ?>
+	<!-- 	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script> -->
 </head>
 <body class="<?php echo uri_css_class(); ?>">
 <div class="navbar navbar-fixed-top">
@@ -57,6 +59,7 @@
 						if($this->access_control->check_account_type('admin', 'dev'))
 						{
 						?>
+						<li class="nav-header"><a href="<?php echo site_url('admin/profile'); ?>">Dashboard</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/accounts'); ?>">Accounts</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/accounts/customers'); ?>">Customers</a></li>
 						<?php
