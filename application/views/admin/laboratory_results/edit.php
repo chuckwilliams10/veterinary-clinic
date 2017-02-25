@@ -16,7 +16,7 @@
 				<td><?php echo $laboratory_results->exm_name; ?></td>
 				<td><?php echo $pet->pet_name; ?></td>
 				<td><?php echo format_date($pet->pet_date_of_birth); ?></td>
-				<td><?php echo ucfirst($pet->pet_gender); ?> <?php echo $pet->pet_species; ?> - <?php echo $pet->pet_breed; ?></td> 
+				<td><?php echo ucfirst($pet->pet_gender); ?> <?php echo $pet->spe_name; ?> - <?php echo $pet->bre_name; ?></td> 
 			</tr> 
 		</table> 
 		<table class="table-form table-bordered"> 

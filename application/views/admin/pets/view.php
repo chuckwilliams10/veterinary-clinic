@@ -161,9 +161,11 @@
 		<div class="page-nav">
 			<ul class="nav nav-pills pull-right">
 				<?php if ($pet->pet_status != "active"): ?>
-					<li><span class="label label-info"><?php echo ucwords($pet->pet_status); ?></span></li>
+					<li><span class="label label-danger"><?php echo ucwords($pet->pet_status); ?></span></li>
 				<?php else: ?>
-					<li><a href="<?php echo site_url("admin/release_vouchers/create/".$pet->pet_id); ?>">Release Pet</a></li>
+					<?php if ($laboratory_results->num_rows() > 0): ?>
+						<li><a href="<?php echo site_url("admin/release_vouchers/create/".$pet->pet_id); ?>">Release Pet</a></li>
+					<?php endif ?>
 				<?php endif ?>
 			</ul>
 		</div>

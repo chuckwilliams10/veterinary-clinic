@@ -239,7 +239,9 @@ class Laboratory_results extends CI_Controller
 		$ltr_params   = array("laboratory_test_result.lab_id" => $lab_id);
 		$ltr_order_by = array("laboratory_test.lat_sequence" => " ASC");
 		$page['laboratory_test_results'] = $this->laboratory_test_result_model->get_all_aggregated($ltr_params,$ltr_order_by);
-		$page['lab_result_images'] = $this->laboratory_result_images_model->get_all(["laboratory_results.lab_id" => $lab_id]);
+
+		$laboratory_images_params = array("laboratory_results.lab_id" => $lab_id, "lri_image_thumb !="=>"");
+		$page['lab_result_images'] = $this->laboratory_result_images_model->get_all($laboratory_images_params);
 
 		$this->template->content('laboratory_results-view', $page);
 		$this->template->show();

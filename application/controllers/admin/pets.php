@@ -194,6 +194,8 @@ class Pets extends CI_Controller
 		$lab['laboratory_results'] = $this->laboratory_results_model->get_all($lab_results, $lab_results_order);
 		$page['lab_index'] = $this->load->view('admin/laboratory_results/index',$lab,true); 
 
+		$page['laboratory_results'] = $lab['laboratory_results'];
+
 		$medical_records = $this->medical_record_model->get_all(['medical_record.pet_id'=>$pet_id]);
 		$page['medical_records'] = $medical_records;
 		

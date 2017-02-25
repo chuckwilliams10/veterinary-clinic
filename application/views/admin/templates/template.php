@@ -122,6 +122,9 @@
 	$(document).ready(function(){
         $("img").on("error", function(){
             $(this).attr('src', '<?php echo res_url("site/images/bvclogo.png"); ?>');
+            $(this).closest('a').click(function(event){
+            	event.preventDefault();
+            });
         });
     });
 </script>

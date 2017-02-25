@@ -218,8 +218,7 @@ class Release_vouchers extends CI_Controller
 		$template['content'] = $this->template->get_view('release_voucher', $page, 'email');		
 				
 		//send the email
-		// $send_to = $page['release_voucher']->acc_username;
-		$send_to = "jmsenosa@gmail.com";
+		$send_to = $page['release_voucher']->acc_username; 
 		$subject = "Blessed Veterinary Clinic Voucher"; 
 
 		$this->email->send_mail($send_to, $subject, $template);
@@ -244,7 +243,7 @@ class Release_vouchers extends CI_Controller
 
 		$exam_sort = array( "lab_id"     => "DESC" );
 		$exam_data = array( "pet.pet_id" => $pet_id );
-
+ 
 		$pet   = $this->pet_model->get_one($pet_id);
 		$exams = $this->laboratory_results_model->get_all($exam_data, $exam_sort);
 		
@@ -254,7 +253,7 @@ class Release_vouchers extends CI_Controller
 			
 			$data[$examination->exm_id] = $examination;
 
-			$exam_params = ["laboratory_results.lab_id" => $examination->exm_id];
+			$exam_params = ["laboratory_results.lab_id" => $examination->lab_id];
 			$exam_orders = ["lat_sequence"=>"ASC"];
 
 			$examination_results = $this->laboratory_test_result_model->get_all($exam_params, $exam_orders);

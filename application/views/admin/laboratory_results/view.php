@@ -13,7 +13,7 @@
 			<tr>
 				<td><?php echo $pet->pet_name; ?></td>
 				<td><?php echo format_date($pet->pet_date_of_birth); ?></td>
-				<td><?php echo ucfirst($pet->pet_gender); ?> <?php echo $pet->pet_species; ?> - <?php echo $pet->pet_breed; ?></td> 
+				<td><?php echo ucfirst($pet->pet_gender); ?> <?php echo $pet->spe_name; ?> - <?php echo $pet->bre_name; ?></td> 
 			</tr> 
 		</table> 
 	</div>
@@ -58,7 +58,8 @@
 		    </tbody>
 	   </table>
 	</div>
-</div>
+</div> 
+<?php if ($lab_result_images->num_rows() > 0): ?>
 <div class="row">
 	<div class="span10">
 		<br/>
@@ -68,6 +69,7 @@
 		<?php } ?>
 	</div>
 </div>
+<?php endif ?>
 <table class="table-form table-bordered">
 	<tr>
 		<th></th>
