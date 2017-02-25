@@ -23,9 +23,9 @@
 	<br>
 	<div class="row">
 		<div class="span10">
-			<label>Examination</label>
+			<label>Services</label>
 			<select name="exm_id" id="exam_select">
-			<option value="">Select Examination</option>
+			<option value="">Select Services</option>
 				<?php foreach($exm_ids->result() as $exm_id) { ?>
 					<option value="<?php echo $exm_id->exm_id; ?>"><?php echo $exm_id->exm_name; ?></option>
 				<?php } ?>

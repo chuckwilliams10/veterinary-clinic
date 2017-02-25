@@ -14,7 +14,7 @@ class Examinations extends CI_Controller
 
 	public function index()
 	{
-		$this->template->title('Examinations');
+		$this->template->title('Services');
 
 		if($this->input->post('form_mode'))
 		{
@@ -33,7 +33,7 @@ class Examinations extends CI_Controller
 							$this->examination_model->delete($exm_id);
 						}
 					}
-					$this->template->notification('Selected examinations were deleted.', 'success');
+					$this->template->notification('Selected service(s) were deleted.', 'success');
 				}
 			}
 		}
@@ -48,7 +48,7 @@ class Examinations extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Examination');
+		$this->template->title('Create Service');
 
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -71,7 +71,7 @@ class Examinations extends CI_Controller
 				$this->examination_model->create($examination, $this->form_validation->get_fields());
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
-				$this->template->notification('New examination created.', 'success');
+				$this->template->notification('New service created.', 'success');
 				redirect('admin/examinations');
 			}
 			else
@@ -91,7 +91,7 @@ class Examinations extends CI_Controller
 
 	public function edit($exm_id)
 	{
-		$this->template->title('Edit Examination');
+		$this->template->title('Edit Service');
 
 
 		$this->form_validation->set_rules('exm_code', 'Code', 'trim|required|max_length[200]');
@@ -108,7 +108,7 @@ class Examinations extends CI_Controller
 				$examination['exm_id'] = $exm_id;
 				$rows_affected = $this->examination_model->update($examination, $this->form_validation->get_fields());
 
-				$this->template->notification('Examination updated.', 'success');
+				$this->template->notification('Service updated.', 'success');
 				redirect('admin/examinations');
 			}
 			else
@@ -123,7 +123,7 @@ class Examinations extends CI_Controller
 
 		if($page['examination'] === false)
 		{
-			$this->template->notification('Examination was not found.', 'error');
+			$this->template->notification('Service was not found.', 'error');
 			redirect('admin/examinations');
 		}
 
@@ -133,14 +133,14 @@ class Examinations extends CI_Controller
 
 	public function view($examination_id)
 	{
-		$this->template->title('View Examination');
+		$this->template->title('View Service');
 		
 		$page = array();
 		$page['examination'] = $this->examination_model->get_one($examination_id);
 
 		if($page['examination'] === false)
 		{
-			$this->template->notification('Examination was not found.', 'error');
+			$this->template->notification('Service was not found.', 'error');
 			redirect('admin/examinations');
 		}
 
@@ -159,7 +159,7 @@ class Examinations extends CI_Controller
 
 		if($page['examination'] === false)
 		{
-			$this->template->notification('Examination was not found.', 'error');
+			$this->template->notification('Service was not found.', 'error');
 			redirect('admin/examinations/');
 		} 
 

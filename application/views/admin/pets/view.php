@@ -142,12 +142,12 @@
 
 <div class="row">
 	<div class="span10">
-		<div class="pull-left"><h3>Laboratory Results</h3></div>
+		<div class="pull-left"><h3>Services Results</h3></div>
 		<div class="create-result">
 			<div class="page-nav">
 				<?php if ($pet->pet_status == "active"): ?>
 				<ul class="nav nav-pills pull-right">
-					<li><a href="<?php echo site_url("admin/laboratory_results/create/".$pet->pet_id); ?>">Add Laboratory Examination</a></li>
+					<li><a href="<?php echo site_url("admin/laboratory_results/create/".$pet->pet_id); ?>">Add Service</a></li>
 				</ul>
 				<?php endif ?>	
 			</div>

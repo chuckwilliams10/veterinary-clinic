@@ -106,8 +106,8 @@
 					</a>
 				</td>
 				<td style="vertical-align: middle;"><?php echo $pet->pet_name; ?></td>
-				<td style="vertical-align: middle;"><?php echo $pet->pet_species; ?></td>
-				<td style="vertical-align: middle;"><?php echo $pet->pet_breed; ?></td>
+				<td style="vertical-align: middle;"><?php echo $pet->spe_name; ?></td>
+				<td style="vertical-align: middle;"><?php echo $pet->bre_name; ?></td>
 				<td style="vertical-align: middle;"><?php echo $pet->pet_gender; ?></td>
 				<td style="vertical-align: middle;"><?php echo $pet->pet_status; ?></td>
 				<td style="vertical-align: middle;"><?php echo format_date($pet->pet_date_of_birth, "F d, Y"); ?></td>
