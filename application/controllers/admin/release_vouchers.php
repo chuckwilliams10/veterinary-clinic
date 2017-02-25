@@ -261,4 +261,31 @@ class Release_vouchers extends CI_Controller
 		}  
 		return $data;
 	}
+
+	public function pdf($pet_id = 0)
+	{
+
+		$this->load->library("Pdf");
+
+		$page = array();
+		$page["pet"] = $this->pet_model->get_one($pet_id);
+		$page["line_items"] = $this->get_pet($page['pet']->pet_id);
+
+		if($page["pet"] === false)
+		{
+			$this->template->notification('Pet was not found.', 'error');
+			redirect('admin/release_vouchers');
+		}
+
+
+		$voucher = $this->load->view("admin/release_vouchers/receipt",$page,true);
+		$pdf = new PDF();
+		$pdf->load_html($voucher); 
+		$pdf->set_paper('letter', 'portrait');
+
+		$pdf->render();
+		$pdf->stream("voucher-".str_pad($page['pet']->pet_id, 7, "0",STR_PAD_LEFT).".pdf"); 
+		exit(0);
+
+	}
 }

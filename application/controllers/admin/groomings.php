@@ -9,6 +9,7 @@ class Groomings extends CI_Controller
 		$this->access_control->logged_in();
 		$this->access_control->validate();
 
+		$this->load->model('pet_model');
 		$this->load->model('grooming_model');
 	}
 
@@ -151,5 +152,32 @@ class Groomings extends CI_Controller
 		
 		$this->template->content('groomings-view', $page);
 		$this->template->show();
+	}
+
+	public function voucher($grooming_id)
+	{
+		$page['grooming'] = $this->grooming_model->get_one($grooming_id);
+
+		if($page['grooming'] === false)
+		{
+			$this->template->notification('Grooming was not found.', 'error');
+			redirect('admin/groomings');
+		}
+
+		$page['pet'] = $this->pet_model->get_one($page['grooming']->pet_id);
+		$voucher = $this->load->view("admin/groomings/reciept.php",$page,true);
+		
+		$this->load->library("Pdf");
+		
+		$pdf = new PDF();
+		$pdf->load_html($voucher); 
+		$pdf->set_paper('letter', 'portrait');
+
+		$pdf->render();
+		$pdf->stream("voucher-".str_pad($page['grooming']->gro_id, 7, "0",STR_PAD_LEFT).".pdf"); 
+
+		// $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
+		exit(0);
+		// echo $checklistpage;
 	}
 }

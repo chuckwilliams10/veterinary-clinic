@@ -11,7 +11,7 @@ if($groomings->num_rows())
 					<th>Customer</th> 
 					<th>Cost</th>
 					<th>Datetime</th>
-					<th style="width: 60px;"></th>
+					<th style="width: 130px;"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,7 +42,12 @@ if($groomings->num_rows())
 						?>
 						<span class="label label-<?php echo $labelclass; ?>"><?php echo ucwords($grooming->gro_status); ?></span>	
 					</td>
-					<td class="center"><a href="<?php echo site_url('admin/groomings/edit/' . $grooming->gro_id); ?>" class="btn">Edit</a></td>
+					<td class="center">
+						<?php if ($grooming->gro_status == "active"): ?>
+							<a href="<?php echo site_url("admin/groomings/voucher/".$grooming->gro_id) ?>" class="btn btn-info">Print Voucher</a>
+						<?php endif ?>
+						<a href="<?php echo site_url('admin/groomings/edit/' . $grooming->gro_id); ?>" class="btn">Edit</a>
+					</td>
 				</tr>
 				<?php
 			}

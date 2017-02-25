@@ -164,6 +164,7 @@
 					<li><span class="label label-danger"><?php echo ucwords($pet->pet_status); ?></span></li>
 				<?php else: ?>
 					<?php if ($laboratory_results->num_rows() > 0): ?>
+						<li><a href="<?php echo site_url("admin/release_vouchers/pdf/".$pet->pet_id); ?>">Generate Voucher</a></li>
 						<li><a href="<?php echo site_url("admin/release_vouchers/create/".$pet->pet_id); ?>">Release Pet</a></li>
 					<?php endif ?>
 				<?php endif ?>
