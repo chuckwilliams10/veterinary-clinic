@@ -39,6 +39,7 @@
 	    title: {
 	       	text: '<?php echo $chart_data['ppm']['title'] ?>'
 	    }, 
+     	subtitle: {text:'as of 2017'},
 	    xAxis: {
 	         categories: ppm_categories,
 	        crosshair: true
@@ -84,6 +85,7 @@
 	    title: {
 	       	text: '<?php echo $chart_data['epm']['title'] ?>'
 	    }, 
+     	subtitle: {text:'as of 2017'},
 	    xAxis: {
 	         categories: ppm_categories,
 	        crosshair: true
@@ -136,7 +138,8 @@
 	    },
 	    title: {
 	       	text: '<?php echo $chart_data['ppps']['title'] ?>'
-	    }, 
+	    },  
+     	subtitle: {text:'as of 2017'},
 	    xAxis: {
 	         categories: ppm_categories,
 	        crosshair: true
