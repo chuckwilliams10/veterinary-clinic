@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<th>Date Of Birth</th>
-			<td><input type="text" name="pet_date_of_birth" class="date" value="" /></td>
+			<td><input type="text" name="pet_date_of_birth" class="dob" data-min_year="<?php echo date("Y")-20 ?>" data-max_year="<?php echo date("Y") ?>" value="" /></td>
 		</tr>
 		<tr>
 			<th>Species</th>
@@ -81,7 +81,8 @@
 				<?php 
 					$time = strtotime($pet->pet_death_datetime); 
 				?>
-				<input type="text" name="pet_death_datetime" class="newdate" value="<?php echo ($pet->pet_death_datetime == "0000-00-00 00:00:00") ? "" : format_date($pet->pet_death_datetime,"Y-m-d"); ?>" /></td>
+				<input type="text" name="pet_death_datetime" class="newdate" value="<?php echo ($pet->pet_death_datetime == "0000-00-00 00:00:00") ? "" : format_date($pet->pet_death_datetime,"Y-m-d"); ?>" />
+			</td>
 		</tr>
 		<tr class="death-data hidden-force" style="display: none;">
 			<th>Cause Of Death</th>
@@ -161,7 +162,21 @@
 	});
 
 	var selected_id = $('#species').data("selected");
-	ajaxCallBreed(selected_id)
+	ajaxCallBreed(selected_id);
+
+	var datepicker = $( ".dob" );
+	var max_year = datepicker.data("max_year");
+	var min_year = datepicker.data("min_year"); 
+
+	var year_range = min_year+":"+max_year;
+ 
+	var dobpicker = datepicker.datepicker({
+		dateFormat: "yy-mm-dd",
+		changeYear: true,
+		changeMonth: true
+	});
+
+	dobpicker.datepicker("option","yearRange",year_range); 
 
 </script>
 <script type="text/javascript">

@@ -25,7 +25,7 @@
 		</tr>
 		<tr>
 			<th>Date Of Birth</th>
-			<td><input type="text" name="pet_date_of_birth" class="date" value="" /></td>
+			<td><input type="text" name="pet_date_of_birth" data-min_year="<?php echo date("Y")-20 ?>" data-max_year="<?php echo date("Y") ?>" class="dob" value="" /></td>
 		</tr>
 		<tr>
 			<th>Species</th>
@@ -73,8 +73,8 @@
 			</td>
 		</tr> 
 		<tr>
-			<th>Date Added</th>
-			<td><input type="text" name="pet_date_added" class="date" value="<?php echo date("Y-m-d"); ?>" /></td>
+			<th></th>
+			<td><input type="hidden" name="pet_date_added" class="" value="<?php echo date("Y-m-d"); ?>" /></td>
 		</tr>
 		<tr>
 			<th></th>
@@ -94,6 +94,20 @@
 			$('.death-data').hide();
 		}
 	});
+
+	var datepicker = $( ".dob" );
+	var max_year = datepicker.data("max_year");
+	var min_year = datepicker.data("min_year"); 
+
+	var year_range = min_year+":"+max_year;
+ 
+	var dobpicker = datepicker.datepicker({
+		dateFormat: "yy-mm-dd",
+		changeYear: true,
+		changeMonth: true
+	});
+
+	dobpicker.datepicker("option","yearRange",year_range); 
 
 	$('#species').change(function(){
 
