@@ -10,7 +10,7 @@
            
                 <table class="bordered">
                     <tr>
-                        <th><i class="tiny material-icons">person_pin</i> Name: </th>
+                        <th width="100px"><i class="tiny material-icons">person_pin</i> Name: </th>
                         <td><?php echo $account->acc_first_name." ".$account->acc_first_name; ?></td>
                     </tr>
                     <tr>

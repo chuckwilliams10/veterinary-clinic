@@ -57,7 +57,7 @@
                         <tr>
                             <th></th>
                             <td class="right">
-                                <input type="submit" name="submit" value="Update" class="btn waves-effect waves-light blue"> 
+                                <input type="submit" name="submit" value="Update" class="btn"> 
                             </td>
                         </tr>
                     </table>
@@ -74,5 +74,11 @@
         $('select').material_select();
         $('#textarea').val("<?php echo $account->acc_address; ?>");
         $('#textarea').trigger('autoresize');
+
+        $('#textarea').keypress(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
     });
 </script>

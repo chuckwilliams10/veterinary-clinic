@@ -117,3 +117,11 @@
 		<?php endforeach ?>
 	<?php endif ?>
 </table>
+
+<script type="text/javascript">
+	$('textarea').keypress(function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+</script>
