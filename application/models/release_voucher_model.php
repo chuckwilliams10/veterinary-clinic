@@ -45,7 +45,7 @@ class Release_voucher_model extends Base_model
 		return parent::get_one($id);
 	}
 
-	public function get_all($params = array())
+	public function get_all($params = array() , $order_by = array("rev_id"=>"DESC"))
 	{				
 		$this->db->select('
 				release_voucher.*,
@@ -62,6 +62,15 @@ class Release_voucher_model extends Base_model
 		$this->db->join('account as account', "account.acc_id = {$this->table}.acc_id");	
 		$this->db->join('account as admin_account', "admin_account.acc_id = {$this->table}.rev_admin_acc_id");				
 		$this->db->join('pet', "pet.pet_id = {$this->table}.pet_id");
+
+		if ($order_by) 
+		{	
+			foreach ($order_by as $key => $value) 
+			{
+				$this->db->order_by($key, $value); 
+			}
+		}
+		
 		return parent::get_all($params);
 	}
 
