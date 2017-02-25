@@ -18,30 +18,37 @@ class Accounts extends CI_Controller
 	{
 		$this->template->title('Accounts');
 		
-		if($this->input->post('form_mode'))
+		if($this->input->post('acc_status'))
 		{
-			$form_mode = $this->input->post('form_mode');
+			$form_mode = $this->input->post('acc_status');
 			
-			if($form_mode === 'delete')
+			if ($form_mode == "active" || $form_mode == "locked") 
 			{
 				$account_ids = $this->input->post('acc_ids');
-				if($account_ids !== false)
-				{
-					foreach($account_ids as $account_id)
-					{
-						$account = $this->account_model->get_one($account_id);
-						if($account !== false)
-						{
-							// Prevent admin user from being deleted
-							if($account->acc_username != 'admin')
-							{
-								$this->account_model->delete($account_id);
-							}
-						}
-					}
-					$this->template->notification('Selected accounts were deleted.', 'success');
-				}
-			}
+	            if($account_ids !== false)
+	            {
+	                foreach($account_ids as $account_id)
+	                {
+	                	$account = $this->account_model->get_one($account_id);
+			            if($account !== false)
+			            {
+			                // Prevent admin user from being deleted
+			                if($account->acc_username != 'admin')
+			                {
+			                	$account_params = array(
+			                		"acc_id" => $account->acc_id,
+			                		"acc_status" => $form_mode
+		                		);
+
+		                		$this->account_model->update($account_params);
+			                }
+			            }
+	                }
+	            }
+
+	            $this->template->notification('Selected accounts were updated.', 'success');
+      		}
+
 		}
 		
 		$page = array();
@@ -52,8 +59,54 @@ class Accounts extends CI_Controller
 		$this->template->content('menu-accounts', null, 'admin', 'page-nav');
 		$this->template->show();
 	}
+
+	public function customers()
+	{
+		$this->template->title('Customers');
+		
+		if($this->input->post('acc_status'))
+		{
+			$form_mode = $this->input->post('acc_status');
+			
+			if ($form_mode == "active" || $form_mode == "locked") 
+			{
+				$account_ids = $this->input->post('acc_ids');
+	            if($account_ids !== false)
+	            {
+	                foreach($account_ids as $account_id)
+	                {
+	                	$account = $this->account_model->get_one($account_id);
+			            if($account !== false)
+			            {
+			                // Prevent admin user from being deleted
+			                if($account->acc_username != 'admin')
+			                {
+			                	$account_params = array(
+			                		"acc_id" => $account->acc_id,
+			                		"acc_status" => $form_mode
+		                		);
+
+		                		$this->account_model->update($account_params);
+			                }
+			            }
+	                }
+	            }
+
+	            $this->template->notification('Selected accounts were updated.', 'success');
+      		}
+
+		}
+		
+		$page = array();
+		$page['accounts'] = $this->account_model->pagination('admin/accounts/index/__PAGE__', 'get_all', array('acc_type' => 'customer'));
+		$page['accounts_pagination'] = $this->account_model->pagination_links();
+		
+		$this->template->content('accounts-index', $page);
+		$this->template->content('menu-customers', null, 'admin', 'page-nav');
+		$this->template->show();
+	}
 	
-	public function create() 
+	public function create($type="") 
 	{
 		$this->template->title('Create Account');
 		
@@ -113,7 +166,33 @@ class Accounts extends CI_Controller
 	public function view($id = 0)
 	{
 		$this->template->title('Accounts');
+
+		$this->form_validation->set_rules('acc_first_name', 'First Name', 'trim|required|max_length[60]');
+		$this->form_validation->set_rules('acc_last_name', 'Last Name', 'trim|required|max_length[30]');
+		$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
+		$this->form_validation->set_rules('acc_gender', 'Gender', 'trim|required');
+		$this->form_validation->set_rules('acc_status', 'Status', 'trim|required');
+		$this->form_validation->set_rules('acc_contact', 'Contact', 'trim|required|numeric');
+		$this->form_validation->set_rules('acc_address', 'Address', 'trim|required');
 		
+		if($this->input->post('submit'))
+		{
+			$account = $this->extract->post();
+			if($this->form_validation->run() !== false)
+			{
+				$account['acc_id'] = $id;
+				$rows_affected = $this->account_model->update($account, $this->form_validation->get_fields());
+				$this->template->notification('Account updated.', 'success');
+				redirect('admin/accounts/view/'.$id);
+			}
+			else
+			{
+				$this->template->notification(validation_errors());
+			}
+
+		}
+
+
 		$account = $this->account_model->get_one($id);
 		if($account !== false)
 		{

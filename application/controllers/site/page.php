@@ -113,20 +113,26 @@ class Page extends CI_Controller
 				$account = $this->account_model->authenticate($username, $password);
 				if($account !== false)
 				{
-					$this->account_model->failed_login_reset($username);
+					if ($account->acc_status == "active") {
+						# code...
 					
-					$this->session->set_userdata('acc_id', $account->acc_id);
-					$this->session->set_userdata('acc_username', $account->acc_username);
-					$this->session->set_userdata('acc_type', $account->acc_type);
-					$this->session->set_userdata('acc_first_name', $account->acc_first_name);
-					$this->session->set_userdata('acc_last_name', $account->acc_last_name);
-					$this->session->set_userdata('acc_name', $account->acc_first_name . ' ' . $account->acc_last_name);
+						$this->account_model->failed_login_reset($username);
+						
+						$this->session->set_userdata('acc_id', $account->acc_id);
+						$this->session->set_userdata('acc_username', $account->acc_username);
+						$this->session->set_userdata('acc_type', $account->acc_type);
+						$this->session->set_userdata('acc_first_name', $account->acc_first_name);
+						$this->session->set_userdata('acc_last_name', $account->acc_last_name);
+						$this->session->set_userdata('acc_name', $account->acc_first_name . ' ' . $account->acc_last_name);
 
-					$full_name = $account->acc_first_name . ' ' . $account->acc_last_name;
-					
-					$this->template->notification('Welcome '.$full_name."!", 'success');
+						$full_name = $account->acc_first_name . ' ' . $account->acc_last_name;
+						
+						$this->template->notification('Welcome '.$full_name."!", 'success');
+						redirect('account');
+					}else{
+						$this->template->notification('Sorry, your account is '.$account->acc_status.".", 'error');
+					}
 
-					redirect('account');
 				}
 				else
 				{

@@ -50,31 +50,17 @@
 				<ul class="nav nav-list">
 					<?php if($this->access_control->check_logged_in()) { ?>
 						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/pages'); ?>">Pages</a></li> -->
-						<?php
-						if($this->access_control->check_account_type('dev'))
-						{
-						?>
-						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/page_categories'); ?>">Page Categories</a></li> -->
-						<?php
-						}
-						?>
+						 
 						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/photos'); ?>">Photos</a></li> -->
 						<?php
 						if($this->access_control->check_account_type('admin', 'dev'))
 						{
 						?>
 						<li class="nav-header"><a href="<?php echo site_url('admin/accounts'); ?>">Accounts</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/accounts/customers'); ?>">Customers</a></li>
 						<?php
 						}
-						?>
-						<?php
-						if($this->access_control->check_account_type('dev'))
-						{
-						?>
-						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/settings'); ?>">Settings</a></li> -->
-						<?php
-						}
-						?>
+						?> 
 
 
 						<li class="nav-header"><a href="<?php echo site_url('admin/pets'); ?>">Pets</a></li>

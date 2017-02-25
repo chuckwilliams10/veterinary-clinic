@@ -4,7 +4,8 @@
 	<title><?php echo template('title'); ?> | Blessed Veterinary Clinic</title>
 	<meta charset="utf-8">	 
 
-	<script type="text/javascript" src="<?php echo res_url("bower/jquery/dist/jquery.min.js"); ?>"></script>
+    <script type="text/javascript" src="<?php echo res_url("bower/jquery/dist/jquery.min.js"); ?>"></script>
+    <script src="<?php echo res_url("bower/materialize/dist/js/materialize.min.js"); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url("bower/bxslider-4/dist/jquery.bxslider.js"); ?>"></script>
 	<!-- 	
 	<script type="text/javascript" src=""></script>

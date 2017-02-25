@@ -1,35 +1,90 @@
-<table class="table-form table-bordered">
-	<tr>
-		<th>Email</th>
-		<td><?php echo $account->acc_username; ?></td>
-	</tr>
-	<tr>
-		<th>Name</th>
-		<td><?php echo $account->acc_first_name . ' ' . $account->acc_last_name; ?></td>
-	</tr>
-	<tr>
-		<th>Account Type</th>
-		<td><?php echo $account->acc_type; ?></td>
-	</tr>
-	<tr>
-		<th>Gender</th>
-		<td><?php echo $account->acc_gender; ?></td>
-	</tr>
-	<tr>
-		<th>Contact</th>
-		<td><?php echo $account->acc_contact; ?></td>
-	</tr>
-	<tr>
-		<th>Contact</th>
-		<td><?php echo $account->acc_address; ?></td>
-	</tr>
-	<tr>
-		<th>Password</th>
-		<td>
-			<a href="<?php echo site_url('admin/accounts/reset_password/' . $account->acc_id); ?>">Reset Password</a>
-		</td>
-	</tr>
-</table>
+<form method="post">
+	<table class="table-form table-bordered">
+		<tr>
+			<th>Email</th>
+			<td><?php echo $account->acc_username; ?></td>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<td><?php echo $account->acc_first_name . ' ' . $account->acc_last_name; ?></td>
+		</tr>
+		<tr>
+			<th>First Name</th>
+			<td><input type="text" required name="acc_first_name" value="<?php echo $account->acc_first_name; ?>"></td>
+		</tr>
+		<tr>
+			<th>Last Name</th>
+			<td><input type="text" required name="acc_last_name" value="<?php echo $account->acc_last_name; ?>"></td>
+		</tr>
+
+		<tr>
+			<th>Status</th>
+			<td>
+				<span class="label <?php echo $account->acc_status == "locked" ? "label-important": "label-info"; ?>" style="
+				    position: relative;
+				    top: -3px;
+				    padding: 7px;
+				    height: 16px;
+				    line-height: 19px;
+				">
+					<?php echo $account->acc_status; ?>
+				</span>
+				<select name="acc_status" required>
+					<option>Select status</option>
+					<option <?php echo $account->acc_status == "active" ? "selected": ""; ?> value="active">Active</option>
+					<option <?php echo $account->acc_status == "locked" ? "selected": ""; ?> value="locked">Locked</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>Account Type</th>
+			<td>
+				<?php if ($account->acc_type != "dev"): ?>
+					
+				<select name="acc_type" required>
+					<option> select type</option>
+					<option <?php echo $account->acc_type == "admin" ? "selected": ""; ?> value="admin">Admin</option>
+					<option <?php echo $account->acc_type == "customer" ? "selected": ""; ?> value="customer">Customer</option>
+				</select>
+				<?php endif ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Gender</th>
+			<td>
+				<select name="acc_gender" required>
+					<option>select gender</option>
+					<option <?php echo ($account->acc_gender == "male") ? "selected" : "" ; ?> value="male">Male</option>
+					<option <?php echo ($account->acc_gender == "female") ? "selected" : "" ; ?> value="female">Female</option>
+				</select> 
+			</td>
+		</tr>
+		<tr>
+			<th>Contact</th>
+			<td>			
+				<input type="number" name="acc_contact" maxlength="11" value="<?php echo $account->acc_contact; ?>" required> 
+			</td>
+		</tr>
+		<tr>
+			<th>Address</th> 
+			<td>
+				<textarea name="acc_address" required><?php echo $account->acc_address; ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>Password</th>
+			<td>
+				<a href="<?php echo site_url('admin/accounts/reset_password/' . $account->acc_id); ?>">Reset Password</a>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td class="left">
+				<input type="submit" value="update" name="submit" class="btn btn-primary">
+			</td>
+		</tr>
+	</table>
+</form>
 <h3>Pets</h3>
 <table class="table table-bordered">
 	<thead>

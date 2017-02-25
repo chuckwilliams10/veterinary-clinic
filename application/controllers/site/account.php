@@ -36,10 +36,58 @@ class Account extends CI_Controller
         $params['pets'] = $this->pet_model->pagination("account/index/__PAGE__", 'get_all',$pet_params,$pet_order);
         $params['pets_pagination'] = $this->pet_model->pagination_links();
 
-        $this->template->title("Account");
+        $this->template->title("Profile");
         $this->template->content('account-index', $params);
 
         $this->template->show();        
+    }
+
+    public function update($acc_id = 0)
+    { 
+
+        $this->form_validation->set_rules('acc_first_name', 'First Name', 'trim|required|max_length[60]');
+        $this->form_validation->set_rules('acc_last_name', 'Last Name', 'trim|required|max_length[30]'); 
+        $this->form_validation->set_rules('acc_gender', 'Gender', 'trim|required'); 
+        $this->form_validation->set_rules('acc_contact', 'Contact', 'trim|required|numeric');
+        $this->form_validation->set_rules('acc_address', 'Address', 'trim|required');
+        
+        if($this->input->post('submit'))
+        {
+            $account = $this->extract->post();
+            if($this->form_validation->run() !== false)
+            {
+                $account['acc_id'] = $acc_id;
+                $rows_affected = $this->account_model->update($account, $this->form_validation->get_fields());
+                $this->template->notification('Account updated.', 'success');
+                redirect('account/update/'.$acc_id);
+            }
+            else
+            {
+                $this->template->notification(validation_errors());
+            }
+
+        }
+
+        if (!$this->session->userdata("acc_username")) {
+            redirect('page/login');    
+        }
+
+
+        $account = $this->account_model->get_one($acc_id);
+        if($account !== false)
+        {             
+            $page = array();
+            $page['account'] = $account; 
+
+            $this->template->title("Profile - Update");
+            $this->template->content('account-update', $page);
+
+            $this->template->show();
+        }
+        else
+        {
+            redirect();
+        }
     }
 
     public function pet($pet_id = 0)

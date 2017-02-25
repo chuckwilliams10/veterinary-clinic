@@ -5,7 +5,7 @@
             <div class="col s12 m5">
                 <h4>
                     Profile  
-                    <!-- <a href="<?php echo site_url("account/update/".$account->acc_id) ?>" class="small-text anchor">Edit</a> -->
+                   <a href="<?php echo site_url("account/update/".$account->acc_id) ?>" class="small-text anchor">Edit</a>
                 </h4>
            
                 <table class="bordered">
@@ -29,6 +29,12 @@
                         <th><i class="tiny material-icons">location_on</i> Address: </th>
                         <td><?php echo $account->acc_address; ?></td>
                     </tr> 
+                    <tr>
+                        <th></th>
+                        <td class="right">
+                            <a href="<?php echo site_url("account/update/".$account->acc_id); ?>" class="btn waves-effect waves-light red">Edit</a>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="col s12 m7">

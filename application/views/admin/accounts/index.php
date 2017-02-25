@@ -23,11 +23,19 @@ if($accounts->num_rows())
 		{
 			?>
 			<tr>
-				<td class="center"><input type="checkbox" name="acc_ids[]" value="<?php echo $account->acc_id; ?>" /></td>		
+				<td class="center">
+					<?php if ($account->acc_type == "customer"): ?>
+						<input type="checkbox" name="acc_ids[]" value="<?php echo $account->acc_id; ?>" />
+					<?php endif ?>
+				</td>		
 				<td><a href="<?php echo site_url('admin/accounts/view/' . $account->acc_id); ?>"><?php echo $account->acc_username; ?></a></td>
 				<td><?php echo $account->acc_first_name . ' ' . $account->acc_last_name; ?></td>		
 				<td><?php echo $account->acc_type; ?></td>		
-				<td><?php echo $account->acc_status; ?></td>
+				<td>
+					<span class="label <?php echo $account->acc_status == "locked" ? "label-important": "label-info"; ?>">
+						<?php echo $account->acc_status; ?>
+					</span>
+				</td>
 			</tr>
 			<?php
 		}
@@ -37,9 +45,10 @@ if($accounts->num_rows())
 		<?php echo $accounts_pagination; ?>
 		<div class="choose-select">
 			With selected: 
-			<select name="form_mode" class="select-submit">
-				<option value="">choose...</option>
-				<option value="delete">Delete Accounts</option>
+			<select name="acc_status" class="select-submit">
+				<option value="">Update Status</option>
+				<option value="active">Active</option>
+				<option value="locked">Locked</option>
 			</select>
 		</div>
 	</form>

@@ -6,7 +6,7 @@
 	<table class="table-form table-bordered">
 		<tr>
 			<th>Email</th>
-			<td><input type="email" name="acc_username" maxlength="20" /></td>
+			<td><input type="email" name="acc_username" maxlength="150" /></td>
 		</tr>
 		<tr>
 			<th>Password</th>
