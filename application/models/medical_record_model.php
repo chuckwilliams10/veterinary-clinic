@@ -21,6 +21,13 @@ class Medical_record_model extends Base_model
 	public function get_all($params = array(), $order_by = array("mer_id"=>'DESC'))
 	{				
 		$this->db->join('pet', "pet.pet_id = {$this->table}.pet_id");
+		if ($order_by) 
+		{	
+			foreach ($order_by as $key => $value) 
+			{
+				$this->db->order_by($key, $value); 
+			}
+		}
 		return parent::get_all($params);
 	}
 }
