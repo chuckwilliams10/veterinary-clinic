@@ -33,16 +33,19 @@
 		<tr>
 			<th>Species</th>
 			<td>
-				<select name="pet_species">
-					<option <?php echo ($pet->pet_species == "Feline") ? "selected": ""; ?> value="Feline">Feline</option>
-					<option <?php echo ($pet->pet_species == "Canine") ? "selected": ""; ?> value="Canine">Canine</option>
-					<option <?php echo ($pet->pet_species == "Others") ? "selected": ""; ?> value="Others">Others</option>
+				<select name="spe_id" id="species" data-selected="<?php echo $pet->spe_id; ?>">
+					<option>Select Species</option>
+					<?php foreach ($species->result() as $specie): ?>
+					<option <?php echo ($specie->spe_id == $pet->spe_id) ? "selected":""; ?> value="<?php echo $specie->spe_id; ?>"><?php echo $specie->spe_name." (".$specie->spe_common_name.")"; ?></option>
+					<?php endforeach ?>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<th>Breed</th>
-			<td><input type="text" name="pet_breed" size="80" maxlength="120" value="" /></td>
+			<td>
+				<select name="bre_id" id="breed" data-selected="<?php echo $pet->bre_id; ?>"></select>
+			</td>
 		</tr>
 		<tr>
 			<th>Gender</th>
@@ -131,12 +134,40 @@
 		dateFormat: "yy-mm-dd"
 	});
 
+	var ajaxCallBreed = function(species_id){
+		$.ajax({
+			method: "GET",
+			url: "<?php echo site_url('admin/pets/select_breed'); ?>",
+			data: { species_id: species_id }
+		})
+		.done(function( breeds ) {
+			var species_breeds = $.parseJSON(breeds);
+			var selectedVal = $("#breed").data('selected');
+			$("#breed").html('')
+			$("#breed").append("<option>select breed</option>");
+			for(x in species_breeds){
+				selected = "";
+				if (selectedVal == species_breeds[x].id) {
+					selected = "selected";
+				}
+				$("#breed").append('<option '+selected+' value="'+species_breeds[x].id+'">'+species_breeds[x].name+'</option>');
+			}
+		});
+	}
+
+	$('#species').change(function(){ 
+		var species_id = $(this).val();  
+		ajaxCallBreed(species_id)
+	});
+
+	var selected_id = $('#species').data("selected");
+	ajaxCallBreed(selected_id)
+
 </script>
 <script type="text/javascript">
 $(function() {		 
 	$('form').floodling('pet_name', "<?php echo addslashes($pet->pet_name); ?>");		
-	$('form').floodling('pet_date_of_birth', "<?php echo addslashes($pet->pet_date_of_birth); ?>");		 
-	$('form').floodling('pet_breed', "<?php echo addslashes($pet->pet_breed); ?>");		 
+	$('form').floodling('pet_date_of_birth', "<?php echo addslashes($pet->pet_date_of_birth); ?>");		  
 	$('form').floodling('pet_color', "<?php echo addslashes($pet->pet_color); ?>");		
 	$('form').floodling('pet_remarks', "<?php echo addslashes($pet->pet_remarks); ?>");		 
 });

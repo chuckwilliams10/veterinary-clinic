@@ -30,7 +30,9 @@ if($pets->num_rows())
 					<td><a href="<?php echo site_url('admin/pets/view/' . $pet->pet_id); ?>"><?php echo $pet->acc_first_name." ".$pet->acc_last_name; ?></a></td>
 					<td><?php echo $pet->pet_name; ?></td>
 					<td><?php echo format_date($pet->pet_date_of_birth); ?></td>
-					<td><?php echo $pet->pet_species; ?></td>
+					<td>
+						<?php echo $pet->spe_name; ?>
+					 </td>
 					<td><?php echo strtoupper($pet->pet_status); ?></td>
 					<td><?php echo format_date($pet->pet_date_added); ?></td>
 					<td class="center"><a href="<?php echo site_url('admin/pets/edit/' . $pet->pet_id); ?>" class="btn">Edit</a></td>

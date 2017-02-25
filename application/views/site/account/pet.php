@@ -26,11 +26,11 @@
                     </tr>
                     <tr>
                         <th>Species: </th>
-                        <td><?php echo $pet->pet_species; ?></td>
+                        <td><?php echo $pet->spe_name; ?></td>
                     </tr>
                     <tr>
                         <th>Breed: </th>
-                        <td><?php echo $pet->pet_breed; ?></td>
+                        <td><?php echo $pet->bre_name; ?></td>
                     </tr>
                     <tr>
                         <th>Birthday: </th>

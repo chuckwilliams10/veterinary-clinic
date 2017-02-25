@@ -10,7 +10,10 @@ class Pets extends CI_Controller
 		$this->access_control->validate();
 
 		$this->load->model('pet_model');
+		$this->load->model('breed_model');
+		$this->load->model('species_model');
 		$this->load->model('laboratory_results_model');
+
 		$this->load->helper('format');
 		$this->mythos->library('upload');
 	}
@@ -63,8 +66,8 @@ class Pets extends CI_Controller
 		$this->form_validation->set_rules('acc_id', 'Username', 'trim|required|integer|max_length[11]');
 		$this->form_validation->set_rules('pet_name', 'Name', 'trim|required|max_length[100]');
 		$this->form_validation->set_rules('pet_date_of_birth', 'Date Of Birth', 'trim|date');
-		$this->form_validation->set_rules('pet_species', 'Species', 'trim|required');
-		$this->form_validation->set_rules('pet_breed', 'Breed', 'trim|required|max_length[120]');
+		$this->form_validation->set_rules('spe_id', 'Species', 'trim|required');
+		$this->form_validation->set_rules('bre_id', 'Breed', 'trim|required');
 		$this->form_validation->set_rules('pet_gender', 'Gender', 'trim|required|max_length[120]');
 		$this->form_validation->set_rules('pet_color', 'Color', 'trim|required|max_length[120]');
 		$this->form_validation->set_rules('pet_remarks', 'Remarks', 'trim|required');
@@ -102,6 +105,9 @@ class Pets extends CI_Controller
 		}
 
 		$page = array();
+		$page["species"] = $this->species_model->get_all();
+		$page["breeds"] = $this->breed_model->get_all();
+
 		$page['acc_ids'] = $this->account_model->get_all(['acc_type'=>"customer"]);
 		
 		$this->template->content('pets-create', $page);
@@ -117,8 +123,8 @@ class Pets extends CI_Controller
 		$this->form_validation->set_rules('acc_id', 'Username', 'trim|required|integer|max_length[11]');
 		$this->form_validation->set_rules('pet_name', 'Name', 'trim|required|max_length[100]');
 		$this->form_validation->set_rules('pet_date_of_birth', 'Date Of Birth', 'trim|date');
-		$this->form_validation->set_rules('pet_species', 'Species', 'trim|required');
-		$this->form_validation->set_rules('pet_breed', 'Breed', 'trim|required|max_length[120]');
+		$this->form_validation->set_rules('spe_id', 'Species', 'trim|required');
+		$this->form_validation->set_rules('bre_id', 'Breed', 'trim|required');
 		$this->form_validation->set_rules('pet_gender', 'Gender', 'trim|required|max_length[120]');
 		$this->form_validation->set_rules('pet_color', 'Color', 'trim|required|max_length[120]');
 		$this->form_validation->set_rules('pet_remarks', 'Remarks', 'trim|required');
@@ -153,6 +159,8 @@ class Pets extends CI_Controller
 		}
 
 		$page = array();
+		$page["species"] = $this->species_model->get_all();
+		$page["breeds"] = $this->breed_model->get_all();
 		$page['pet'] = $this->pet_model->get_one($pet_id);
 
 		if($page['pet'] === false)
@@ -188,5 +196,26 @@ class Pets extends CI_Controller
 		
 		$this->template->content('pets-view', $page);
 		$this->template->show();
+	}
+
+	public function select_breed()
+	{
+		$breeds = array();
+
+		$spe_id = $this->input->get("species_id");
+
+		$species_breeds = $this->breed_model->get_all(array("breed.spe_id"=>$spe_id));
+		
+		foreach ($species_breeds->result() as $breed) 
+		{
+			$data = array();
+			$data["id"] = $breed->bre_id;
+			$data["name"] = $breed->bre_name;
+
+			$breeds[] = $data;
+			$data = array();
+		}
+
+		echo json_encode( $breeds , true);
 	}
 }

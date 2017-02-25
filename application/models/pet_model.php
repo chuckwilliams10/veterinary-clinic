@@ -11,8 +11,8 @@ class Pet_model extends Base_model
 			'acc_id', 
 			'pet_name',
 			'pet_date_of_birth', 
-			'pet_species', 
-			'pet_breed', 
+			'spe_id', 
+			'bre_id', 
 			'pet_gender', 
 			'pet_color', 
 			'pet_remarks', 
@@ -31,12 +31,16 @@ class Pet_model extends Base_model
 	public function get_one($id)
 	{				
 		$this->db->join('account', "account.acc_id = {$this->table}.acc_id");
+		$this->db->join('species', "species.spe_id = {$this->table}.spe_id",'left');
+		$this->db->join('breed', "breed.bre_id = {$this->table}.bre_id",'left');
 		return parent::get_one($id);
 	}
 
 	public function get_all($params = array(),$order_by = array())
 	{				
 		$this->db->join('account', "account.acc_id = {$this->table}.acc_id");
+		$this->db->join('species', "species.spe_id = {$this->table}.spe_id",'left');
+		$this->db->join('breed', "breed.bre_id = {$this->table}.bre_id",'left');
 		
 		if ($order_by) 
 		{	

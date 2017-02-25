@@ -62,7 +62,9 @@
 						}
 						?> 
 
-
+						
+						<li class="nav-header"><a href="<?php echo site_url('admin/species'); ?>">Species</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/breeds'); ?>">Breeds</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/pets'); ?>">Pets</a></li>
 						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/laboratory_results'); ?>">Laboratory Results</a></li> -->
 						<li class="nav-header"><a href="<?php echo site_url('admin/examinations'); ?>">Examinations</a></li>

@@ -30,16 +30,19 @@
 		<tr>
 			<th>Species</th>
 			<td>
-				<select name="pet_species">
-					<option value="Feline">Feline</option>
-					<option value="Canine">Canine</option>
-					<option value="Others">Others</option>
+				<select name="spe_id" id="species">
+					<option>Select Species</option>
+					<?php foreach ($species->result() as $specie): ?>
+					<option value="<?php echo $specie->spe_id; ?>"><?php echo $specie->spe_name." (".$specie->spe_common_name.")"; ?></option>
+					<?php endforeach ?>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<th>Breed</th>
-			<td><input type="text" name="pet_breed" size="80" maxlength="120" value="" /></td>
+			<td>
+				<select name="bre_id" id="breed"></select>
+			</td>
 		</tr>
 		<tr>
 			<th>Gender</th>
@@ -90,5 +93,24 @@
 		}else{
 			$('.death-data').hide();
 		}
+	});
+
+	$('#species').change(function(){
+
+		var species_id = $(this).val();  
+
+		$.ajax({
+			method: "GET",
+			url: "<?php echo site_url('admin/pets/select_breed'); ?>",
+			data: { species_id: species_id }
+		})
+		.done(function( breeds ) {
+			var species_breeds = $.parseJSON(breeds);
+			$("#breed").html('')
+			$("#breed").append("<option>select breed</option>");
+			for(x in species_breeds){
+				$("#breed").append('<option value="'+species_breeds[x].id+'">'+species_breeds[x].name+'</option>');
+			}
+		});
 	});
 </script>

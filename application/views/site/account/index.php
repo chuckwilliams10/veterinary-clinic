@@ -69,8 +69,8 @@
                                             <th style="width: 65px;" class="orange center">BREED : </th>
                                         </tr>
                                         <tr>
-                                            <td class="center"><?php echo $pet->pet_species; ?></td>
-                                            <td class="center"><?php echo $pet->pet_breed; ?></td>
+                                            <td class="center"><?php echo $pet->spe_name; ?></td>
+                                            <td class="center"><?php echo $pet->bre_name; ?></td>
                                         </tr>
                                     </table>
                                 </div>
