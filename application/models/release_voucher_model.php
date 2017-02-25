@@ -83,8 +83,8 @@ class Release_voucher_model extends Base_model
 				admin_account.acc_gender as admin_gender,  
 				pet.pet_name as Pet_Name,
 				pet.pet_date_of_birth as Date_of_Birth,
-				pet.pet_species as Species,
-				pet.pet_breed as Breed,
+				species.spe_name as Species,
+				breed.bre_name as Breed,
 				pet.pet_gender as Gender,
 				pet.pet_color as Color,
 				pet.pet_status as Status
@@ -93,6 +93,8 @@ class Release_voucher_model extends Base_model
 		$this->db->join('account as account', "account.acc_id = {$this->table}.acc_id");	
 		$this->db->join('account as admin_account', "admin_account.acc_id = {$this->table}.rev_admin_acc_id");				
 		$this->db->join('pet', "pet.pet_id = {$this->table}.pet_id");
+		$this->db->join('species', "species.spe_id = pet.spe_id",'left');
+		$this->db->join('breed', "breed.bre_id = pet.bre_id",'left');
 		return parent::get_all($params);
 	}
 }

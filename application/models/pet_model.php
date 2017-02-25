@@ -66,8 +66,8 @@ class Pet_model extends Base_model
 			account.acc_contact as Contact,
 			pet.pet_name as Pet_Name,
 			pet.pet_date_of_birth as Date_of_Birth,
-			pet.pet_species as Species,
-			pet.pet_breed as Breed,
+			species.spe_name as Species,
+			breed.bre_name as Breed,
 			pet.pet_gender as Gender,
 			pet.pet_color as Color,
 			pet.pet_status as Status,
@@ -78,6 +78,8 @@ class Pet_model extends Base_model
 
 		");
 		$this->db->join('account', "account.acc_id = {$this->table}.acc_id");
+		$this->db->join('species', "species.spe_id = {$this->table}.spe_id",'left');
+		$this->db->join('breed', "breed.bre_id = {$this->table}.bre_id",'left');
 		
 		if ($order_by) 
 		{	
