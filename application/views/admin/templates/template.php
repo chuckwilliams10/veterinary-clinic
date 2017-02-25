@@ -10,6 +10,8 @@
 	<script type="text/javascript" src="<?php echo res_url('mythos/tiny_mce/tiny_mce.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url('admin/js/document.ready.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url("bower/highcharts/highcharts.src.js"); ?>"></script>
+
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<?php echo template('head'); ?>
 	<!-- 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script> -->
