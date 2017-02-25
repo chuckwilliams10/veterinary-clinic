@@ -116,6 +116,17 @@ class Account_model extends Base_model
 		}
 	}
 
+	public function get_all($params = array(), $order_by = array('acc_id'=>"DESC")) {
+		if ($order_by) 
+		{	
+			foreach ($order_by as $key => $value) 
+			{
+				$this->db->order_by($key, $value); 
+			}
+		}
+		return parent::get_all($params);
+	}
+
 	public function csv($params = array(),$order_by = array("pet.pet_id"=>"DESC"))
 	{
 		$this->db->select("
