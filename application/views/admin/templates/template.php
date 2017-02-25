@@ -117,3 +117,11 @@
 </div>
 </body>
 </html>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+        $("img").on("error", function(){
+            $(this).attr('src', '<?php echo res_url("site/images/bvclogo.png"); ?>');
+        });
+    });
+</script>

@@ -98,4 +98,10 @@
     $(".alert a.close").click(function(){ 
         $(this).closest(".alert").slideUp(200).remove();
     });
+
+    $(document).ready(function(){
+        $("img").on("error", function(){
+            $(this).attr('src', '<?php echo res_url("site/images/bvclogo.png"); ?>');
+        });
+    });
 </script>
