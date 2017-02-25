@@ -18,7 +18,7 @@ class Laboratory_test_model extends Base_model
 		return parent::get_one($id);
 	}
 
-	public function get_all($params = array(), $order_by = array())
+	public function get_all($params = array(), $order_by = array('lat_sequence'=>"ASC"))
 	{				
 		$this->db->join('examination', "examination.exm_id = {$this->table}.exm_id");
 

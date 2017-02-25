@@ -1,5 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 class Examinations extends CI_Controller
 {
 
@@ -10,6 +9,7 @@ class Examinations extends CI_Controller
 		$this->access_control->validate();
 
 		$this->load->model('examination_model');
+		$this->load->model('laboratory_test_model');
 	}
 
 	public function index()
@@ -143,8 +143,40 @@ class Examinations extends CI_Controller
 			$this->template->notification('Examination was not found.', 'error');
 			redirect('admin/examinations');
 		}
+
+		$laboratory_test_params   = array('laboratory_test.exm_id'=>$examination_id, "lat_status" => "active");
+		$page['laboratory_tests'] = $this->laboratory_test_model->get_all($laboratory_test_params);
 		
 		$this->template->content('examinations-view', $page);
 		$this->template->show();
+	}
+
+	function generate_check_list($examination_id)
+	{
+		$this->load->library("Pdf");
+
+		$page['examination'] = $this->examination_model->get_one($examination_id);
+
+		if($page['examination'] === false)
+		{
+			$this->template->notification('Examination was not found.', 'error');
+			redirect('admin/examinations/');
+		} 
+
+		$laboratory_test_params   = array('laboratory_test.exm_id'=>$examination_id, "lat_status" => "active");
+		$page['laboratory_tests'] = $this->laboratory_test_model->get_all($laboratory_test_params);
+
+		$checklistpage = $this->load->view("admin/examinations/checklist",$page,true);
+	
+		$pdf = new PDF();
+		$pdf->load_html($checklistpage); 
+		$pdf->set_paper('letter', 'portrait');
+
+		$pdf->render();
+		$pdf->stream("examination.pdf");
+
+		// $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
+		exit(0);
+		// echo $checklistpage;
 	}
 }

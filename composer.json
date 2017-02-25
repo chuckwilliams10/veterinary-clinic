@@ -1,0 +1,11 @@
+{
+    "name": "veterinary-clinic", 
+    "require": {
+
+        "barryvdh/laravel-dompdf": "^0.6.1"
+    },
+
+    "config": {
+        "vendor-dir": "application/third_party/composer"
+    }
+}
