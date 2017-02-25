@@ -19,7 +19,7 @@ class Grooming_model extends Base_model
 		return parent::get_one($id);
 	}
 
-	public function get_all($params = array(), $order_by = array('gro_id'=>"DESC"))
+	public function get_all($params = array(), $order_by = array('gro_datetime'=>"DESC"))
 	{				
 		$this->db->join('pet', "pet.pet_id = {$this->table}.pet_id");
 		$this->db->join('account', "account.acc_id = pet.acc_id","left");
@@ -31,5 +31,52 @@ class Grooming_model extends Base_model
 			}
 		}
 		return parent::get_all($params);
+	}
+
+	public function csv_all()
+	{
+		$grooming = $this->db->query("
+			SELECT 
+				grooming.gro_id as Grooming_ID,
+				account.acc_id as Account_ID,
+			    pet.pet_id as Pet_ID,
+			    account.acc_username as Customer_email,
+			    account.acc_last_name as First_Name,
+			    account.acc_first_name as Last_Name,
+			    account.acc_gender as Customer_Gender,
+			    account.acc_address as Customer_Address,
+			    account.acc_contact as Customer_Contact,
+			    pet.pet_name as Pet,
+			    species.spe_name as Pet_Species,
+			    breed.bre_name as Breed_Name,
+			    pet.pet_gender as Pet_Gender,
+			    pet.pet_color as Pet_Color,
+			    grooming.gro_cost as Grooming_Cost,
+			    grooming.gro_datetime as Grooming_Date,
+			    grooming.gro_status as Grooming_Status,
+			    grooming.gro_description as Description
+			    
+			FROM 
+				(`grooming`) 
+			JOIN 
+				`pet`
+			    	ON 
+			    	`pet`.`pet_id` = `grooming`.`pet_id` 
+			JOIN 
+				`account` 
+			    	ON 
+			        `pet`.`acc_id` = `account`.`acc_id` 
+			JOIN
+				species
+			    	ON
+			        	species.spe_id = pet.spe_id
+			JOIN
+				breed
+			    	ON
+			        	breed.bre_id = pet.bre_id
+			ORDER BY `gro_id` DESC 
+		"); 
+
+		return $grooming;
 	}
 }

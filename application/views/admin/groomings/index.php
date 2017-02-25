@@ -25,6 +25,23 @@ if($groomings->num_rows())
 		 			<td><?php echo $grooming->acc_first_name." ".$grooming->acc_last_name; ?></td>
 					<td><?php echo "Php ".number_format($grooming->gro_cost, 2); ?></td>
 					<td><?php echo format_datetime($grooming->gro_datetime); ?></td>
+					<td>
+						<?php 
+							$labelclass = "success";
+							switch ($grooming->gro_status) { 
+								case 'rejected':
+									$labelclass = "important";
+									break;
+								case 'done':
+									$labelclass = "info";
+									break;
+								default:
+									$labelclass = "success";
+									break;
+							}
+						?>
+						<span class="label label-<?php echo $labelclass; ?>"><?php echo ucwords($grooming->gro_status); ?></span>	
+					</td>
 					<td class="center"><a href="<?php echo site_url('admin/groomings/edit/' . $grooming->gro_id); ?>" class="btn">Edit</a></td>
 				</tr>
 				<?php

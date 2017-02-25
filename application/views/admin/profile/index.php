@@ -4,6 +4,7 @@
 	<div class="span10">
 		<div id="ppm"></div>
 		<div id="epm"></div>
+		<div id="gpm"></div>
 		<div id="ppps"></div>
 	</div>
 </div>

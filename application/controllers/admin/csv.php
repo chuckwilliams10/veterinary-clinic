@@ -12,6 +12,7 @@ class Csv extends CI_Controller
         $this->load->model([
             "pet_model",
             "account_model",
+            "grooming_model",
             "release_voucher_model"
         ]);
         $this->load->helper('format');
@@ -36,7 +37,10 @@ class Csv extends CI_Controller
                 $vouchers = $this->release_voucher_model->csv_all(); 
                 $this->generate($vouchers,"List-of-Vouchers-".date("F-m-d-h-i"));
                 break;
-            
+            case 'groomings':
+            $groomings = $this->grooming_model->csv_all(); 
+                $this->generate($groomings,"List-of-groomings-".date("F-m-d-h-i"));
+                break;
             default:
                 exit();
                 break;
