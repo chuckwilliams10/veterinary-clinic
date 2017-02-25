@@ -102,7 +102,7 @@ class Pets extends CI_Controller
 		}
 
 		$page = array();
-		$page['acc_ids'] = $this->account_model->get_all();
+		$page['acc_ids'] = $this->account_model->get_all(['acc_type'=>"customer"]);
 		
 		$this->template->content('pets-create', $page);
 		$this->template->show();
