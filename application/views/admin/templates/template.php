@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="<?php echo res_url('mythos/js/jquery.tablesorter.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url('mythos/tiny_mce/tiny_mce.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url('admin/js/document.ready.js'); ?>"></script>
+	<script type="text/javascript" src="<?php echo res_url("bower/highcharts/js/highcharts.js"); ?>"></script>
 	<?php echo template('head'); ?>
 </head>
 <body class="<?php echo uri_css_class(); ?>">

@@ -45,7 +45,7 @@ class Profile extends CI_Controller
 			$page = array();
 			$page['account'] = $account;
 			$page['chart_data'] = $this->charts();
-			dd($page);
+	 
 			$this->template->content('profile-index', $page);
 			
 			$this->template->show();
