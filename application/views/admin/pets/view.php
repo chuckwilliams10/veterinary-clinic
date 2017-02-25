@@ -147,7 +147,7 @@
 			<div class="page-nav">
 				<?php if ($pet->pet_status == "active"): ?>
 				<ul class="nav nav-pills pull-right">
-					<li><a href="<?php echo site_url("admin/laboratory_results/create/".$pet->pet_id); ?>">Add Service</a></li>
+					<li><a href="<?php echo site_url("admin/laboratory_results/create/".$pet->pet_id); ?>">Add Laboratory Service</a></li>
 				</ul>
 				<?php endif ?>	
 			</div>

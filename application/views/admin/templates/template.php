@@ -75,6 +75,7 @@
 						<li class="nav-header"><a href="<?php echo site_url('admin/laboratory_tests'); ?>">Laboratory Tests</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/medical_records'); ?>">Medical Records</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/release_vouchers'); ?>">Release Vouchers</a></li>
+						<li class="nav-header"><a href="<?php echo site_url('admin/groomings'); ?>">Pet Grooming</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/banners'); ?>">Banners</a></li>
 
 						<!-- Sample menu with dropdown sub items
