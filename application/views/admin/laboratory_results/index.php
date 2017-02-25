@@ -22,7 +22,9 @@ if($laboratory_results->num_rows())
 					<td class="center"><?php echo format_datetime($laboratory_results->lab_date,"F d, Y H:i A"); ?></td>
 					<td class="center"><?php echo $laboratory_results->lab_status; ?></td>
 					<td class="center">
+						<?php if ( $pet->pet_status == "active" ): ?>
 						<a href="<?php echo site_url('admin/laboratory_results/edit/' . $laboratory_results->lab_id."/".$pet->pet_id); ?>" class="btn btn-primary">Edit</a>
+						<?php endif ?>
 						<a href="<?php echo site_url('admin/laboratory_results/view/' . $laboratory_results->lab_id."/".$pet->pet_id); ?>" class="btn btn-warning">View</a>
 					</td>
 				</tr> 

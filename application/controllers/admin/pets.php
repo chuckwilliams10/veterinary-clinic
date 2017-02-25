@@ -13,6 +13,7 @@ class Pets extends CI_Controller
 		$this->load->model('breed_model');
 		$this->load->model('species_model');
 		$this->load->model('laboratory_results_model');
+		$this->load->model('medical_record_model');
 
 		$this->load->helper('format');
 		$this->mythos->library('upload');
@@ -168,8 +169,7 @@ class Pets extends CI_Controller
 			$this->template->notification('Pet was not found.', 'error');
 			redirect('admin/pets');
 		}
-		$page['acc_ids'] = $this->account_model->get_all();
-
+		$page['acc_ids'] = $this->account_model->get_all(); 
 		$this->template->content('pets-edit', $page);
 		$this->template->show();
 	}
@@ -193,6 +193,9 @@ class Pets extends CI_Controller
 		$lab['pet'] = $this->pet_model->get_one($pet_id);
 		$lab['laboratory_results'] = $this->laboratory_results_model->get_all($lab_results, $lab_results_order);
 		$page['lab_index'] = $this->load->view('admin/laboratory_results/index',$lab,true); 
+
+		$medical_records = $this->medical_record_model->get_all(['medical_record.pet_id'=>$pet_id]);
+		$page['medical_records'] = $medical_records;
 		
 		$this->template->content('pets-view', $page);
 		$this->template->show();

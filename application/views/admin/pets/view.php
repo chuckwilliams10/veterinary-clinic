@@ -64,14 +64,92 @@
 		</td>
 	</tr>
 </table>
+
+<div class="row">
+	<div class="span10">
+		<div class="pull-left"><h3>Medical Record</h3></div> 
+		<?php foreach ($medical_records->result() as $medical_record): ?>
+			<table class="table-form table-bordered"> 
+				<tr>
+					<th>Date</th>
+					<td><?php echo format_datetime($medical_record->mer_date); ?></td>
+				</tr> 
+				<tr>
+					<th>Height</th>
+					<td><?php echo number_format($medical_record->mer_height, 2)." ".$medical_record->mer_height_unit; ?></td>
+				</tr> 
+				<tr>
+					<th>Weight</th>
+					<td><?php echo number_format($medical_record->mer_weight, 2)." ".$medical_record->mer_weight_unit; ?></td>
+				</tr> 
+				<tr>
+					<th>Temperature</th>
+					<td><?php echo number_format($medical_record->mer_temperature, 2)." ".$medical_record->mer_temperature_unit; ?></td>
+				</tr> 
+				<tr>
+					<th>Heartrate</th>
+					<td><?php echo number_format($medical_record->mer_heartrate); ?></td>
+				</tr>
+				<tr>
+					<th>Nose</th>
+					<td><?php echo nl2br($medical_record->mer_nose); ?></td>
+				</tr>
+				<tr>
+					<th>Skin</th>
+					<td><?php echo nl2br($medical_record->mer_skin); ?></td>
+				</tr>
+				<tr>
+					<th>Anus</th>
+					<td><?php echo nl2br($medical_record->mer_anus); ?></td>
+				</tr>
+				<tr>
+					<th>Throat</th>
+					<td><?php echo nl2br($medical_record->mer_throat); ?></td>
+				</tr>
+				<tr>
+					<th>Fecal</th>
+					<td><?php echo nl2br($medical_record->mer_fecal); ?></td>
+				</tr>
+				<tr>
+					<th>Mouth</th>
+					<td><?php echo nl2br($medical_record->mer_mouth); ?></td>
+				</tr>
+				<tr>
+					<th>Lower Abdomen</th>
+					<td><?php echo nl2br($medical_record->mer_lower_abdomen); ?></td>
+				</tr>
+				<tr>
+					<th>Upper Abdomen</th>
+					<td><?php echo nl2br($medical_record->mer_upper_abdomen); ?></td>
+				</tr>
+				<tr>
+					<th>Limbs</th>
+					<td><?php echo nl2br($medical_record->mer_limbs); ?></td>
+				</tr>
+				<tr>
+					<th>Other Remarks</th>
+					<td><?php echo nl2br($medical_record->mer_other_remarks); ?></td>
+				</tr>
+				<tr>
+					<th>Status</th>
+					<td><?php echo nl2br($medical_record->mer_status); ?></td>
+				</tr>
+			</table>
+		<?php endforeach ?>
+		</div>
+	</div>
+</div>
+
 <div class="row">
 	<div class="span10">
 		<div class="pull-left"><h3>Laboratory Results</h3></div>
 		<div class="create-result">
 			<div class="page-nav">
+				<?php if ($pet->pet_status == "active"): ?>
 				<ul class="nav nav-pills pull-right">
 					<li><a href="<?php echo site_url("admin/laboratory_results/create/".$pet->pet_id); ?>">Add Laboratory Examination</a></li>
 				</ul>
+				<?php endif ?>	
 			</div>
 		</div>
 	</div>
@@ -82,7 +160,11 @@
 	<div class="create-result">
 		<div class="page-nav">
 			<ul class="nav nav-pills pull-right">
-				<li><a href="<?php echo site_url("admin/release_vouchers/create/".$pet->pet_id); ?>">Release Pet</a></li>
+				<?php if ($pet->pet_status != "active"): ?>
+					<li><span class="label label-info"><?php echo ucwords($pet->pet_status); ?></span></li>
+				<?php else: ?>
+					<li><a href="<?php echo site_url("admin/release_vouchers/create/".$pet->pet_id); ?>">Release Pet</a></li>
+				<?php endif ?>
 			</ul>
 		</div>
 	</div>

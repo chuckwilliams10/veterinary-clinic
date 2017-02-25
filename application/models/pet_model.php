@@ -36,7 +36,7 @@ class Pet_model extends Base_model
 		return parent::get_one($id);
 	}
 
-	public function get_all($params = array(),$order_by = array())
+	public function get_all($params = array(),$order_by = array('pet_status'=>'ASC'))
 	{				
 		$this->db->join('account', "account.acc_id = {$this->table}.acc_id");
 		$this->db->join('species', "species.spe_id = {$this->table}.spe_id",'left');

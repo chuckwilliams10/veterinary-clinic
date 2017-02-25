@@ -33,7 +33,26 @@ if($pets->num_rows())
 					<td>
 						<?php echo $pet->spe_name; ?>
 					 </td>
-					<td><?php echo strtoupper($pet->pet_status); ?></td>
+					<td>
+						<?php 
+							$labelclass = "success";
+							switch ($pet->pet_status) {
+								case 'dead':
+									$labelclass = "inverse";
+									break;
+								case 'released':
+									$labelclass = "important";
+									break;
+								case 'inactive':
+									$labelclass = "info";
+									break;
+								default:
+									$labelclass = "success";
+									break;
+							}
+						?>
+						<span class="label label-<?php echo $labelclass; ?>"><?php echo ucwords($pet->pet_status); ?></span>		
+					</td>
 					<td><?php echo format_date($pet->pet_date_added); ?></td>
 					<td class="center"><a href="<?php echo site_url('admin/pets/edit/' . $pet->pet_id); ?>" class="btn">Edit</a></td>
 				</tr>
