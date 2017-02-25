@@ -71,6 +71,15 @@
                 <h5 class="anchor">Remarks: </h5>
                 <p><?php echo $pet->pet_remarks; ?></p>
                 <hr>
+                <h5 class="anchor">Images:</h5>
+                <div>
+                    <ul class="bxslider" id="pet_images">
+                        <?php foreach ($images->result() as $image): ?>
+                            <li><img src="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" title="<?php echo $image->exm_name; ?>" style="width: 100%"></li>
+                        <?php endforeach ?> 
+                    </ul>
+                </div>
+                <hr>
                 <h5 class="anchor">Examination Results</h5>
                 <?php $total = 0; ?>
                 <?php foreach ($line_items as $key => $value): ?>
@@ -120,4 +129,12 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#pet_images').bxSlider({
+            captions: true,
+            adaptiveHeight: true,
+            captions: true
+        });
+    });
+</script>

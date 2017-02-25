@@ -26,6 +26,26 @@ class Laboratory_result_images_model extends Base_model
         return parent::get_all($params);
     }
 
+    public function get_all_in_lab_id($laboratory_result_ids = array(), $params = array(), $order_by = array() )
+    {               
+        $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");       
+        $this->db->join('examination', "examination.exm_id = laboratory_results.exm_id");   
+
+        if ($laboratory_result_ids !== false) {
+            $this->db->where_in("{$this->table}.lab_id",$laboratory_result_ids);
+        }
+
+        if ($order_by) 
+        {   
+            foreach ($order_by as $key => $value) 
+            {
+                $this->db->order_by($key, $value); 
+            }
+        }
+
+        return parent::get_all($params);
+    }
+
     public function get_one($id)
     {
         $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");   

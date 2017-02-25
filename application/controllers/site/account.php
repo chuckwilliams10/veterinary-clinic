@@ -8,6 +8,7 @@ class Account extends CI_Controller
         parent::__construct();
         $this->load->model('pet_model');         
         $this->load->model('account_model');
+        $this->load->model('laboratory_result_images_model');
 
         $this->load->model([ 
             "laboratory_results_model",
@@ -109,6 +110,7 @@ class Account extends CI_Controller
         $exams = $this->laboratory_results_model->get_all($exam_data, $exam_sort);
 
         $data = array();
+        $laboratory_ids = array();
 
         foreach ($exams->result() as $examination) {
             
@@ -119,8 +121,16 @@ class Account extends CI_Controller
 
             $examination_results = $this->laboratory_test_result_model->get_all($exam_params, $exam_orders);
             $data[$examination->exm_id]->line_item = $examination_results->result();
-        }  
 
+            foreach ($examination_results->result() as $exmanintionresults) {
+                if (!in_array($exmanintionresults->lab_id, $laboratory_ids)) {
+                    $laboratory_ids[] = $exmanintionresults->lab_id;
+                }
+            }
+        }   
+
+        $page['images'] = $this->laboratory_result_images_model->get_all_in_lab_id($laboratory_ids, array("lri_image !="=> ""));
+        // dd($page['images']->result());
         $page['line_items'] = $data;
 
         $this->template->title("Pet Information");
