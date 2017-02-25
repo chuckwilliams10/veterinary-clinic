@@ -44,9 +44,10 @@ class Accounts extends CI_Controller
 			                }
 			            }
 	                }
+
+	            	$this->template->notification('Selected accounts were updated.', 'success');
 	            }
 
-	            $this->template->notification('Selected accounts were updated.', 'success');
       		}
 
 		}

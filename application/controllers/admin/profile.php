@@ -3,6 +3,8 @@
 class Profile extends CI_Controller 
 {
 
+	private $species = [];
+
 	public function __construct() 
 	{
 		parent::__construct();
@@ -10,6 +12,12 @@ class Profile extends CI_Controller
 		$this->access_control->logged_in();
 		$this->access_control->account_type('dev', 'admin');
 		$this->access_control->validate();
+
+		$this->load->model("species_model");
+		$list_species = $this->species_model->get_all();
+		foreach ($list_species->result() as $specie) {
+			$this->species[] = $specie->spe_name;
+		}
 	}
 	
 	public function index()
@@ -36,6 +44,8 @@ class Profile extends CI_Controller
 			
 			$page = array();
 			$page['account'] = $account;
+			$page['chart_data'] = $this->charts();
+			dd($page);
 			$this->template->content('profile-index', $page);
 			
 			$this->template->show();
@@ -88,4 +98,85 @@ class Profile extends CI_Controller
 		$this->template->show();
 	}
 	
+
+	public function charts() {
+		$pet_permonth = $this->db->query("SELECT  
+			    COUNT(*) as total,
+			    DATE_FORMAT(pet_date_added, '%b') as month 
+			FROM
+				pet 
+			JOIN
+				species
+			    	ON
+			        	species.spe_id = pet.spe_id
+			GROUP BY 
+				DATE_FORMAT(pet_date_added, '%b')
+			ORDER BY 
+				MONTH(pet_date_added)
+			");
+
+		$ppm = array('title' => 'Pet registered per month','month' => array(), 'data' => array());
+		foreach ($pet_permonth->result() as $ppmonth) {
+			$ppm['month'][] = $ppmonth->month;
+			$ppm['data'][] = $ppmonth->total;
+		}
+ 
+		
+		$exam_permonth = $this->db->query("SELECT 
+				DATE_FORMAT(lab_date, '%b') as month,
+			    COUNT(*) as total
+			FROM 
+				laboratory_results
+			JOIN
+				examination ON examination.exm_id = laboratory_results.exm_id
+			GROUP BY 
+				DATE_FORMAT(lab_date, '%b')
+			ORDER BY 
+				MONTH(lab_date)
+			"); 
+		
+		$epm = array('title' => 'Laboratory test per month','month' => array(), 'data' => array());
+		foreach ($exam_permonth->result() as $ppmonth) {
+			$epm['month'][] = $ppmonth->month;
+			$epm['data'][] = $ppmonth->total;
+		}
+
+
+
+		$pet_permonth_per_species = $this->db->query("SELECT 
+				species.spe_name as species,
+			    COUNT(*) as total,
+			    DATE_FORMAT(pet_date_added, '%b') as month 
+			FROM
+				pet 
+			JOIN
+				species
+			    	ON
+			        	species.spe_id = pet.spe_id
+			GROUP BY 
+				DATE_FORMAT(pet_date_added, '%b'), species.spe_id
+			ORDER BY 
+				MONTH(pet_date_added)
+		");
+
+
+
+		$ppps = array('title' => 'Laboratory test per month','month' => array(), 'data' => []);
+		foreach ($pet_permonth_per_species->result() as $ppmonth) {
+			if (!in_array($ppmonth->month, $ppps['month'])) {
+				$ppps['month'][] = $ppmonth->month;
+			}
+			$ppps['data'][$ppmonth->species][] = $ppmonth->total;
+		}
+ 
+		$data = array(
+			"ppm"  => $ppm,
+			"epm"  => $epm,
+			"ppps" => $ppps
+		);
+
+		return json_encode($data, true);
+	} 
+
+
 }
