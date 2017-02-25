@@ -21,7 +21,10 @@
 		</tr>
 		<tr>
 			<th>Name</th>
-			<td><input type="text" name="pet_name" size="80" maxlength="100" value="" /></td>
+			<td>
+				<input type="hidden" name="pet_status" value="active">
+				<input type="text" name="pet_name" size="80" maxlength="100" value="" />
+			</td>
 		</tr>
 		<tr>
 			<th>Date Of Birth</th>
@@ -62,16 +65,16 @@
 			<th>Remarks</th>
 			<td><textarea name="pet_remarks" rows="5" cols="80"></textarea></td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<th>Status</th>
 			<td>
 				<select name="pet_status" id="pet_status">
 					<option value="active">active</option>
 					<option value="inactive">inactive</option>
-					<!-- <option value="dead">dead</option> -->
+					<option value="dead">dead</option>
 				</select>
 			</td>
-		</tr> 
+		</tr>  -->
 		<tr>
 			<th></th>
 			<td><input type="hidden" name="pet_date_added" class="" value="<?php echo date("Y-m-d"); ?>" /></td>
