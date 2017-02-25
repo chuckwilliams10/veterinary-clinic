@@ -24,7 +24,7 @@ a {
 h1 {
 	color: #444;
 	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
+	border-bottom: 0px solid #D0D0D0;
 	font-size: 19px;
 	font-weight: normal;
 	margin: 0 0 14px 0;
@@ -35,7 +35,7 @@ code {
 	font-family: Consolas, Monaco, Courier New, Courier, monospace;
 	font-size: 12px;
 	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
+	border: 0px solid #D0D0D0;
 	color: #002166;
 	display: block;
 	margin: 14px 0 14px 0;
@@ -43,9 +43,7 @@ code {
 }
 
 #container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	-webkit-box-shadow: 0 0 8px #D0D0D0;
+	margin: 10px; 
 }
 
 p {
@@ -55,8 +53,8 @@ p {
 </head>
 <body>
 	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
+		<h1 style="text-align: center;"><?php echo $heading; ?></h1>
+		
 	</div>
 </body>
 </html>
