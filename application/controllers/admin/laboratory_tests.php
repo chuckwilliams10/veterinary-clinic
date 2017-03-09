@@ -48,8 +48,8 @@ class Laboratory_tests extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Laboratory Test');
-				
+		$this->template->title('Add Laboratory Test');
+
 		$this->load->model('examination_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -90,7 +90,7 @@ class Laboratory_tests extends CI_Controller
 
 		$page = array();
 		$page['exm_ids'] = $this->examination_model->get_all();
-		
+
 		$this->template->content('laboratory_tests-create', $page);
 		$this->template->show();
 	}
@@ -98,7 +98,7 @@ class Laboratory_tests extends CI_Controller
 	public function edit($lat_id)
 	{
 		$this->template->title('Edit Laboratory Test');
-				
+
 		$this->load->model('examination_model');
 
 		$this->form_validation->set_rules('exm_id', 'Code', 'trim|required|integer|max_length[11]');
@@ -146,7 +146,7 @@ class Laboratory_tests extends CI_Controller
 	public function view($laboratory_test_id)
 	{
 		$this->template->title('View Laboratory Test');
-		
+
 		$page = array();
 		$page['laboratory_test'] = $this->laboratory_test_model->get_one($laboratory_test_id);
 
@@ -155,7 +155,7 @@ class Laboratory_tests extends CI_Controller
 			$this->template->notification('Laboratory test was not found.', 'error');
 			redirect('admin/laboratory_tests');
 		}
-		
+
 		$this->template->content('laboratory_tests-view', $page);
 		$this->template->show();
 	}
@@ -171,8 +171,8 @@ class Laboratory_tests extends CI_Controller
 				'lat_status' => 'active'
 			],
 			[
-				'laboratory_test.lat_sequence' => "ASC"	
-			] 
+				'laboratory_test.lat_sequence' => "ASC"
+			]
 		);
 
 		$html_string = $this->load->view('admin/laboratory_tests/form',$page,true);

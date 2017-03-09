@@ -48,8 +48,8 @@ class Breeds extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Breed');
-				
+		$this->template->title('Add Breed');
+
 		$this->load->model('species_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -84,7 +84,7 @@ class Breeds extends CI_Controller
 
 		$page = array();
 		$page['spe_ids'] = $this->species_model->get_all();
-		
+
 		$this->template->content('breeds-create', $page);
 		$this->template->show();
 	}
@@ -92,7 +92,7 @@ class Breeds extends CI_Controller
 	public function edit($bre_id)
 	{
 		$this->template->title('Edit Breed');
-				
+
 		$this->load->model('species_model');
 
 		$this->form_validation->set_rules('spe_id', 'Name', 'trim|required|integer|max_length[11]');
@@ -134,7 +134,7 @@ class Breeds extends CI_Controller
 	public function view($breed_id)
 	{
 		$this->template->title('View Breed');
-		
+
 		$page = array();
 		$page['breed'] = $this->breed_model->get_one($breed_id);
 
@@ -143,7 +143,7 @@ class Breeds extends CI_Controller
 			$this->template->notification('Breed was not found.', 'error');
 			redirect('admin/breeds');
 		}
-		
+
 		$this->template->content('breeds-view', $page);
 		$this->template->show();
 	}

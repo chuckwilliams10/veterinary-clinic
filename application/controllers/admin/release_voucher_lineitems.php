@@ -48,9 +48,9 @@ class Release_voucher_lineitems extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Release Voucher Lineitem');
-				
-		$this->load->model('release_voucher_model');				
+		$this->template->title('Add Release Voucher Lineitem');
+
+		$this->load->model('release_voucher_model');
 		$this->load->model('laboratory_test_result_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -85,7 +85,7 @@ class Release_voucher_lineitems extends CI_Controller
 		$page = array();
 		$page['rev_ids'] = $this->release_voucher_model->get_all();
 		$page['ltr_ids'] = $this->laboratory_test_result_model->get_all();
-		
+
 		$this->template->content('release_voucher_lineitems-create', $page);
 		$this->template->show();
 	}
@@ -93,8 +93,8 @@ class Release_voucher_lineitems extends CI_Controller
 	public function edit($rvl_id)
 	{
 		$this->template->title('Edit Release Voucher Lineitem');
-				
-		$this->load->model('release_voucher_model');				
+
+		$this->load->model('release_voucher_model');
 		$this->load->model('laboratory_test_result_model');
 
 		$this->form_validation->set_rules('rev_id', 'Code', 'trim|required|integer|max_length[11]');
@@ -136,7 +136,7 @@ class Release_voucher_lineitems extends CI_Controller
 	public function view($release_voucher_lineitem_id)
 	{
 		$this->template->title('View Release Voucher Lineitem');
-		
+
 		$page = array();
 		$page['release_voucher_lineitem'] = $this->release_voucher_lineitem_model->get_one($release_voucher_lineitem_id);
 
@@ -145,7 +145,7 @@ class Release_voucher_lineitems extends CI_Controller
 			$this->template->notification('Release voucher lineitem was not found.', 'error');
 			redirect('admin/release_voucher_lineitems');
 		}
-		
+
 		$this->template->content('release_voucher_lineitems-view', $page);
 		$this->template->show();
 	}

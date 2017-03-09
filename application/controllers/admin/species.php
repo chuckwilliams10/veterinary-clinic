@@ -48,7 +48,7 @@ class Species extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Species');
+		$this->template->title('Add Species');
 
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -81,7 +81,7 @@ class Species extends CI_Controller
 		}
 
 		$page = array();
-		
+
 		$this->template->content('species-create', $page);
 		$this->template->show();
 	}
@@ -128,7 +128,7 @@ class Species extends CI_Controller
 	public function view($species_id)
 	{
 		$this->template->title('View Species');
-		
+
 		$page = array();
 		$page['species'] = $this->species_model->get_one($species_id);
 
@@ -137,7 +137,7 @@ class Species extends CI_Controller
 			$this->template->notification('Species was not found.', 'error');
 			redirect('admin/species');
 		}
-		
+
 		$this->template->content('species-view', $page);
 		$this->template->show();
 	}

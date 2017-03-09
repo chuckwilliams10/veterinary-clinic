@@ -2,15 +2,23 @@
 <html lang="en">
 <head>
 	<title><?php echo template('title'); ?> | Administration Panel</title>
-	<meta charset="utf-8">	
+	<meta charset="utf-8">
 	<?php echo template('mythos'); ?>
 	<?php echo template('bootstrap'); ?>
-	<link rel="stylesheet" type="text/css" href="<?php echo res_url('admin/css/styles.css'); ?>" />
+
 	<script type="text/javascript" src="<?php echo res_url('mythos/js/jquery.tablesorter.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url('mythos/tiny_mce/tiny_mce.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url('admin/js/document.ready.js'); ?>"></script>
+	<script type="text/javascript" src="<?php echo res_url('admin/js/document.ready.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo res_url("bower/highcharts/highcharts.src.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo res_url('admin/js/email.validation.exp.js'); ?>"></script>
+	<script type="text/javascript" src="<?php echo res_url('admin/js/philcontact.js'); ?>"></script>
 
+
+	<link rel="stylesheet" type="text/css" href="<?php echo res_url('admin/css/styles.css'); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo res_url('admin/css/philcontact.css'); ?>" />
+
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<?php echo template('head'); ?>
 	<!-- 	<script src="https://code.highcharts.com/highcharts.js"></script>
@@ -22,7 +30,7 @@
 		<div class="container">
 			<img src="<?php echo res_url('admin/images/logo.png'); ?>" style="float: left;" />
 			<?php
-			if($this->access_control->check_logged_in()) 
+			if($this->access_control->check_logged_in())
 			{
 			?>
 				<ul class="nav pull-right">
@@ -40,7 +48,7 @@
 			else
 			{
 			?>
-				
+
 			<?php
 			}
 			?>
@@ -55,7 +63,7 @@
 				<ul class="nav nav-list">
 					<?php if($this->access_control->check_logged_in()) { ?>
 						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/pages'); ?>">Pages</a></li> -->
-						 
+
 						<!-- <li class="nav-header"><a href="<?php echo site_url('admin/photos'); ?>">Photos</a></li> -->
 						<?php
 						if($this->access_control->check_account_type('admin', 'dev'))
@@ -66,9 +74,9 @@
 						<li class="nav-header"><a href="<?php echo site_url('admin/accounts/customers'); ?>">Customers</a></li>
 						<?php
 						}
-						?> 
+						?>
 
-						
+
 						<li class="nav-header"><a href="<?php echo site_url('admin/species'); ?>">Species</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/breeds'); ?>">Breeds</a></li>
 						<li class="nav-header"><a href="<?php echo site_url('admin/pets'); ?>">Pets</a></li>

@@ -1,28 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Accounts extends CI_Controller 
+class Accounts extends CI_Controller
 {
 
-	public function __construct() 
+	public function __construct()
 	{
 		parent::__construct();
-	
+
 		$this->access_control->account_type('dev', 'admin');
 		$this->access_control->validate();
-		
+
 		$this->load->model('pet_model');
 		$this->load->model('account_model');
 	}
-	
-	public function index() 
+
+	public function index()
 	{
 		$this->template->title('Accounts');
-		
+
 		if($this->input->post('acc_status'))
 		{
 			$form_mode = $this->input->post('acc_status');
-			
-			if ($form_mode == "active" || $form_mode == "locked") 
+
+			if ($form_mode == "active" || $form_mode == "locked")
 			{
 				$account_ids = $this->input->post('acc_ids');
 	            if($account_ids !== false)
@@ -51,11 +51,11 @@ class Accounts extends CI_Controller
       		}
 
 		}
-		
+
 		$page = array();
 		$page['accounts'] = $this->account_model->pagination('admin/accounts/index/__PAGE__', 'get_all', array('acc_type !=' => 'dev'));
 		$page['accounts_pagination'] = $this->account_model->pagination_links();
-		
+
 		$this->template->content('accounts-index', $page);
 		$this->template->content('menu-accounts', null, 'admin', 'page-nav');
 		$this->template->show();
@@ -64,12 +64,12 @@ class Accounts extends CI_Controller
 	public function customers()
 	{
 		$this->template->title('Customers');
-		
+
 		if($this->input->post('acc_status'))
 		{
 			$form_mode = $this->input->post('acc_status');
-			
-			if ($form_mode == "active" || $form_mode == "locked") 
+
+			if ($form_mode == "active" || $form_mode == "locked")
 			{
 				$account_ids = $this->input->post('acc_ids');
 	            if($account_ids !== false)
@@ -97,20 +97,20 @@ class Accounts extends CI_Controller
       		}
 
 		}
-		
+
 		$page = array();
 		$page['accounts'] = $this->account_model->pagination('admin/accounts/index/__PAGE__', 'get_all', array('acc_type' => 'customer'));
 		$page['accounts_pagination'] = $this->account_model->pagination_links();
-		
+
 		$this->template->content('accounts-index', $page);
 		$this->template->content('menu-customers', null, 'admin', 'page-nav');
 		$this->template->show();
 	}
-	
-	public function create($type="") 
+
+	public function create($type="")
 	{
-		$this->template->title('Create Account');
-		
+		$this->template->title('Add Account');
+
 		// Use the set_rules from the Form_validation class for form validation.
 		// Already combined with jQuery. No extra coding required for JS validation.
 		// We get both JS and PHP validation which makes it both secure and user friendly.
@@ -122,9 +122,9 @@ class Accounts extends CI_Controller
 		$this->form_validation->set_rules('acc_last_name', 'Last Name', 'trim|required|max_length[30]');
 		$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
 		$this->form_validation->set_rules('acc_gender', 'Gender', 'trim|required');
-		$this->form_validation->set_rules('acc_contact', 'Contact', 'trim|required|numeric');
+		$this->form_validation->set_rules('acc_contact', 'Contact', 'trim|required');
 		$this->form_validation->set_rules('acc_address', 'Address', 'trim|required');
-		
+
 		if($this->input->post('submit'))
 		{
 			// Extract all $_POST variables using the method post from Extract
@@ -151,7 +151,7 @@ class Accounts extends CI_Controller
 			}
 			else
 			{
-				// To display validation errors caught by the Form_validation, you should have the code below. 
+				// To display validation errors caught by the Form_validation, you should have the code below.
 				$this->template->notification(validation_errors(), 'error');
 			}
 
@@ -159,11 +159,11 @@ class Accounts extends CI_Controller
 			unset($account['acc_password2']);
 			$this->template->autofill($account);
 		}
-		
+
 		$this->template->content('accounts-create');
 		$this->template->show();
 	}
-	
+
 	public function view($id = 0)
 	{
 		$this->template->title('Accounts');
@@ -173,15 +173,16 @@ class Accounts extends CI_Controller
 		$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
 		$this->form_validation->set_rules('acc_gender', 'Gender', 'trim|required');
 		$this->form_validation->set_rules('acc_status', 'Status', 'trim|required');
-		$this->form_validation->set_rules('acc_contact', 'Contact', 'trim|required|numeric');
+		$this->form_validation->set_rules('acc_contact', 'Contact', 'trim|required');
 		$this->form_validation->set_rules('acc_address', 'Address', 'trim|required');
-		
+
 		if($this->input->post('submit'))
 		{
 			$account = $this->extract->post();
 			if($this->form_validation->run() !== false)
 			{
 				$account['acc_id'] = $id;
+
 				$rows_affected = $this->account_model->update($account, $this->form_validation->get_fields());
 				$this->template->notification('Account updated.', 'success');
 				redirect('admin/accounts/view/'.$id);
@@ -202,7 +203,7 @@ class Accounts extends CI_Controller
 			{
 				redirect('admin/accounts');
 			}
-			
+
 			$page = array();
 			$page['account'] = $account;
 			$page['pets'] = $this->pet_model->get_all(['pet.acc_id'=>$id],["pet_id"=>"DESC"]);
@@ -215,11 +216,11 @@ class Accounts extends CI_Controller
 			redirect('admin/accounts');
 		}
 	}
-	
+
 	public function reset_password($id = 0)
 	{
 		$this->template->title('Reset Password');
-		
+
 		$account = $this->account_model->get_one($id);
 		if($account === false)
 		{
@@ -227,20 +228,20 @@ class Accounts extends CI_Controller
 		}
 		else
 		{
-			// Prevent viewing 'dev' accounts if user is not 'dev' 
+			// Prevent viewing 'dev' accounts if user is not 'dev'
 			if($account->acc_type == 'dev' && !$this->access_control->check_account_type('dev'))
 			{
 				redirect('admin/accounts');
 			}
-		
+
 			if($this->input->post('submit') !== false)
 			{
-				
+
 				$password = $this->input->post('acc_password');
 				$this->account_model->change_password($account->acc_username, $password);
-				
+
 				$this->template->notification('Password for ' . $account->acc_username . ' was changed.', 'success');
-				
+
 				redirect('admin/accounts');
 			}
 			else
@@ -253,5 +254,5 @@ class Accounts extends CI_Controller
 			}
 		}
 	}
-	
+
 }

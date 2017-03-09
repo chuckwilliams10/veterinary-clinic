@@ -40,7 +40,7 @@
 			<th>Account Type</th>
 			<td>
 				<?php if ($account->acc_type != "dev"): ?>
-					
+
 				<select name="acc_type" required>
 					<option> select type</option>
 					<option <?php echo $account->acc_type == "admin" ? "selected": ""; ?> value="admin">Admin</option>
@@ -56,17 +56,17 @@
 					<option>select gender</option>
 					<option <?php echo ($account->acc_gender == "male") ? "selected" : "" ; ?> value="male">Male</option>
 					<option <?php echo ($account->acc_gender == "female") ? "selected" : "" ; ?> value="female">Female</option>
-				</select> 
+				</select>
 			</td>
 		</tr>
 		<tr>
 			<th>Contact</th>
-			<td>			
-				<input type="number" name="acc_contact" maxlength="11" value="<?php echo $account->acc_contact; ?>" required> 
+			<td>
+				<input type="text" name="acc_contact" class="philcontact" maxlength="13" value="<?php echo $account->acc_contact; ?>" required>
 			</td>
 		</tr>
 		<tr>
-			<th>Address</th> 
+			<th>Address</th>
 			<td>
 				<textarea name="acc_address" required><?php echo $account->acc_address; ?></textarea>
 			</td>
@@ -124,4 +124,5 @@
             event.preventDefault();
         }
     });
+    $(".philcontact").philcontact();
 </script>

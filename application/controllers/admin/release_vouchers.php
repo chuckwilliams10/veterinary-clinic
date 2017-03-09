@@ -51,8 +51,8 @@ class Release_vouchers extends CI_Controller
 
 	public function create($pet_id = 0)
 	{
-		$this->template->title('Create Release Voucher');
-				 		
+		$this->template->title('Add Release Voucher');
+
 
 		// Use the set_rules from the Form_validation class for form validation.
 		// Already combined with jQuery. No extra coding required for JS validation.
@@ -80,13 +80,13 @@ class Release_vouchers extends CI_Controller
 
 				$release_voucher['acc_id'] = $pet->acc_id;
 				$release_voucher['pet_id'] = $pet->pet_id;
-				$release_voucher['rev_datetime'] = date("Y-m-d H:i:s");			
-				$release_voucher['rev_admin_acc_id'] = $current_user->acc_id;	 
+				$release_voucher['rev_datetime'] = date("Y-m-d H:i:s");
+				$release_voucher['rev_admin_acc_id'] = $current_user->acc_id;
 
 				$rev_id = $this->release_voucher_model->create($release_voucher, $this->form_validation->get_fields());
-				
-				foreach ($release_voucher['rvl_value'] as $exm_id => $rvl_value) 
-				{ 	
+
+				foreach ($release_voucher['rvl_value'] as $exm_id => $rvl_value)
+				{
 					$rvlineitem = array();
 
 					$rvlineitem["rev_id"] = $rev_id;
@@ -94,7 +94,7 @@ class Release_vouchers extends CI_Controller
 					$rvlineitem["rvl_value"] = $rvl_value;
 
 					$this->release_voucher_lineitem_model->create($rvlineitem);
-				} 
+				}
 
 				$pet_params = array();
 				$pet_params["pet_id"] = $pet->pet_id;
@@ -127,7 +127,7 @@ class Release_vouchers extends CI_Controller
 		}
 
 		$page['line_items'] = $this->get_pet($pet_id);
-		
+
 		$this->template->content('release_vouchers-create', $page);
 		$this->template->show();
 	}
@@ -135,8 +135,8 @@ class Release_vouchers extends CI_Controller
 	public function edit($rev_id)
 	{
 		$this->template->title('Edit Release Voucher');
-				
-		$this->load->model('account_model');				
+
+		$this->load->model('account_model');
 		$this->load->model('pet_model');
 
 		$this->form_validation->set_rules('rev_code', 'Code', 'trim|required|max_length[12]');
@@ -185,10 +185,10 @@ class Release_vouchers extends CI_Controller
 	public function view($release_voucher_id)
 	{
 		$this->template->title('View Release Voucher');
-		
+
 		$page = array();
 		$page['release_voucher'] = $this->release_voucher_model->get_one($release_voucher_id);
-		
+
 		if($page['release_voucher'] === false)
 		{
 			$this->template->notification('Release voucher was not found.', 'error');
@@ -196,17 +196,17 @@ class Release_vouchers extends CI_Controller
 		}
 
 		$page["line_items"] = $this->get_pet($page['release_voucher']->pet_id);
-		
+
 		$this->template->content('release_vouchers-view', $page);
 		$this->template->show();
 	}
 
 	public function email_to_account($release_voucher_id)
 	{
-		$this->mythos->library("email"); 
+		$this->mythos->library("email");
 		$page = array();
 		$page['release_voucher'] = $this->release_voucher_model->get_one($release_voucher_id);
-		
+
 		if($page['release_voucher'] === false)
 		{
 			$this->template->notification('Release voucher was not found.', 'error');
@@ -215,11 +215,11 @@ class Release_vouchers extends CI_Controller
 
 		$page["line_items"] = $this->get_pet($page['release_voucher']->pet_id);
 
-		$template['content'] = $this->template->get_view('release_voucher', $page, 'email');		
-				
+		$template['content'] = $this->template->get_view('release_voucher', $page, 'email');
+
 		//send the email
-		$send_to = $page['release_voucher']->acc_username; 
-		$subject = "Blessed Veterinary Clinic Voucher"; 
+		$send_to = $page['release_voucher']->acc_username;
+		$subject = "Blessed Veterinary Clinic Voucher";
 
 		$this->email->send_mail($send_to, $subject, $template);
 		$this->template->notification('Email Sent!', 'success');
@@ -230,7 +230,7 @@ class Release_vouchers extends CI_Controller
 		$update["rev_emailed"] = 1;
 		$this->release_voucher_model->update($update, ["rev_id","rev_emailed"]);
 
-		redirect('admin/release_vouchers');			
+		redirect('admin/release_vouchers');
 	}
 
 	public function get_pet($pet_id)
@@ -243,14 +243,14 @@ class Release_vouchers extends CI_Controller
 
 		$exam_sort = array( "lab_id"     => "DESC" );
 		$exam_data = array( "pet.pet_id" => $pet_id );
- 
+
 		$pet   = $this->pet_model->get_one($pet_id);
 		$exams = $this->laboratory_results_model->get_all($exam_data, $exam_sort);
-		
+
 		$data = array();
 
 		foreach ($exams->result() as $examination) {
-			
+
 			$data[$examination->exm_id] = $examination;
 
 			$exam_params = ["laboratory_results.lab_id" => $examination->lab_id];
@@ -258,7 +258,7 @@ class Release_vouchers extends CI_Controller
 
 			$examination_results = $this->laboratory_test_result_model->get_all($exam_params, $exam_orders);
 			$data[$examination->exm_id]->line_item = $examination_results->result();
-		}  
+		}
 		return $data;
 	}
 
@@ -280,11 +280,11 @@ class Release_vouchers extends CI_Controller
 
 		$voucher = $this->load->view("admin/release_vouchers/receipt",$page,true);
 		$pdf = new PDF();
-		$pdf->load_html($voucher); 
+		$pdf->load_html($voucher);
 		$pdf->set_paper('letter', 'portrait');
 
 		$pdf->render();
-		$pdf->stream("voucher-".str_pad($page['pet']->pet_id, 7, "0",STR_PAD_LEFT).".pdf"); 
+		$pdf->stream("voucher-".str_pad($page['pet']->pet_id, 7, "0",STR_PAD_LEFT).".pdf");
 		exit(0);
 
 	}

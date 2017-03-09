@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Normal form here. Form validation are taken care of by the controller.
 // Make sure to name your form elements properly and uniquely.
 ?>
@@ -36,7 +36,7 @@
 		</tr>
 		<tr>
 			<th>Contact Number</th>
-			<td><input type="number" name="acc_contact" maxlength="11"></td>
+			<td><input type="number" name="acc_contact" class="philcontact" maxlength="13"></td>
 		</tr>
 		<tr>
 			<th>Address</th>
@@ -73,4 +73,6 @@
             event.preventDefault();
         }
     });
+
+    $(".philcontact").philcontact();
 </script>

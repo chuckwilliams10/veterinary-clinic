@@ -101,8 +101,10 @@
     });
 
     $(document).ready(function(){
-        $("img").on("error", function(){
-            $(this).attr('src', '<?php echo res_url("site/images/bvclogo.png"); ?>');
+        $("img").each(function(){
+            $(this).on("error", function(){
+                $(this).attr('src', '<?php echo res_url("site/images/bvclogo.png"); ?>');
+            });
         });
     });
 </script>

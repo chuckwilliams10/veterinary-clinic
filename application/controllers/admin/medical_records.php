@@ -48,8 +48,8 @@ class Medical_records extends CI_Controller
 
 	public function create($pet_id = 0)
 	{
-		$this->template->title('Create Medical Record');
-				
+		$this->template->title('Add Medical Record');
+
 		$this->load->model('pet_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -103,9 +103,9 @@ class Medical_records extends CI_Controller
 		}
 
 		$page = array();
-		$page['pet_ids'] = $this->pet_model->get_all();		
+		$page['pet_ids'] = $this->pet_model->get_all();
 		$page['pet'] = $this->pet_model->get_one($pet_id);
-		
+
 		$this->template->content('medical_records-create', $page);
 		$this->template->show();
 	}
@@ -113,7 +113,7 @@ class Medical_records extends CI_Controller
 	public function edit($mer_id)
 	{
 		$this->template->title('Edit Medical Record');
-				
+
 		$this->load->model('pet_model');
 
 		$this->form_validation->set_rules('pet_id', 'Id', 'trim|required|integer|max_length[11]');
@@ -172,7 +172,7 @@ class Medical_records extends CI_Controller
 	public function view($medical_record_id)
 	{
 		$this->template->title('View Medical Record');
-		
+
 		$page = array();
 		$page['medical_record'] = $this->medical_record_model->get_one($medical_record_id);
 
@@ -181,7 +181,7 @@ class Medical_records extends CI_Controller
 			$this->template->notification('Medical record was not found.', 'error');
 			redirect('admin/medical_records');
 		}
-		
+
 		$this->template->content('medical_records-view', $page);
 		$this->template->show();
 	}

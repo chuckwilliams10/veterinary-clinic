@@ -48,7 +48,7 @@ class Examinations extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Service');
+		$this->template->title('Add Service');
 
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -84,7 +84,7 @@ class Examinations extends CI_Controller
 		}
 
 		$page = array();
-		
+
 		$this->template->content('examinations-create', $page);
 		$this->template->show();
 	}
@@ -134,7 +134,7 @@ class Examinations extends CI_Controller
 	public function view($examination_id)
 	{
 		$this->template->title('View Service');
-		
+
 		$page = array();
 		$page['examination'] = $this->examination_model->get_one($examination_id);
 
@@ -146,7 +146,7 @@ class Examinations extends CI_Controller
 
 		$laboratory_test_params   = array('laboratory_test.exm_id'=>$examination_id, "lat_status" => "active");
 		$page['laboratory_tests'] = $this->laboratory_test_model->get_all($laboratory_test_params);
-		
+
 		$this->template->content('examinations-view', $page);
 		$this->template->show();
 	}
@@ -161,15 +161,15 @@ class Examinations extends CI_Controller
 		{
 			$this->template->notification('Service was not found.', 'error');
 			redirect('admin/examinations/');
-		} 
+		}
 
 		$laboratory_test_params   = array('laboratory_test.exm_id'=>$examination_id, "lat_status" => "active");
 		$page['laboratory_tests'] = $this->laboratory_test_model->get_all($laboratory_test_params);
 
 		$checklistpage = $this->load->view("admin/examinations/checklist",$page,true);
-	
+
 		$pdf = new PDF();
-		$pdf->load_html($checklistpage); 
+		$pdf->load_html($checklistpage);
 		$pdf->set_paper('letter', 'portrait');
 
 		$pdf->render();

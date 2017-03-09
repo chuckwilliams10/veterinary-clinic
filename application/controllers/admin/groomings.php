@@ -50,8 +50,8 @@ class Groomings extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Grooming');
-				
+		$this->template->title('Add Grooming');
+
 		$this->load->model('pet_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -88,7 +88,7 @@ class Groomings extends CI_Controller
 
 		$page = array();
 		$page['pet_ids'] = $this->pet_model->get_all();
-		
+
 		$this->template->content('groomings-create', $page);
 		$this->template->show();
 	}
@@ -96,7 +96,7 @@ class Groomings extends CI_Controller
 	public function edit($gro_id)
 	{
 		$this->template->title('Edit Grooming');
-				
+
 		$this->load->model('pet_model');
 
 		$this->form_validation->set_rules('pet_id', 'Id', 'trim|required|integer|max_length[10]|min_length[1]');
@@ -140,7 +140,7 @@ class Groomings extends CI_Controller
 	public function view($grooming_id)
 	{
 		$this->template->title('View Grooming');
-		
+
 		$page = array();
 		$page['grooming'] = $this->grooming_model->get_one($grooming_id);
 
@@ -149,7 +149,7 @@ class Groomings extends CI_Controller
 			$this->template->notification('Grooming was not found.', 'error');
 			redirect('admin/groomings');
 		}
-		
+
 		$this->template->content('groomings-view', $page);
 		$this->template->show();
 	}
@@ -166,15 +166,15 @@ class Groomings extends CI_Controller
 
 		$page['pet'] = $this->pet_model->get_one($page['grooming']->pet_id);
 		$voucher = $this->load->view("admin/groomings/reciept.php",$page,true);
-		
+
 		$this->load->library("Pdf");
-		
+
 		$pdf = new PDF();
-		$pdf->load_html($voucher); 
+		$pdf->load_html($voucher);
 		$pdf->set_paper('letter', 'portrait');
 
 		$pdf->render();
-		$pdf->stream("voucher-".str_pad($page['grooming']->gro_id, 7, "0",STR_PAD_LEFT).".pdf"); 
+		$pdf->stream("voucher-".str_pad($page['grooming']->gro_id, 7, "0",STR_PAD_LEFT).".pdf");
 
 		// $pdf->stream("dompdf_out.pdf", array("Attachment" => false));
 		exit(0);

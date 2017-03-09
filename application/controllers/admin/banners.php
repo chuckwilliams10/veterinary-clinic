@@ -50,7 +50,7 @@ class Banners extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Banner');
+		$this->template->title('Add Banner');
 
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -87,7 +87,7 @@ class Banners extends CI_Controller
 		}
 
 		$page = array();
-		
+
 		$this->template->content('banners-create', $page);
 		$this->template->show();
 	}
@@ -137,7 +137,7 @@ class Banners extends CI_Controller
 	public function view($banner_id)
 	{
 		$this->template->title('View Banner');
-		
+
 		$page = array();
 		$page['banner'] = $this->banner_model->get_one($banner_id);
 
@@ -146,7 +146,7 @@ class Banners extends CI_Controller
 			$this->template->notification('Banner was not found.', 'error');
 			redirect('admin/banners');
 		}
-		
+
 		$this->template->content('banners-view', $page);
 		$this->template->show();
 	}

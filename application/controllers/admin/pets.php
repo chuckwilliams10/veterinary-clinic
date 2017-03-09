@@ -56,8 +56,8 @@ class Pets extends CI_Controller
 
 	public function create()
 	{
-		$this->template->title('Create Pet');
-				
+		$this->template->title('Add Pet');
+
 		$this->load->model('account_model');
 
 		// Use the set_rules from the Form_validation class for form validation.
@@ -110,7 +110,7 @@ class Pets extends CI_Controller
 		$page["breeds"] = $this->breed_model->get_all();
 
 		$page['acc_ids'] = $this->account_model->get_all(['acc_type'=>"customer"]);
-		
+
 		$this->template->content('pets-create', $page);
 		$this->template->show();
 	}
@@ -118,7 +118,7 @@ class Pets extends CI_Controller
 	public function edit($pet_id)
 	{
 		$this->template->title('Edit Pet');
-				
+
 		$this->load->model('account_model');
 
 		$this->form_validation->set_rules('acc_id', 'Username', 'trim|required|integer|max_length[11]');
@@ -141,13 +141,13 @@ class Pets extends CI_Controller
 			$pet = $this->extract->post();
 			if($this->form_validation->run() !== false)
 			{
-				$pet['pet_id'] = $pet_id; 
-				
+				$pet['pet_id'] = $pet_id;
+
 				$data = $this->upload->do_upload_resize("pet_image",300,300,'./uploads/pets/');
 				$pet['pet_image'] = $data['upload_data']['file_name'];
 				$pet['pet_image_thumb'] = $data['thumb_file_name'];
 
-				$rows_affected = $this->pet_model->update($pet, $this->form_validation->get_fields()); 
+				$rows_affected = $this->pet_model->update($pet, $this->form_validation->get_fields());
 
 				$this->template->notification('Pet updated.', 'success');
 				redirect('admin/pets');
@@ -169,7 +169,7 @@ class Pets extends CI_Controller
 			$this->template->notification('Pet was not found.', 'error');
 			redirect('admin/pets');
 		}
-		$page['acc_ids'] = $this->account_model->get_all(); 
+		$page['acc_ids'] = $this->account_model->get_all();
 		$this->template->content('pets-edit', $page);
 		$this->template->show();
 	}
@@ -177,7 +177,7 @@ class Pets extends CI_Controller
 	public function view($pet_id)
 	{
 		$this->template->title('View Pet');
-		
+
 		$page = array();
 		$page['pet'] = $this->pet_model->get_one($pet_id);
 
@@ -192,13 +192,13 @@ class Pets extends CI_Controller
 
 		$lab['pet'] = $this->pet_model->get_one($pet_id);
 		$lab['laboratory_results'] = $this->laboratory_results_model->get_all($lab_results, $lab_results_order);
-		$page['lab_index'] = $this->load->view('admin/laboratory_results/index',$lab,true); 
+		$page['lab_index'] = $this->load->view('admin/laboratory_results/index',$lab,true);
 
 		$page['laboratory_results'] = $lab['laboratory_results'];
 
 		$medical_records = $this->medical_record_model->get_all(['medical_record.pet_id'=>$pet_id]);
 		$page['medical_records'] = $medical_records;
-		
+
 		$this->template->content('pets-view', $page);
 		$this->template->show();
 	}
@@ -210,8 +210,8 @@ class Pets extends CI_Controller
 		$spe_id = $this->input->get("species_id");
 
 		$species_breeds = $this->breed_model->get_all(array("breed.spe_id"=>$spe_id));
-		
-		foreach ($species_breeds->result() as $breed) 
+
+		foreach ($species_breeds->result() as $breed)
 		{
 			$data = array();
 			$data["id"] = $breed->bre_id;

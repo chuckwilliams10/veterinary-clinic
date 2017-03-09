@@ -2,25 +2,25 @@
 
 class Photos extends CI_Controller {
 
-	public function __construct() 
+	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->access_control->logged_in();
 		$this->access_control->account_type('dev', 'admin');
 		$this->access_control->validate();
-		
+
 		$this->load->model('photo_album_model');
 	}
-	
-	public function index() 
+
+	public function index()
 	{
 		$this->template->title('Photos');
-		
+
 		if($this->input->post('form_mode'))
 		{
 			$form_mode = $this->input->post('form_mode');
-			
+
 			if($form_mode == 'delete')
 			{
 				$alb_ids = $this->input->post('alb_ids');
@@ -32,13 +32,13 @@ class Photos extends CI_Controller {
 						if($album !== false)
 						{
 							$this->photo_album_model->delete($alb_id);
-							
+
 							$alb_dir = BASEPATH . '../uploads/images/albums/' . $album->alb_slug;
 							foreach(glob($alb_dir . '/thumbnails/*.*') as $file){
 								unlink($file);
 							}
 							rmdir($alb_dir . '/thumbnails');
-							
+
 							foreach(glob($alb_dir . '/*.*') as $file){
 								unlink($file);
 							}
@@ -49,7 +49,7 @@ class Photos extends CI_Controller {
 				}
 			}
 		}
-		
+
 		$page = array();
 		$page['albums'] = $this->photo_album_model->pagination("admin/photos/index/__PAGE__", 'get_all');
 		$page['albums_pagination'] = $this->photo_album_model->pagination_links();
@@ -57,30 +57,30 @@ class Photos extends CI_Controller {
 		$this->template->content('menu-photos_index', null, 'admin', 'page-nav');
 		$this->template->show();
 	}
-	
-	public function album_create() 
+
+	public function album_create()
 	{
-		$this->template->title('Create Album');
-		
+		$this->template->title('Add Album');
+
 		$this->form_validation->set_rules('alb_name', 'Album Name', 'trim|required|max_length[50]');
 		$this->form_validation->set_rules('alb_description', 'Description', 'trim');
-		
+
 		if($this->input->post('submit'))
 		{
 			$photo_album = $this->extract->post();
 			if($this->form_validation->run() !== false)
 			{
-				
+
 				$alb_id = $this->photo_album_model->create($photo_album, $this->form_validation->get_fields());
-				
+
 				$slug = format_html_slug($photo_album['alb_name']);
 				if($this->photo_album_model->get_by_slug($slug) !== false)
 				{
 					$slug .= '-' . $alb_id;
 				}
 				$this->photo_album_model->update_slug($alb_id, $slug);
-				
-				if(mkdir(BASEPATH . '../uploads/images/albums/' . $slug, 0755) && 
+
+				if(mkdir(BASEPATH . '../uploads/images/albums/' . $slug, 0755) &&
 					mkdir(BASEPATH . '../uploads/images/albums/' . $slug . '/thumbnails', 0755))
 				{
 					$this->template->notification('New album created.', 'success');
@@ -96,32 +96,32 @@ class Photos extends CI_Controller {
 			}
 			else
 			{
-				// To display validation errors caught by the Form_validation, you should have the code below. 
+				// To display validation errors caught by the Form_validation, you should have the code below.
 				$this->template->notification(validation_errors(), 'error');
 			}
 			$this->template->autofill($photo_album);
 		}
-		
+
 		$this->template->content('photos-album_create');
 		$this->template->show();
 	}
-	
+
 	public function album_edit($alb_id = '')
 	{
 		$this->template->title('Edit Album');
-		
+
 		$this->form_validation->set_rules('alb_name', 'Album Name', 'trim|required|max_length[50]');
 		$this->form_validation->set_rules('alb_description', 'Description', 'trim');
-		
+
 		if($this->input->post('submit'))
 		{
 			$album = $this->extract->post();
 			if($this->form_validation->run() !== false)
 			{
-				
+
 				$album['alb_id'] = $alb_id;
 				$rows_affected = $this->photo_album_model->update($album, $this->form_validation->get_fields());
-				
+
 				$this->template->notification('Album updated.', 'success');
 				redirect('admin/photos/album/' . $alb_id);
 			}
@@ -131,47 +131,47 @@ class Photos extends CI_Controller {
 			}
 			$this->template->autofill($album);
 		}
-		
+
 		$page['album'] = $this->photo_album_model->get_one($alb_id);
-		
+
 		if($page['album'] === false)
 		{
 			$this->template->notification('Album was not found.', 'error');
 			redirect('admin/photos');
 		}
-		
+
 		$this->template->content('photos-album_edit', $page);
-		
+
 		$this->template->show();
 	}
-	
-    public function album($alb_id = '') 
+
+    public function album($alb_id = '')
 	{
 		$page = array();
-		
+
 		$page['album'] = $this->photo_album_model->get_one($alb_id);
 		if($page['album'] === false)
 		{
 			$this->template->notification('Album does not exist.');
 			redirect('admin/photos');
 		}
-		
+
 		$this->template->title($page['album']->alb_name);
-		
+
 		$this->template->set('head', '<!--[if lt IE 7]><link rel="stylesheet" href="' . res_url('mythos/file_upload/css/bootstrap-ie6.min.css') . '"><![endif]-->');
 		$this->template->set('head', '<link rel="stylesheet" href="' . res_url('mythos/file_upload/css/bootstrap-image-gallery.min.css') . '">');
 		$this->template->set('head', '<link rel="stylesheet" href="' . res_url('mythos/file_upload/css/jquery.fileupload-ui.css') . '">');
 		$this->template->set('head', '<!--[if lt IE 9]><script src="' . res_url('mythos/file_upload/js/html5.js') . '"></script><![endif]-->');
-		
+
 		$this->template->content('photos-album', $page);
 		$this->template->content('menu-photos_album', $page, 'admin', 'page-nav');
 		$this->template->show();
 	}
-   
-	public function upload($alb_slug = '') 
+
+	public function upload($alb_slug = '')
 	{
 		$album = $this->photo_album_model->get_by_slug($alb_slug);
-		
+
 		$this->load->library('jquery_upload');
 
 		header('Pragma: no-cache');
@@ -185,7 +185,7 @@ class Photos extends CI_Controller {
 		if($album !== false)
 		{
 			$this->jquery_upload->set_album($alb_slug);
-			
+
 			switch ($_SERVER['REQUEST_METHOD']) {
 				case 'OPTIONS':
 					break;
