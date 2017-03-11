@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <th>Pet</th>
-        <td><a href="<?php echo site_url("admin/pets/view/".$release_voucher->pet_id) ?>"><?php echo $release_voucher->pet_name; ?></a></td>
+        <td><a href="<?php echo site_url("account/pet/".$release_voucher->pet_id) ?>"><?php echo $release_voucher->pet_name; ?></a></td>
     </tr>
     <tr>
         <th>Or Number</th>
