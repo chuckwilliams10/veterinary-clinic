@@ -60,11 +60,13 @@ class Laboratory_tests extends CI_Controller
 		$this->form_validation->set_rules('lat_code', 'Code', 'trim|required|max_length[12]');
 		$this->form_validation->set_rules('lat_name', 'Name', 'trim|required|max_length[100]');
 		$this->form_validation->set_rules('lat_sequence', 'Sequence', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lat_unit', 'Unit', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lat_normal_value', 'Normal Value', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lat_normal_value_start', 'Normal Value Start', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lat_normal_value_end', 'Normal Value End', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_unit', 'Unit', 'trim|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value', 'Normal Value', 'trim|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value_start', 'Normal Value Start', 'trim|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_normal_value_end', 'Normal Value End', 'trim|integer|max_length[11]');
 		$this->form_validation->set_rules('lat_status', 'Status', 'trim|required');
+		$this->form_validation->set_rules('lat_type', 'Type', 'trim|required');
+		$this->form_validation->set_rules('lat_array_values', 'Comma Separated Values', 'trim');
 
 		if($this->input->post('submit'))
 		{
@@ -73,6 +75,13 @@ class Laboratory_tests extends CI_Controller
 			// Call run method from Form_validation to check
 			if($this->form_validation->run() !== false)
 			{
+				if ($laboratory_test['lat_type'] == "array")
+				{
+					$laboratory_test['lat_array_values'] = implode(",",$laboratory_test["laboratory_tests_values"]);
+					unset($laboratory_test["laboratory_tests_values"]);
+				}
+
+				// dd($laboratory_test);
 				$this->laboratory_test_model->create($laboratory_test, $this->form_validation->get_fields());
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
@@ -105,11 +114,13 @@ class Laboratory_tests extends CI_Controller
 		$this->form_validation->set_rules('lat_code', 'Code', 'trim|required|max_length[12]');
 		$this->form_validation->set_rules('lat_name', 'Name', 'trim|required|max_length[100]');
 		$this->form_validation->set_rules('lat_sequence', 'Sequence', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lat_unit', 'Unit', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lat_normal_value', 'Normal Value', 'trim|required|max_length[10]');
-		$this->form_validation->set_rules('lat_normal_value_start', 'Normal Value Start', 'trim|required|integer|max_length[11]');
-		$this->form_validation->set_rules('lat_normal_value_end', 'Normal Value End', 'trim|required|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_unit', 'Unit', 'trim|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value', 'Normal Value', 'trim|max_length[10]');
+		$this->form_validation->set_rules('lat_normal_value_start', 'Normal Value Start', 'trim|integer|max_length[11]');
+		$this->form_validation->set_rules('lat_normal_value_end', 'Normal Value End', 'trim|integer|max_length[11]');
 		$this->form_validation->set_rules('lat_status', 'Status', 'trim|required');
+		$this->form_validation->set_rules('lat_type', 'Type', 'trim|required');
+		$this->form_validation->set_rules('lat_array_values', 'Comma Separated Values', 'trim');
 
 		if($this->input->post('submit'))
 		{
@@ -117,6 +128,11 @@ class Laboratory_tests extends CI_Controller
 			if($this->form_validation->run() !== false)
 			{
 				$laboratory_test['lat_id'] = $lat_id;
+				if ($laboratory_test['lat_type'] == "array")
+				{
+					$laboratory_test['lat_array_values'] = implode(",",$laboratory_test["laboratory_tests_values"]);
+					unset($laboratory_test["laboratory_tests_values"]);
+				}
 				$rows_affected = $this->laboratory_test_model->update($laboratory_test, $this->form_validation->get_fields());
 
 				$this->template->notification('Laboratory test updated.', 'success');
