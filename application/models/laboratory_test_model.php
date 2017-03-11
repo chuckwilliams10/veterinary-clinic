@@ -6,7 +6,20 @@ class Laboratory_test_model extends Base_model
 	{
 		// List all fields of the table.
 		// Primary key must be auto-increment and must be listed here first.
-		$fields = array('lat_id', 'exm_id', 'lat_code', 'lat_name', 'lat_sequence', 'lat_unit', 'lat_normal_value', 'lat_normal_value_start', 'lat_normal_value_end', 'lat_status');
+		$fields = array(
+			'lat_id',
+			'exm_id',
+			'lat_code',
+			'lat_name',
+			'lat_sequence',
+			'lat_unit',
+			'lat_normal_value',
+			'lat_normal_value_start',
+			'lat_normal_value_end',
+			'lat_status',
+			'lat_type',
+			'lat_array_values'
+		);
 		// Call the parent constructor with the table name and fields as parameters.
 		parent::__construct('laboratory_test', $fields);
 	}
