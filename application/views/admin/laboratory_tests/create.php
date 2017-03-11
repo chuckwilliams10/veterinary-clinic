@@ -72,7 +72,7 @@
 		<tr>
 			<th></th>
 			<td>
-				<input type="submit" name="submit" value="Submit" class="btn btn-primargsettings set org.gnome.desktop.wm.preferences mouse-button-modifier "<Super>" y" />
+				<input type="submit" name="submit" value="Submit" class="btn btn-primary" />
 				<a href="<?php echo site_url('admin/laboratory_tests'); ?>" class="btn">Back</a>
 			</td>
 		</tr>
