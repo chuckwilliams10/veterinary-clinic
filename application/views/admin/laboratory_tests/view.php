@@ -30,7 +30,15 @@
 	<tr>
 		<th>Normal Value End</th>
 		<td><?php echo number_format($laboratory_test->lat_normal_value_end); ?></td>
-	</tr>
+	</tr> 
+	<tr class="array selections">
+		<th style="valign:top;">
+			List Values
+		</th>
+		<td style="valign:top;">
+			<?php echo $laboratory_test->lat_array_values; ?>
+		</td>
+	</tr> 
 	<tr>
 		<th>Status</th>
 		<td><?php echo $laboratory_test->lat_status; ?></td>

@@ -50,13 +50,40 @@
 								<input type="hidden" name="ltr_id[<?php echo $labresult->ltr_id; ?>]" value="<?php echo $labresult->ltr_id; ?>">	
 							</td>
 							<td class="text-center"><?php echo $labresult->lat_normal_value; ?></td>
+							 
+							<?php if($labresult->lat_type == "array") { ?>
+							<td class="text-center" colspan="2">
+								<?php 
+									$exect = $labresult->lat_array_values;
+									if($exect != ""){
+										$exect = explode(",",$labresult->lat_array_values);
+									}
+									
+								?>
+								<select name="ltr_result[<?php echo $labresult->ltr_id; ?>]" required="required" style="width:95%">
+									<option value=""></option>
+									<?php foreach($exect as $key=>$value) {?>
+										<option <?php echo ( $labresult->ltr_result == $value) ? "selected": ""; ?> value="<?php echo $value; ?>"><?php echo $value;?></option>
+									<?php } ?>
+								</select>
+							</td>
+							<?php } else { ?>
 							<td class="text-center"><?php echo $labresult->lat_normal_value_start."-".$labresult->lat_normal_value_end." ".$labresult->lat_unit; ?></td>
 							<td class="text-center">
 								<input type="text" name="ltr_result[<?php echo $labresult->ltr_id; ?>]" required="required" style="width: 50px" value="<?php echo $labresult->ltr_result; ?>">
 							</td>
-							<td class="text-center" style="text-align: center !important;">
-								<input type="text" name="ltr_remark[<?php echo $labresult->ltr_id; ?>]" required="required" style="width: 350px" value="<?php echo $labresult->ltr_remark; ?>">	
+							<?php } ?>
+							<td class="text-center"> 
+								<select name="ltr_remark[<?php echo $labresult->ltr_id; ?>]" required="required" style="width: 350px">
+									<option value=""></option>
+									<option <?php echo ( $labresult->ltr_remark == "Normal") ? "selected": ""; ?> value="Normal">Normal</option>
+									<option <?php echo ( $labresult->ltr_remark == "Normal with slight changes") ? "selected": ""; ?> value="Normal with slight changes">Normal but with slight changes</option>
+									<option <?php echo ( $labresult->ltr_remark == "Irregular") ? "selected": ""; ?> value="Irregular">With irregularities</option>
+									<option <?php echo ( $labresult->ltr_remark == "Needs further testing") ? "selected": ""; ?> value="Needs further testing">Needs further testing</option>
+									<option <?php echo ( $labresult->ltr_remark == "Critical") ? "selected": ""; ?> value="Critical">Critical</option>
+								</select>
 							</td>
+
 						</tr>
 					<?php endforeach ?>
 			    </tbody>
