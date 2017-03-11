@@ -129,7 +129,12 @@ class Account extends CI_Controller
             }
         }   
 
-        $page['images'] = $this->laboratory_result_images_model->get_all_in_lab_id($laboratory_ids, array("lri_image !="=> ""));
+        $page["images"] = null;
+
+        if($laboratory_ids) {
+            $page['images'] = $this->laboratory_result_images_model->get_all_in_lab_id($laboratory_ids, array("lri_image !="=> ""));
+        }
+
         // dd($page['images']->result());
         $page['line_items'] = $data;
 

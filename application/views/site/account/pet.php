@@ -73,11 +73,13 @@
                 <hr>
                 <h5 class="anchor">Images:</h5>
                 <div>
-                    <ul class="bxslider" id="pet_images">
-                        <?php foreach ($images->result() as $image): ?>
-                            <li><img src="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" title="<?php echo $image->exm_name; ?>" style="width: 100%"></li>
-                        <?php endforeach ?> 
-                    </ul>
+                    <?php if($images) { ?>
+                        <ul class="bxslider" id="pet_images">
+                            <?php foreach ($images->result() as $image): ?>
+                                <li><img src="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" title="<?php echo $image->exm_name; ?>" style="width: 100%"></li>
+                            <?php endforeach ?> 
+                        </ul>
+                    <?php } ?>
                 </div>
                 <hr>
                 <h5 class="anchor">Examination Results</h5>
