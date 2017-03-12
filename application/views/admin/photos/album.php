@@ -21,7 +21,7 @@ if($album->alb_description != '')
 				<td colspan="5">
 					<span class="btn fileinput-button">
 						<span>Add Files</span>
-						<input type="file" name="files[]" multiple>
+						<input type="file" name="files[]" accept="image/*" multiple>
 					</span>
 					<button type="submit" class="btn start">
 						<span>Start Upload</span>

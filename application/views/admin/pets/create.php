@@ -17,7 +17,7 @@
 		</tr>
 		<tr>
 			<th>Image</th>
-			<td><input type="file" name="pet_image"></td>
+			<td><input type="file" name="pet_image" accept="image/*" ></td>
 		</tr>
 		<tr>
 			<th>Name</th>

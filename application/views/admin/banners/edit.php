@@ -4,7 +4,7 @@
 			<th>Image</th>
 			<td>
 				<img src="<?php echo base_url("uploads/banners/".$banner->bnr_image) ?>"><br>
-				<input type="file" name="bnr_image" />
+				<input type="file" name="bnr_image" accept="image/*" />
 			</td>
 		</tr> 
 		<tr>

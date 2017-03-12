@@ -378,7 +378,8 @@ table .headerSortUp:after {
 }
 
 .add_this,
-.delete_this {
+.delete_this,
+.remove_this {
     position: relative;
     top: -5px;
     z-index: 999;

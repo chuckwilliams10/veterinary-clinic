@@ -19,7 +19,7 @@
 			<th>Image</th>
 			<td>
 				<img src="<?php echo base_url("uploads/pets/".$pet->pet_image_thumb); ?> "> <br>
-				<input type="file" name="pet_image">
+				<input type="file" name="pet_image" accept="image/*" >
 			</td>
 		</tr>
 		<tr>

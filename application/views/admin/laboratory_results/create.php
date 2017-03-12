@@ -44,7 +44,7 @@
 		</div>
 		<div class="span10">
 			<p style="font-size: 14px;">Images</p>
-			<input name="lri_image[]" id="filesToUpload" type="file" multiple="multiple" />
+			<input name="lri_image[]" id="filesToUpload" type="file" multiple="multiple" accept="image/*"  />
 			<p style="color:red;">Press CTRL while clicking to select multiple files</p>
 			<ul id="fileList"></ul>
 		</div>

@@ -98,7 +98,7 @@
 		</div>
 		<div class="span10">
 			<label style="font-size: 14px; font-weight: bold;">Images</label>
-			<input name="lri_image[]" id="filesToUpload" type="file" multiple="multiple" />
+			<input name="lri_image[]" id="filesToUpload" type="file" multiple="multiple" accept="image/*"  />
 			<a href="#photos" role="button" class="btn btn-info" data-toggle="modal">View images</a>
 			<p style="color:red;">Press CTRL while clicking to select multiple files</p>
 		</div>

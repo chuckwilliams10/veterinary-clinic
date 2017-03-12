@@ -2,7 +2,7 @@
 	<table class="table-form table-bordered">
 		<tr>
 			<th>Image</th>
-			<td><input type="file" name="bnr_image" /></td>
+			<td><input type="file" name="bnr_image" accept="image/*"  /></td>
 		</tr> 
 		<tr>
 			<th></th>
