@@ -398,3 +398,23 @@ p.light
     color: #FFF;
     margin-top: 16px;
 }
+
+.bgslder-caption {
+    border-top: 1px solid #e2e2e2;
+    margin-top:15px;
+    background: #FFF;
+    padding: 0px 10px 10px 10px;
+}
+
+.bgslder-caption span {
+    font-size: 21px;
+    color: #e03d43;
+}
+
+.bgslder-caption strong {
+    font-size: 12px;
+}
+
+.bgslder-caption p {
+
+}

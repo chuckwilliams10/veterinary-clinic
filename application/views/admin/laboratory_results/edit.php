@@ -96,12 +96,12 @@
 			<label style="font-size: 14px; font-weight: bold;">Final remarks</label>
 			<textarea name="lab_remark" style="margin: 0px 0px 10px; width: 767px; height: 42px;"><?php echo $laboratory_results->lab_remark; ?></textarea> 
 		</div>
-		<div class="span10">
+		<!--<div class="span10">
 			<label style="font-size: 14px; font-weight: bold;">Images</label>
 			<input name="lri_image[]" id="filesToUpload" type="file" multiple="multiple" accept="image/*"  />
 			<a href="#photos" role="button" class="btn btn-info" data-toggle="modal">View images</a>
 			<p style="color:red;">Press CTRL while clicking to select multiple files</p>
-		</div>
+		</div>-->
 	</div>
 	<table class="table-form table-bordered">  
 		<tr>
@@ -114,7 +114,7 @@
 	</table> 
 </form>
 
-<div class="modal hide" id="photos">
+<!--<div class="modal hide" id="photos">
   	<div class="modal-header">
     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     	<h3>Photos</h3>
@@ -138,7 +138,7 @@
   	<div class="modal-footer">
 		<a class="btn" data-dismiss="modal" aria-hidden="true">Close</a> 
   	</div>
-</div>
+</div>-->
 
 <script type="text/javascript">
 

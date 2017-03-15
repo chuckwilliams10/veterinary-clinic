@@ -63,9 +63,17 @@
 <div class="row">
 	<div class="span10">
 		<br/>
+		<h3>Images</h3>
 		<?php foreach ($lab_result_images->result() as $image) { ?>
-		<a href="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" target="_blank"><img src="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" width="300"></a>
-		<br/><br/>
+		<div class="well">
+			<a href="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" target="_blank">
+				<img src="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" style="width:100%;">
+			</a>
+			<p><?php echo $image->lri_description; ?></p>
+			<strong>
+				<?php echo format_datetime($image->lri_date_created); ?>
+			</strong>
+		</div> 
 		<?php } ?>
 	</div>
 </div>
@@ -74,6 +82,7 @@
 	<tr>
 		<th></th>
 		<td>
+			<a href="<?php echo site_url('admin/laboratory_result_images/index/'. $laboratory_results->lab_id)?>" class="btn btn-info">Manage Images</a>
 			<a href="<?php echo site_url('admin/laboratory_results/edit/' . $laboratory_results->lab_id."/".$pet->pet_id); ?>" class="btn btn-primary">Edit</a>
 			<a href="<?php echo site_url('admin/pets/view/'.$pet->pet_id); ?>" class="btn">Back</a>
 		</td>

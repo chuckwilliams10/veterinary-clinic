@@ -76,7 +76,17 @@
                     <?php if($images) { ?>
                         <ul class="bxslider" id="pet_images">
                             <?php foreach ($images->result() as $image): ?>
-                                <li><img src="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" title="<?php echo $image->exm_name; ?>" style="width: 100%"></li>
+                                <li>
+                                    <div class="well">
+                                        <img src="<?php echo base_url("uploads/laboratory_results/".$image->lri_image); ?>" title="<?php echo $image->exm_name; ?>" style="width: 100%">
+                                        <div class="bgslder-caption">
+                                            <br>
+                                            <span><?php echo $image->exm_name;?></span><br>
+                                            <strong><?php echo format_datetime($image->lri_date_created); ?></strong>
+                                            <p><?php echo $image->lri_description; ?></p>
+                                        </div>
+                                    </div>
+                                </li>
                             <?php endforeach ?> 
                         </ul>
                     <?php } ?>
@@ -136,7 +146,7 @@
         $('#pet_images').bxSlider({
             captions: true,
             adaptiveHeight: true,
-            captions: true
+            captions: false
         });
     });
 </script>

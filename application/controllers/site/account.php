@@ -122,16 +122,14 @@ class Account extends CI_Controller
             $examination_results = $this->laboratory_test_result_model->get_all($exam_params, $exam_orders);
             $data[$examination->exm_id]->line_item = $examination_results->result();
 
-            foreach ($examination_results->result() as $exmanintionresults) {
-                if (!in_array($exmanintionresults->lab_id, $laboratory_ids)) {
-                    $laboratory_ids[] = $exmanintionresults->lab_id;
-                }
+            if (!in_array($examination->lab_id, $laboratory_ids)) {
+                $laboratory_ids[] = $examination->lab_id;
             }
         }   
 
         $page["images"] = null;
 
-        if($laboratory_ids) {
+        if($laboratory_ids) { 
             $page['images'] = $this->laboratory_result_images_model->get_all_in_lab_id($laboratory_ids, array("lri_image !="=> ""));
         }
 

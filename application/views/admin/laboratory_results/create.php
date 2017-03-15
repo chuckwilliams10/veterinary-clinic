@@ -42,12 +42,12 @@
 			<p style="font-size: 14px;">Final remarks</p>
 			<textarea name="lab_remark" style="margin: 0px 0px 10px; width: 767px; height: 42px;"></textarea> 
 		</div>
-		<div class="span10">
+		<!--<div class="span10">
 			<p style="font-size: 14px;">Images</p>
 			<input name="lri_image[]" id="filesToUpload" type="file" multiple="multiple" accept="image/*"  />
 			<p style="color:red;">Press CTRL while clicking to select multiple files</p>
 			<ul id="fileList"></ul>
-		</div>
+		</div>-->
 	</div>
 	<table class="table-form table-bordered">  
 		<tr>

@@ -6,12 +6,12 @@ class Laboratory_result_images_model extends Base_model
     {
         // List all fields of the table.
         // Primary key must be auto-increment and must be listed here first.
-        $fields = array('lri_id', 'lab_id', 'lri_image','lri_image_thumb','lri_image_original');
+        $fields = array('lri_id', 'lab_id', 'lri_image','lri_image_thumb','lri_image_original','lri_description','lri_date_created');
         // Call the parent constructor with the table name and fields as parameters.
         parent::__construct('laboratory_result_images', $fields);
     }
 
-    public function get_all( $params = array(), $order_by = array() )
+    public function get_all( $params = array(), $order_by = array('lri_date_created' => 'DESC', 'lri_id' => "DESC") )
     {               
         $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");        
 
@@ -26,7 +26,7 @@ class Laboratory_result_images_model extends Base_model
         return parent::get_all($params);
     }
 
-    public function get_all_in_lab_id($laboratory_result_ids = array(), $params = array(), $order_by = array() )
+    public function get_all_in_lab_id($laboratory_result_ids = array(), $params = array(), $order_by = array('lri_date_created' => 'DESC', 'lri_id' => "DESC") )
     {               
         $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");       
         $this->db->join('examination', "examination.exm_id = laboratory_results.exm_id");   
