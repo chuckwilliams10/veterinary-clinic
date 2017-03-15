@@ -98,7 +98,7 @@ class Laboratory_results extends CI_Controller
 				}
 
 
-				$this->load->library('upload');
+				/*$this->load->library('upload');
 
 			    $files = $_FILES;
 			    $cpt = count($_FILES['lri_image']['name']);
@@ -123,7 +123,7 @@ class Laboratory_results extends CI_Controller
 	                $imgfile['lab_id'] = $id;
 
               	 	$this->laboratory_result_images_model->create($imgfile);
-			    }
+			    }*/
 
 				// Set a notification using notification method from Template.
 				// It is okay to redirect after and the notification will be displayed on the redirect page.
@@ -168,7 +168,7 @@ class Laboratory_results extends CI_Controller
 				$rows_affected = $this->laboratory_test_result_model->update($data, ["ltr_id","ltr_result","ltr_remark"]);
 			}
 
-			$this->load->library('upload');
+			/*$this->load->library('upload');
 
 		    $files = $_FILES;
 		    $cpt = count($_FILES['lri_image']['name']);
@@ -197,7 +197,7 @@ class Laboratory_results extends CI_Controller
               	 	$this->laboratory_result_images_model->create($imgfile);
                 }
 
-		    }
+		    }*/
 		}
 
 		$page = array();

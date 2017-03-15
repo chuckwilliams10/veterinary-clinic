@@ -28,8 +28,20 @@ class Laboratory_result_images_model extends Base_model
 
     public function get_all_in_lab_id($laboratory_result_ids = array(), $params = array(), $order_by = array('lri_date_created' => 'DESC', 'lri_id' => "DESC") )
     {               
-        $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id");       
-        $this->db->join('examination', "examination.exm_id = laboratory_results.exm_id");   
+        $this->db->select(
+            "   laboratory_result_images.lri_id as lri_id, 
+                laboratory_results.lab_id as lab_id, 
+                laboratory_result_images.lri_image as lri_image,
+                laboratory_result_images.lri_image_thumb as lri_image_thumb,
+                laboratory_result_images.lri_image_original as lri_image_original,
+                laboratory_result_images.lri_description as lri_description,
+                laboratory_result_images.lri_date_created as lri_date_created,
+                examination.exm_name as exm_name
+            "
+        );
+        
+        $this->db->join('laboratory_results', "laboratory_results.lab_id = {$this->table}.lab_id","left");       
+        $this->db->join('examination', "examination.exm_id = laboratory_results.exm_id","left");   
 
         if ($laboratory_result_ids !== false) {
             $this->db->where_in("{$this->table}.lab_id",$laboratory_result_ids);
