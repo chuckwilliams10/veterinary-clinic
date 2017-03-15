@@ -1,0 +1,11 @@
+/byte_safe_strings.php
+/cast_to_int.php
+/error_polyfill.php
+/random.php
+/random_bytes_com_dotnet.php
+/random_bytes_dev_urandom.php
+/random_bytes_libsodium.php
+/random_bytes_libsodium_legacy.php
+/random_bytes_mcrypt.php
+/random_bytes_openssl.php
+/random_int.php
