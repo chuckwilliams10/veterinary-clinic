@@ -144,8 +144,10 @@ class Pets extends CI_Controller
 				$pet['pet_id'] = $pet_id;
 
 				$data = $this->upload->do_upload_resize("pet_image",300,300,'./uploads/pets/');
-				$pet['pet_image'] = $data['upload_data']['file_name'];
-				$pet['pet_image_thumb'] = $data['thumb_file_name'];
+				if(!isset($data['error'])){					
+					$pet['pet_image'] = $data['upload_data']['file_name'];
+					$pet['pet_image_thumb'] = $data['thumb_file_name'];
+				}
 
 				$rows_affected = $this->pet_model->update($pet, $this->form_validation->get_fields());
 
